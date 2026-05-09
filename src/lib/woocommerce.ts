@@ -1,0 +1,168 @@
+const BASE_URL = "https://api.vaiacharms.gr/wp-json/wc/v3";
+const CK = "ck_a60909f612e329245b86ce88e876b4928cf8d419";
+const CS = "cs_8509165bda4837aed2a6f1c0d03d0e7d35570809";
+
+function buildUrl(endpoint: string, params: Record<string, string> = {}) {
+  const url = new URL(`${BASE_URL}/${endpoint}`);
+  url.searchParams.set("consumer_key", CK);
+  url.searchParams.set("consumer_secret", CS);
+  Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
+  return url.toString();
+}
+
+export async function getProducts(params: Record<string, string> = {}) {
+  const res = await fetch(buildUrl("products", { per_page: "20", ...params }));
+  if (!res.ok) throw new Error(`WooCommerce API error: ${res.status}`);
+  return res.json();
+}
+
+export async function getProduct(id: number) {
+  const res = await fetch(buildUrl(`products/${id}`));
+  if (!res.ok) throw new Error(`WooCommerce API error: ${res.status}`);
+  return res.json();
+}
+
+export async function getCategories(params: Record<string, string> = {}) {
+  const res = await fetch(buildUrl("products/categories", { per_page: "50", ...params }));
+  if (!res.ok) throw new Error(`WooCommerce API error: ${res.status}`);
+  return res.json();
+}
+
+export async function getProductsByCategory(categoryId: number, params: Record<string, string> = {}) {
+  return getProducts({ category: String(categoryId), ...params });
+}
+
+export async function getTags(params: Record<string, string> = {}) {
+  const res = await fetch(buildUrl("products/tags", { per_page: "50", ...params }));
+  if (!res.ok) throw new Error(`WooCommerce API error: ${res.status}`);
+  return res.json();
+}
+
+
+export async function getProductVariations(productId: number) {
+  const res = await fetch(buildUrl(`products/${productId}/variations`, { per_page: "100" }));
+  if (!res.ok) throw new Error(`WooCommerce API error: ${res.status}`);
+  return res.json();
+}
+
+export async function registerCustomer(userData: any) {
+  const res = await fetch(buildUrl("customers"), {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(userData),
+  });
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.message || `WooCommerce API error: ${res.status}`);
+  }
+  return res.json();
+}
+
+export async function loginUser(credentials: any) {
+  const baseUrl = "https://api.vaiacharms.gr";
+  const endpoints = [
+    `${baseUrl}/wp-json/jwt-auth/v1/token`,
+    `${baseUrl}/wp-json/jwt-auth/v2/token`,
+    `${baseUrl}/wp-json/simple-jwt-login/v1/auth`,
+    `${baseUrl}/wp-json/simple-jwt-login/v1/authenticate`,
+    `${baseUrl}/?rest_route=/jwt-auth/v1/token`,
+    `${baseUrl}/?rest_route=/simple-jwt-login/v1/auth`
+  ];
+
+  let lastError = "Αποτυχία σύνδεσης: Δεν βρέθηκε ενεργό endpoint πιστοποίησης στο WordPress.";
+
+  for (const url of endpoints) {
+    try {
+      const isSimpleJwt = url.includes("simple-jwt-login");
+      const body = isSimpleJwt
+        ? { username: credentials.username, password: credentials.password }
+        : credentials;
+
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok && (data.token || data.jwt || (data.data && data.data.token))) {
+        const token = data.token || data.jwt || (data.data && data.data.token);
+        let userData = { ...data, token };
+
+        // Αν λείπει το ID, προσπαθούμε πρώτα από το /users/me
+        if (!userData.id && !userData.user_id) {
+          try {
+            const userRes = await fetch(`${baseUrl}/wp-json/wp/v2/users/me`, {
+              headers: { "Authorization": `Bearer ${token}` }
+            });
+            if (userRes.ok) {
+              const fullUserData = await userRes.json();
+              userData = { ...userData, id: fullUserData.id, ...fullUserData };
+            }
+          } catch (e) {
+            console.error("Could not fetch user ID via /me", e);
+          }
+        }
+
+        // Αν ΑΚΟΜΑ λείπει το ID, το ψάχνουμε μέσω του WooCommerce Customers API χρησιμοποιώντας το email
+        if (!userData.id && !userData.user_id) {
+          try {
+            const email = userData.user_email || userData.email || credentials.username;
+            const customerRes = await fetch(buildUrl("customers", { email }));
+            if (customerRes.ok) {
+              const customers = await customerRes.json();
+              if (Array.isArray(customers) && customers.length > 0) {
+                userData.id = customers[0].id;
+              }
+            }
+          } catch (e) {
+            console.error("Could not resolve customer ID via email", e);
+          }
+        }
+
+        // Κανονικοποίηση του response
+        return {
+          id: userData.id || userData.user_id || 0,
+          token: token,
+          user_email: userData.user_email || userData.email || credentials.username,
+          user_nicename: userData.user_nicename || userData.nicename || credentials.username,
+          ...userData
+        };
+      } else if (res.status === 403 || res.status === 401 || (data.code && data.code.includes("auth"))) {
+        lastError = data.message || "Λανθασμένο όνομα χρήστη ή κωδικός πρόσβασης.";
+        if (lastError.includes("not found")) continue; // Αν είναι 404/403 επειδή δεν υπάρχει η διαδρομή
+        throw new Error(lastError);
+      }
+    } catch (e: any) {
+      if (e.message && (e.message.includes("Λανθασμένο") || e.message.includes("στοιχεία") || e.message.includes("κωδικός"))) {
+        throw e;
+      }
+    }
+  }
+
+  throw new Error(lastError);
+}
+
+export async function getUserOrders(customerId: number, email?: string) {
+  const params: any = { per_page: "50" };
+
+  if (email) {
+    // Το WooCommerce API υποστηρίζει το parameter 'email' για να βρίσκει παραγγελίες (και guest)
+    params.email = email;
+  } else if (customerId > 0) {
+    params.customer = String(customerId);
+  } else {
+    return [];
+  }
+
+  const res = await fetch(buildUrl("orders", params));
+  if (!res.ok) throw new Error(`WooCommerce API error: ${res.status}`);
+  return res.json();
+}
+
+export async function getProductReviews(productId: number) {
+  const res = await fetch(buildUrl("products/reviews", { product: String(productId), per_page: "50" }));
+  if (!res.ok) throw new Error(`WooCommerce API error: ${res.status}`);
+  return res.json();
+}

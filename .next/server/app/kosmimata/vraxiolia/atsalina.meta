@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/kosmimata/layout,_N_T_/kosmimata/vraxiolia/layout,_N_T_/kosmimata/vraxiolia/atsalina/layout,_N_T_/kosmimata/vraxiolia/atsalina/page,_N_T_/kosmimata/vraxiolia/atsalina/"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/kosmimata/vraxiolia/atsalina/__PAGE__",
+    "/kosmimata/vraxiolia/atsalina",
+    "/kosmimata/vraxiolia",
+    "/kosmimata",
+    "/_index",
+    "/_head"
+  ]
+}

@@ -1,0 +1,3 @@
+module.exports=[9586,a=>{"use strict";var b=a.i(7997);function c({children:a}){return(0,b.jsx)(b.Fragment,{children:a})}a.s(["default",()=>c,"metadata",0,{title:"Συχνές Ερωτήσεις (FAQ)",description:"Απαντήσεις σε όλες τις συχνές ερωτήσεις για παραγγελίες, αποστολές, πληρωμές, επιστροφές και προϊόντα του Vaia Charms. Αποστολή 3-5 εργάσιμες μέρες, δωρεάν άνω των 65€.",openGraph:{title:"Συχνές Ερωτήσεις | Vaia Charms",description:"Βρείτε απαντήσεις σε ερωτήσεις για παραγγελίες, αποστολές και επιστροφές.",url:"https://www.vaiacharms.gr/faq"},alternates:{canonical:"https://www.vaiacharms.gr/faq"}}])}];
+
+//# sourceMappingURL=src_app_faq_layout_tsx_cee1e65e._.js.map

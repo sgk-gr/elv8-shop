@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/paidika/layout,_N_T_/paidika/xeirourgiko-atsali/layout,_N_T_/paidika/xeirourgiko-atsali/page,_N_T_/paidika/xeirourgiko-atsali/"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/paidika/xeirourgiko-atsali/__PAGE__",
+    "/paidika/xeirourgiko-atsali",
+    "/paidika",
+    "/_index",
+    "/_head"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/kosmimata/layout,_N_T_/kosmimata/charms/layout,_N_T_/kosmimata/charms/page,_N_T_/kosmimata/charms/"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/kosmimata/charms/__PAGE__",
+    "/kosmimata/charms",
+    "/kosmimata",
+    "/_index",
+    "/_head"
+  ]
+}

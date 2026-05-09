@@ -1,0 +1,3 @@
+module.exports=[51614,a=>{"use strict";var b=a.i(7997);function c({children:a}){return(0,b.jsx)(b.Fragment,{children:a})}a.s(["default",()=>c,"metadata",0,{title:"Πολιτική Επιστροφών",description:"Μάθετε για την πολιτική επιστροφών και ανταλλαγών του Vaia Charms. Επιστροφές εντός 14 ημερών για ελαττωματικά ή λανθασμένα προϊόντα. Δωρεάν επιστροφή.",openGraph:{title:"Πολιτική Επιστροφών | Vaia Charms",description:"Επιστροφές εντός 14 ημερών για ελαττωματικά προϊόντα. Δωρεάν επιστροφή.",url:"https://www.vaiacharms.gr/returns"},alternates:{canonical:"https://www.vaiacharms.gr/returns"}}])}];
+
+//# sourceMappingURL=src_app_returns_layout_tsx_38156287._.js.map

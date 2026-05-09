@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/andrika/layout,_N_T_/andrika/xeiropedes/layout,_N_T_/andrika/xeiropedes/page,_N_T_/andrika/xeiropedes/"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/andrika/xeiropedes/__PAGE__",
+    "/andrika/xeiropedes",
+    "/andrika",
+    "/_index",
+    "/_head"
+  ]
+}

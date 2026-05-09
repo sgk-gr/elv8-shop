@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/kosmimata/layout,_N_T_/kosmimata/skoularikia/layout,_N_T_/kosmimata/skoularikia/piercing/layout,_N_T_/kosmimata/skoularikia/piercing/page,_N_T_/kosmimata/skoularikia/piercing/"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/kosmimata/skoularikia/piercing/__PAGE__",
+    "/kosmimata/skoularikia/piercing",
+    "/kosmimata/skoularikia",
+    "/kosmimata",
+    "/_index",
+    "/_head"
+  ]
+}

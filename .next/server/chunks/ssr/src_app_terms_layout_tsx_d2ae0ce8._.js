@@ -1,0 +1,3 @@
+module.exports=[42627,a=>{"use strict";var b=a.i(7997);function c({children:a}){return(0,b.jsx)(b.Fragment,{children:a})}a.s(["default",()=>c,"metadata",0,{title:"Όροι Χρήσης",description:"Οι όροι και προϋποθέσεις χρήσης του eshop Vaia Charms. Πληροφορίες για αγορές, παραδόσεις, επιστροφές και τα δικαιώματά σας ως καταναλωτής.",openGraph:{title:"Όροι Χρήσης | Vaia Charms",description:"Όροι και προϋποθέσεις χρήσης του Vaia Charms eshop.",url:"https://www.vaiacharms.gr/terms"},alternates:{canonical:"https://www.vaiacharms.gr/terms"},robots:{index:!1,follow:!1}}])}];
+
+//# sourceMappingURL=src_app_terms_layout_tsx_d2ae0ce8._.js.map

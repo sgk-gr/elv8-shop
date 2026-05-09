@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/kosmimata/layout,_N_T_/kosmimata/skoularikia/layout,_N_T_/kosmimata/skoularikia/asimenia/layout,_N_T_/kosmimata/skoularikia/asimenia/page,_N_T_/kosmimata/skoularikia/asimenia/"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/kosmimata/skoularikia/asimenia/__PAGE__",
+    "/kosmimata/skoularikia/asimenia",
+    "/kosmimata/skoularikia",
+    "/kosmimata",
+    "/_index",
+    "/_head"
+  ]
+}

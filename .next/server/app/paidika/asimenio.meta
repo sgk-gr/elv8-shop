@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/paidika/layout,_N_T_/paidika/asimenio/layout,_N_T_/paidika/asimenio/page,_N_T_/paidika/asimenio/"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/paidika/asimenio/__PAGE__",
+    "/paidika/asimenio",
+    "/paidika",
+    "/_index",
+    "/_head"
+  ]
+}

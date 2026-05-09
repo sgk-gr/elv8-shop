@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/kosmimata/layout,_N_T_/kosmimata/daxtilidia/layout,_N_T_/kosmimata/daxtilidia/page,_N_T_/kosmimata/daxtilidia/"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/kosmimata/daxtilidia/__PAGE__",
+    "/kosmimata/daxtilidia",
+    "/kosmimata",
+    "/_index",
+    "/_head"
+  ]
+}

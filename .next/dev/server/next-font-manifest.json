@@ -1,0 +1,51 @@
+{
+  "app": {
+    "[project]/src/app/auth/page": [
+      "static/media/5476f68d60460930-s.p.c995e352.woff2",
+      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2",
+      "static/media/01e4147cff8141ee-s.p.7787e134.woff2"
+    ],
+    "[project]/src/app/checkout/page": [
+      "static/media/5476f68d60460930-s.p.c995e352.woff2",
+      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2",
+      "static/media/01e4147cff8141ee-s.p.7787e134.woff2"
+    ],
+    "[project]/src/app/faq/page": [
+      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2",
+      "static/media/01e4147cff8141ee-s.p.7787e134.woff2"
+    ],
+    "[project]/src/app/favorites/page": [
+      "static/media/5476f68d60460930-s.p.c995e352.woff2",
+      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2",
+      "static/media/01e4147cff8141ee-s.p.7787e134.woff2"
+    ],
+    "[project]/src/app/page": [
+      "static/media/5476f68d60460930-s.p.c995e352.woff2",
+      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2",
+      "static/media/01e4147cff8141ee-s.p.7787e134.woff2"
+    ],
+    "[project]/src/app/privacy/page": [
+      "static/media/5476f68d60460930-s.p.c995e352.woff2",
+      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2",
+      "static/media/01e4147cff8141ee-s.p.7787e134.woff2"
+    ],
+    "[project]/src/app/product/[id]/page": [
+      "static/media/5476f68d60460930-s.p.c995e352.woff2",
+      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2",
+      "static/media/01e4147cff8141ee-s.p.7787e134.woff2"
+    ],
+    "[project]/src/app/products/page": [
+      "static/media/5476f68d60460930-s.p.c995e352.woff2",
+      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2",
+      "static/media/01e4147cff8141ee-s.p.7787e134.woff2"
+    ],
+    "[project]/src/app/returns/page": [
+      "static/media/5476f68d60460930-s.p.c995e352.woff2",
+      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2",
+      "static/media/01e4147cff8141ee-s.p.7787e134.woff2"
+    ]
+  },
+  "appUsingSizeAdjust": true,
+  "pages": {},
+  "pagesUsingSizeAdjust": false
+}

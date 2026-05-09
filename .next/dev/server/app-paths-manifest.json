@@ -1,0 +1,11 @@
+{
+  "/auth/page": "app/auth/page.js",
+  "/checkout/page": "app/checkout/page.js",
+  "/faq/page": "app/faq/page.js",
+  "/favorites/page": "app/favorites/page.js",
+  "/page": "app/page.js",
+  "/privacy/page": "app/privacy/page.js",
+  "/product/[id]/page": "app/product/[id]/page.js",
+  "/products/page": "app/products/page.js",
+  "/returns/page": "app/returns/page.js"
+}

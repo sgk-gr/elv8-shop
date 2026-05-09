@@ -1,0 +1,13 @@
+# Vaia Charms - robots.txt
+User-agent: *
+Allow: /
+
+# Μην ευρετηριάσεις ιδιωτικές / transactional σελίδες
+Disallow: /cart/
+Disallow: /checkout/
+Disallow: /account/
+Disallow: /auth/
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://www.vaiacharms.gr/sitemap.xml

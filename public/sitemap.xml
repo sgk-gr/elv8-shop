@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- ── Αρχική σελίδα ────────────────────────────── -->
+  <url>
+    <loc>https://www.vaiacharms.gr/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- ── Προϊόντα ─────────────────────────────────── -->
+  <url>
+    <loc>https://www.vaiacharms.gr/products/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.vaiacharms.gr/products/?on_sale=true</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ── Κοσμήματα ─────────────────────────────────── -->
+  <url>
+    <loc>https://www.vaiacharms.gr/kosmimata/vraxiolia/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vaiacharms.gr/kosmimata/vraxiolia/atsalina/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vaiacharms.gr/kosmimata/vraxiolia/asimenia/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vaiacharms.gr/kosmimata/skoularikia/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vaiacharms.gr/kosmimata/kolie/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vaiacharms.gr/kosmimata/daxtilidia/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vaiacharms.gr/kosmimata/roloi-xeiros/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vaiacharms.gr/kosmimata/charms/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ── Cosmetics / Accessories ───────────────────── -->
+  <url>
+    <loc>https://www.vaiacharms.gr/cosmetics/lipsticks/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.vaiacharms.gr/accessories/hair-accessories/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.vaiacharms.gr/accessories/hair-styling-tools/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- ── Πληροφορίες ───────────────────────────────── -->
+  <url>
+    <loc>https://www.vaiacharms.gr/faq/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.vaiacharms.gr/returns/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://www.vaiacharms.gr/privacy/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.vaiacharms.gr/terms/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>
