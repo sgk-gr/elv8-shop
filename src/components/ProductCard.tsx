@@ -5,16 +5,24 @@ import { WooProduct } from "@/types/product";
 import { Heart } from "lucide-react";
 import { useFavorites } from "@/context/FavoritesContext";
 
+import { usePathname, useSearchParams } from "next/navigation";
+
 interface ProductCardProps {
   product: WooProduct;
   backUrl?: string;
 }
 
 export default function ProductCard({ product, backUrl }: ProductCardProps) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const image = product.images?.[0];
   const hasDiscount = product.on_sale && product.regular_price;
   const { isFavorite, toggleFavorite } = useFavorites();
   const favorite = isFavorite(product.id);
+
+  // Determine the backUrl: use the prop if provided, otherwise the current URL
+  const currentPath = pathname + (searchParams.toString() ? `?${searchParams.toString()}` : "");
+  const effectiveBackUrl = backUrl || currentPath;
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -23,7 +31,7 @@ export default function ProductCard({ product, backUrl }: ProductCardProps) {
   };
 
   return (
-    <Link href={`/product/${product.id}/${backUrl ? `?backUrl=${encodeURIComponent(backUrl)}` : ''}`} className="group block h-full">
+    <Link href={`/product/${product.id}/?backUrl=${encodeURIComponent(effectiveBackUrl)}`} className="group block h-full">
       <div className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-secondary mb-4 shadow-sm group-hover:shadow-soft transition-all duration-500">
         {image ? (
           <img

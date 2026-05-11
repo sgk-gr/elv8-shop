@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/user/Desktop/eshop/src/app/returns/layout.tsx"],"sourcesContent":["import type { Metadata } from \"next\";\n\nexport const metadata: Metadata = {\n    title: \"Πολιτική Επιστροφών\",\n    description:\n        \"Μάθετε για την πολιτική επιστροφών και ανταλλαγών του Vaia Charms. Επιστροφές εντός 14 ημερών για ελαττωματικά ή λανθασμένα προϊόντα. Δωρεάν επιστροφή.\",\n    openGraph: {\n        title: \"Πολιτική Επιστροφών | Vaia Charms\",\n        description: \"Επιστροφές εντός 14 ημερών για ελαττωματικά προϊόντα. Δωρεάν επιστροφή.\",\n        url: \"https://www.vaiacharms.gr/returns\",\n    },\n    alternates: { canonical: \"https://www.vaiacharms.gr/returns\" },\n};\n\nexport default function ReturnsLayout({ children }: { children: React.ReactNode }) {\n    return <>{children}</>;\n}\n"],"names":[],"mappings":";;;;;;;;AAEO,MAAM,WAAqB;IAC9B,OAAO;IACP,aACI;IACJ,WAAW;QACP,OAAO;QACP,aAAa;QACb,KAAK;IACT;IACA,YAAY;QAAE,WAAW;IAAoC;AACjE;AAEe,SAAS,cAAc,EAAE,QAAQ,EAAiC;IAC7E,qBAAO;kBAAG;;AACd"}}]
-}

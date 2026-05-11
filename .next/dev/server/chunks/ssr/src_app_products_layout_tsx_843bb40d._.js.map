@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/user/Desktop/eshop/src/app/products/layout.tsx"],"sourcesContent":["import type { Metadata } from \"next\";\n\nexport const metadata: Metadata = {\n    title: \"Συλλογές & Κατηγορίες\",\n    description:\n        \"Εξερευνήστε όλες τις κατηγορίες κοσμημάτων, cosmetics και αξεσουάρ στο Vaia Charms. Βραχιόλια, σκουλαρίκια, κολιέ, δαχτυλίδια, ρολόγια CLUSE και πολλά άλλα. Δωρεάν αποστολή άνω των 65€.\",\n    openGraph: {\n        title: \"Συλλογές & Κατηγορίες | Vaia Charms\",\n        description: \"Εξερευνήστε όλες τις κατηγορίες κοσμημάτων, cosmetics και αξεσουάρ.\",\n        url: \"https://www.vaiacharms.gr/products\",\n    },\n    alternates: {\n        canonical: \"https://www.vaiacharms.gr/products\",\n    },\n};\n\nexport { default } from \"./ProductsPageClient\";\n"],"names":[],"mappings":";;;;;;;;;AAEO,MAAM,WAAqB;IAC9B,OAAO;IACP,aACI;IACJ,WAAW;QACP,OAAO;QACP,aAAa;QACb,KAAK;IACT;IACA,YAAY;QACR,WAAW;IACf;AACJ"}}]
-}

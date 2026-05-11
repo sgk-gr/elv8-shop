@@ -163,23 +163,12 @@ export default function ProductDetailClient({ id }: { id: string }) {
     const getBackUrl = () => {
         if (!product) return "/products";
         
-        // Specific case for products 506, 500, 68, 273, 102, 317, 426 and 457
-        if (product.id === 506) return "/products?category=27";
-        if (product.id === 500) return "/products?category=99";
-        if (product.id === 68) return "/products?category=21";
-        if (product.id === 110) return "/products?category=107";
-        if (product.id === 127) return "/products?category=23";
-        if (product.id === 273) return "/products?category=23";
-        if (product.id === 102) return "/products?category=24";
-        if (product.id === 317) return "/products?category=74";
-        if (product.id === 426) return "/products?category=71";
-        if (product.id === 457) return "/products?category=65";
-        if (product.id === 631) return "/products?category=121";
-        if (product.id === 638) return "/products?category=121";
-
         // General mapping for other categories using dynamic products page
         const categoryIds = product.categories.map(c => c.id);
+        
+        // Prioritize Silver 925 (107)
         if (categoryIds.includes(107)) return "/products?category=107";
+        
         if (categoryIds.includes(65)) return "/products?category=65";
         if (categoryIds.includes(71)) return "/products?category=71";
         if (categoryIds.includes(74)) return "/products?category=74";
@@ -196,6 +185,11 @@ export default function ProductDetailClient({ id }: { id: string }) {
         if (categoryIds.includes(121)) return "/products?category=121";
         if (categoryIds.includes(112)) return "/products?category=112";
         if (categoryIds.includes(31)) return "/products?category=31";
+        
+        // Final fallback: Use the first category of the product if available
+        if (product.categories && product.categories.length > 0) {
+            return `/products?category=${product.categories[0].id}`;
+        }
         
         return "/products";
     };

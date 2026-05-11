@@ -1,3 +1,0 @@
-module.exports=[61080,a=>{"use strict";var b=a.i(7997);function c({children:a}){return(0,b.jsx)(b.Fragment,{children:a})}a.s(["default",()=>c,"metadata",0,{title:"Πολιτική Απορρήτου",description:"Η πολιτική απορρήτου του Vaia Charms. Πληροφορίες για τον τρόπο συλλογής, χρήσης και προστασίας των προσωπικών δεδομένων σας σύμφωνα με τον GDPR.",openGraph:{title:"Πολιτική Απορρήτου | Vaia Charms",description:"Πληροφορίες για την προστασία των προσωπικών δεδομένων σας (GDPR).",url:"https://www.vaiacharms.gr/privacy"},alternates:{canonical:"https://www.vaiacharms.gr/privacy"},robots:{index:!1,follow:!1}}])}];
-
-//# sourceMappingURL=src_app_privacy_layout_tsx_3d7f1cef._.js.map

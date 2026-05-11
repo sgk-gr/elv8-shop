@@ -1,3 +1,0 @@
-module.exports=[62629,a=>{"use strict";var b=a.i(7997);function c({children:a}){return(0,b.jsx)(b.Fragment,{children:a})}a.s(["default",()=>c,"metadata",0,{title:"Συλλογές & Κατηγορίες",description:"Εξερευνήστε όλες τις κατηγορίες κοσμημάτων, cosmetics και αξεσουάρ στο Vaia Charms. Βραχιόλια, σκουλαρίκια, κολιέ, δαχτυλίδια, ρολόγια CLUSE και πολλά άλλα. Δωρεάν αποστολή άνω των 65€.",openGraph:{title:"Συλλογές & Κατηγορίες | Vaia Charms",description:"Εξερευνήστε όλες τις κατηγορίες κοσμημάτων, cosmetics και αξεσουάρ.",url:"https://www.vaiacharms.gr/products"},alternates:{canonical:"https://www.vaiacharms.gr/products"}}])}];
-
-//# sourceMappingURL=src_app_products_layout_tsx_cca06f84._.js.map

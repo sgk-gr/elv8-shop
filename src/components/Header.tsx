@@ -157,7 +157,7 @@ export default function Header() {
                           {searchResults.map((product) => (
                             <Link
                               key={product.id}
-                              href={`/product/${product.id}/`}
+                              href={`/product/${product.id}/?backUrl=${encodeURIComponent(typeof window !== 'undefined' ? window.location.pathname + window.location.search : '')}`}
                               onClick={() => { setIsSearchFocused(false); setMobileSearchOpen(false); }}
                               className="flex items-center gap-3 p-2 hover:bg-slate-50 rounded-xl transition-colors group"
                             >
@@ -310,7 +310,7 @@ export default function Header() {
                       {searchResults.map((product) => (
                         <Link
                           key={product.id}
-                          href={`/product/${product.id}/`}
+                          href={`/product/${product.id}/?backUrl=${encodeURIComponent(typeof window !== 'undefined' ? window.location.pathname + window.location.search : '')}`}
                           onClick={() => setIsSearchFocused(false)}
                           className="flex items-center gap-4 p-2 hover:bg-slate-50 rounded-2xl transition-colors group"
                         >

@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/user/Desktop/eshop/src/app/privacy/layout.tsx"],"sourcesContent":["import type { Metadata } from \"next\";\n\nexport const metadata: Metadata = {\n    title: \"Πολιτική Απορρήτου\",\n    description:\n        \"Η πολιτική απορρήτου του Vaia Charms. Πληροφορίες για τον τρόπο συλλογής, χρήσης και προστασίας των προσωπικών δεδομένων σας σύμφωνα με τον GDPR.\",\n    openGraph: {\n        title: \"Πολιτική Απορρήτου | Vaia Charms\",\n        description: \"Πληροφορίες για την προστασία των προσωπικών δεδομένων σας (GDPR).\",\n        url: \"https://www.vaiacharms.gr/privacy\",\n    },\n    alternates: { canonical: \"https://www.vaiacharms.gr/privacy\" },\n    robots: { index: false, follow: false },\n};\n\nexport default function PrivacyLayout({ children }: { children: React.ReactNode }) {\n    return <>{children}</>;\n}\n"],"names":[],"mappings":";;;;;;;;AAEO,MAAM,WAAqB;IAC9B,OAAO;IACP,aACI;IACJ,WAAW;QACP,OAAO;QACP,aAAa;QACb,KAAK;IACT;IACA,YAAY;QAAE,WAAW;IAAoC;IAC7D,QAAQ;QAAE,OAAO;QAAO,QAAQ;IAAM;AAC1C;AAEe,SAAS,cAAc,EAAE,QAAQ,EAAiC;IAC7E,qBAAO;kBAAG;;AACd"}}]
-}
