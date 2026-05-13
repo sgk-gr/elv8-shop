@@ -11,10 +11,16 @@ function buildUrl(endpoint: string, params: Record<string, string> = {}) {
 }
 
 export async function getProducts(params: Record<string, string> = {}) {
-  const res = await fetch(buildUrl("products", { per_page: "20", ...params }));
+  const res = await fetch(buildUrl("products", { 
+    per_page: "20", 
+    status: "publish",
+    catalog_visibility: "visible",
+    ...params 
+  }));
   if (!res.ok) throw new Error(`WooCommerce API error: ${res.status}`);
   return res.json();
 }
+
 
 export async function getProduct(id: number) {
   const res = await fetch(buildUrl(`products/${id}`));
