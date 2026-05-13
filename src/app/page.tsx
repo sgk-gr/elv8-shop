@@ -1,5 +1,6 @@
 import { getProducts, getCategories, getTags } from "@/lib/woocommerce";
 import HomeClient from "./HomeClient";
+import { Suspense } from "react";
 
 export const revalidate = 3600; // Cache for 1 hour
 
@@ -13,11 +14,14 @@ export default async function HomePage() {
   ]);
 
   return (
-    <HomeClient 
-      initialFeaturedProducts={featuredProducts}
-      initialSaleProducts={saleProducts}
-      initialCategories={categories}
-      initialTags={tags}
-    />
+    <Suspense fallback={null}>
+      <HomeClient 
+        initialFeaturedProducts={featuredProducts}
+        initialSaleProducts={saleProducts}
+        initialCategories={categories}
+        initialTags={tags}
+      />
+    </Suspense>
   );
 }
+
