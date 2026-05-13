@@ -20,6 +20,7 @@ function ProductsContent() {
     const categoryId = searchParams.get("category");
     const tagId = searchParams.get("tag");
     const onSale = searchParams.get("on_sale");
+    const searchQuery = searchParams.get("search");
 
     const [showFilters, setShowFilters] = useState(false);
     const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
@@ -34,6 +35,7 @@ function ProductsContent() {
     if (categoryId) params.category = categoryId;
     if (tagId) params.tag = tagId;
     if (onSale === "true") params.on_sale = "true";
+    if (searchQuery) params.search = searchQuery;
 
     const { data: allProducts = [], isLoading } = useQuery<WooProduct[]>({
         queryKey: ["products", params],
@@ -216,11 +218,11 @@ function ProductsContent() {
                             />
                         </>
                     )}
-                    {(activeCategory || activeTag || onSale) && (
+                    {(activeCategory || activeTag || onSale || searchQuery) && (
                         <>
                             <ChevronRight className="w-4 h-4" />
                             <span className="text-primary font-medium">
-                                {onSale ? "Εποχιακές Εκπτώσεις" : activeTag ? activeTag.name : activeCategory ? activeCategory.name : ""}
+                                {onSale ? "Εποχιακές Εκπτώσεις" : activeTag ? activeTag.name : activeCategory ? activeCategory.name : searchQuery ? `Αναζήτηση: ${searchQuery}` : ""}
                             </span>
                         </>
                     )}
@@ -228,7 +230,7 @@ function ProductsContent() {
 
                 <div className="space-y-4">
                     <h1 className="font-display text-4xl md:text-6xl font-bold tracking-tight text-[#C4196D]">
-                        {onSale ? "Εποχιακές Εκπτώσεις" : activeTag ? activeTag.name : activeCategory ? activeCategory.name : "Συλλογές"}
+                        {onSale ? "Εποχιακές Εκπτώσεις" : activeTag ? activeTag.name : activeCategory ? activeCategory.name : searchQuery ? `Αποτελέσματα για: ${searchQuery}` : "Συλλογές"}
                     </h1>
                     <p className="text-muted-foreground font-body text-sm max-w-lg leading-relaxed">
                         Ανακαλύψτε επιλεγμένα κομμάτια που συνδυάζουν την διαχρονική κομψότητα με τη σύγχρονη αισθητική.

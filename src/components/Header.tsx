@@ -23,6 +23,7 @@ export default function Header() {
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
+  const mobileSearchRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const [scrollProgress, setScrollProgress] = useState(0);
   const [expandedCategories, setExpandedCategories] = useState<number[]>([]);
@@ -62,13 +63,25 @@ export default function Header() {
   // Close search results when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+      const isOutsideMainSearch = searchRef.current && !searchRef.current.contains(event.target as Node);
+      const isOutsideMobileSearch = !mobileSearchRef.current || !mobileSearchRef.current.contains(event.target as Node);
+      
+      if (isOutsideMainSearch && isOutsideMobileSearch) {
         setIsSearchFocused(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim().length > 0) {
+      router.push(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
+      setIsSearchFocused(false);
+      setMobileSearchOpen(false);
+    }
+  };
 
   // Fetch Categories
   const { data: allCategories = [] } = useQuery<WooCategory[]>({
@@ -126,8 +139,8 @@ export default function Header() {
 
             {/* Mobile Search Overlay (Full Width) */}
             {mobileSearchOpen && (
-              <div className="absolute inset-0 z-10 px-4 bg-background md:hidden flex items-center animate-in fade-in slide-in-from-top-2 duration-300">
-                <div className="relative flex-1 flex items-center gap-3">
+              <div ref={mobileSearchRef} className="absolute inset-0 z-10 px-4 bg-background md:hidden flex items-center animate-in fade-in slide-in-from-top-2 duration-300">
+                <form onSubmit={handleSearchSubmit} className="relative flex-1 flex items-center gap-3">
                   <Search className="absolute left-4 w-4 h-4 text-primary" />
                   <input
                     type="text"
@@ -139,6 +152,7 @@ export default function Header() {
                     autoFocus
                   />
                   <button
+                    type="button"
                     onClick={() => { setMobileSearchOpen(false); setSearchQuery(""); setIsSearchFocused(false); }}
                     className="p-2 hover:bg-secondary/50 rounded-full text-muted-foreground"
                   >
@@ -178,7 +192,7 @@ export default function Header() {
                       )}
                     </div>
                   )}
-                </div>
+                </form>
               </div>
             )}
 
@@ -290,7 +304,7 @@ export default function Header() {
               {/* Desktop Search Dropdown (Icon Triggered) */}
               {isSearchFocused && !mobileSearchOpen && (
                 <div className="absolute top-full right-0 mt-4 w-96 bg-background rounded-3xl shadow-2xl border p-4 animate-in slide-in-from-top-4 duration-300 z-50">
-                  <div className="relative mb-4 group">
+                  <form onSubmit={handleSearchSubmit} className="relative mb-4 group">
                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
                     <input
                       type="text"
@@ -300,7 +314,7 @@ export default function Header() {
                       className="w-full bg-secondary/50 border-none rounded-full py-3 pl-12 pr-6 font-body text-sm focus:ring-2 focus:ring-primary/20 transition-all outline-none"
                       autoFocus
                     />
-                  </div>
+                  </form>
                   {isSearching ? (
                     <div className="flex items-center justify-center py-8">
                       <Loader2 className="w-6 h-6 animate-spin text-primary" />
@@ -436,17 +450,49 @@ export default function Header() {
                             </div>
                             
                             {children.length > 0 && isExpanded && (
-                              <div className="grid grid-cols-2 gap-2 px-2 animate-in fade-in slide-in-from-top-2 duration-300">
-                                {children.map((child) => (
-                                  <Link
-                                    key={child.id}
-                                    href={`/products?category=${child.id}`}
-                                    onClick={() => setMenuOpen(false)}
-                                    className="px-4 py-3 bg-white border border-slate-100 rounded-2xl text-sm font-bold text-slate-600 active:bg-primary active:text-white transition-all shadow-sm flex items-center justify-center text-center"
-                                  >
-                                    {child.name}
-                                  </Link>
-                                ))}
+                              <div className="flex flex-col gap-2 px-2 animate-in fade-in slide-in-from-top-2 duration-300">
+                                {children.map((child) => {
+                                  const subChildren = getChildren(child.id);
+                                  const isSubExpanded = expandedCategories.includes(child.id);
+                                  
+                                  return (
+                                    <div key={child.id} className="space-y-2">
+                                      <div className="flex items-center gap-2">
+                                        <Link
+                                          href={`/products?category=${child.id}`}
+                                          onClick={() => setMenuOpen(false)}
+                                          className="flex-1 flex items-center px-5 py-4 bg-white border border-slate-100 rounded-2xl text-sm font-bold text-slate-700 active:bg-primary/5 transition-all shadow-sm"
+                                        >
+                                          {child.name}
+                                        </Link>
+                                        
+                                        {subChildren.length > 0 && (
+                                          <button
+                                            onClick={() => toggleCategory(child.id)}
+                                            className={`w-14 h-14 flex items-center justify-center bg-white border border-slate-100 rounded-2xl shadow-sm transition-all ${isSubExpanded ? 'bg-primary/5 border-primary/20' : ''}`}
+                                          >
+                                            <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform duration-300 ${isSubExpanded ? 'rotate-180 text-primary' : ''}`} />
+                                          </button>
+                                        )}
+                                      </div>
+                                      
+                                      {subChildren.length > 0 && isSubExpanded && (
+                                        <div className="grid grid-cols-2 gap-2 pl-6 animate-in fade-in slide-in-from-top-2 duration-300">
+                                          {subChildren.map((sub) => (
+                                            <Link
+                                              key={sub.id}
+                                              href={`/products?category=${sub.id}`}
+                                              onClick={() => setMenuOpen(false)}
+                                              className="px-4 py-3 bg-slate-50/50 border border-slate-100 rounded-xl text-xs font-bold text-slate-500 active:bg-primary active:text-white transition-all shadow-sm flex items-center justify-center text-center"
+                                            >
+                                              {sub.name}
+                                            </Link>
+                                          ))}
+                                        </div>
+                                      )}
+                                    </div>
+                                  );
+                                })}
                               </div>
                             )}
                           </div>
@@ -522,12 +568,22 @@ export default function Header() {
 
                 {/* Footer of Drawer */}
                 <div className="p-8 border-t border-slate-100 bg-white mt-auto">
-                  <div className="flex flex-col gap-1">
-                    <p className="text-xs text-muted-foreground font-body leading-relaxed italic">
-                      "Η κομψότητα είναι η μόνη ομορφιά που δεν σβήνει ποτέ."
-                    </p>
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-primary/40 mt-4">Vaia Charms Official © 2026</p>
-                  </div>
+                    <div className="flex flex-col gap-1">
+                      <p className="text-xs text-muted-foreground font-body leading-relaxed italic">
+                        "Η κομψότητα είναι η μόνη ομορφιά που δεν σβήνει ποτέ."
+                      </p>
+                      <div className="flex items-center justify-between mt-4">
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-primary/40">Vaia Charms Official © 2026</p>
+                        <a 
+                          href="https://sgk.gr" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-[10px] font-bold uppercase tracking-widest text-primary/40 hover:text-primary transition-colors"
+                        >
+                          Created by sgk.gr
+                        </a>
+                      </div>
+                    </div>
                 </div>
               </div>
             </div>

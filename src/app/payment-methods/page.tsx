@@ -1,9 +1,9 @@
-import { ChevronRight, CreditCard, Landmark, Info } from "lucide-react";
+import { ChevronRight, CreditCard, Landmark, Info, Zap, Truck, Wallet } from "lucide-react";
 import Link from "next/link";
 
 export const metadata = {
     title: "Τρόποι Πληρωμής | Vaia Charms",
-    description: "Πληροφορίες σχετικά με τους τρόπους πληρωμής και την τραπεζική κατάθεση στο Vaia Charms.",
+    description: "Πληροφορίες σχετικά με τους τρόπους πληρωμής: Πιστωτική Κάρτα, Αντικαταβολή, IRIS και Τραπεζική Κατάθεση.",
 };
 
 export default function PaymentMethodsPage() {
@@ -22,18 +22,57 @@ export default function PaymentMethodsPage() {
                         Πληρωμές
                     </h1>
 
-                    <div className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-sm border border-slate-100 space-y-10">
-                        <section className="space-y-6">
-                            <div className="flex items-center gap-4 text-[#C4196D]">
-                                <div className="w-12 h-12 bg-[#C4196D]/10 rounded-2xl flex items-center justify-center">
-                                    <CreditCard className="w-6 h-6" />
+                    <div className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-sm border border-slate-100 space-y-12">
+                        {/* Payment Methods Grid */}
+                        <div className="grid gap-8">
+                            <section className="flex gap-5 items-start">
+                                <div className="w-12 h-12 bg-[#C4196D]/10 rounded-2xl flex items-center justify-center shrink-0">
+                                    <CreditCard className="w-6 h-6 text-[#C4196D]" />
                                 </div>
-                                <h2 className="font-display text-2xl font-bold text-slate-800">Ποιες μεθόδους πληρωμής δέχεστε;</h2>
-                            </div>
-                            <p className="font-body text-slate-600 leading-relaxed pl-16">
-                                Μπορείτε να εξοφλήσετε την παραγγελία σας μέσω τραπεζικής κατάθεσης στον ακόλουθο λογαριασμό:
-                            </p>
-                        </section>
+                                <div className="space-y-2">
+                                    <h2 className="font-display text-xl font-bold text-slate-800">Πιστωτική / Χρεωστική Κάρτα</h2>
+                                    <p className="font-body text-slate-600 text-sm leading-relaxed">
+                                        Δεχόμαστε όλες τις κύριες κάρτες (Visa, Mastercard, Maestro). Η πληρωμή γίνεται μέσω του ασφαλούς περιβάλλοντος της τράπεζας.
+                                    </p>
+                                </div>
+                            </section>
+
+                            <section className="flex gap-5 items-start">
+                                <div className="w-12 h-12 bg-blue-500/10 rounded-2xl flex items-center justify-center shrink-0">
+                                    <Zap className="w-6 h-6 text-blue-500" />
+                                </div>
+                                <div className="space-y-2">
+                                    <h2 className="font-display text-xl font-bold text-slate-800">IRIS Payments</h2>
+                                    <p className="font-body text-slate-600 text-sm leading-relaxed">
+                                        Άμεση πληρωμή μέσω του e-banking σας χρησιμοποιώντας μόνο τον ΑΦΜ ή τον αριθμό κινητού τηλεφώνου.
+                                    </p>
+                                </div>
+                            </section>
+
+                            <section className="flex gap-5 items-start">
+                                <div className="w-12 h-12 bg-emerald-500/10 rounded-2xl flex items-center justify-center shrink-0">
+                                    <Truck className="w-6 h-6 text-emerald-500" />
+                                </div>
+                                <div className="space-y-2">
+                                    <h2 className="font-display text-xl font-bold text-slate-800">Αντικαταβολή</h2>
+                                    <p className="font-body text-slate-600 text-sm leading-relaxed">
+                                        Πληρώστε το αντίτιμο της παραγγελίας σας κατά την παράδοση στον κούριερ.
+                                    </p>
+                                </div>
+                            </section>
+
+                            <section className="flex gap-5 items-start">
+                                <div className="w-12 h-12 bg-slate-500/10 rounded-2xl flex items-center justify-center shrink-0">
+                                    <Landmark className="w-6 h-6 text-slate-600" />
+                                </div>
+                                <div className="space-y-2">
+                                    <h2 className="font-display text-xl font-bold text-slate-800">Τραπεζική Κατάθεση</h2>
+                                    <p className="font-body text-slate-600 text-sm leading-relaxed">
+                                        Μπορείτε να καταθέσετε το ποσό της παραγγελίας σας στον παρακάτω λογαριασμό Eurobank.
+                                    </p>
+                                </div>
+                            </section>
+                        </div>
 
                         <section className="bg-slate-50 rounded-3xl p-8 md:p-10 space-y-6 border border-slate-100">
                             <div className="flex items-center gap-3 mb-2">
