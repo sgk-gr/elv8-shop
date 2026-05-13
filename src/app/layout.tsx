@@ -29,25 +29,8 @@ export const metadata: Metadata = {
     },
     description:
         "Η κορυφαία επιλογή σας για ποιοτικά κοσμήματα, cosmetics και αξεσουάρ. Ανακαλύψτε χειροποίητα κοσμήματα, ατσάλινα βραχιόλια, ασημένια σκουλαρίκια, ρολόγια CLUSE και πολλά άλλα. Δωρεάν αποστολή άνω των 65€.",
-    keywords: [
-        "κοσμήματα online",
-        "αγορά κοσμημάτων",
-        "ατσάλινα βραχιόλια",
-        "ασημένια κοσμήματα",
-        "σκουλαρίκια",
-        "κολιέ",
-        "δαχτυλίδια",
-        "ρολόγια CLUSE",
-        "cosmetics",
-        "vaia charms",
-        "κοσμήματα Ελλάδα",
-        "χειροποίητα κοσμήματα",
-        "piercing",
-        "stainless steel",
-        "ασήμι 925",
-        "κοσμήματα online shop",
-    ],
     authors: [{ name: "Vaia Charms", url: "https://www.vaiacharms.gr" }],
+
     creator: "Vaia Charms",
     publisher: "Vaia Charms",
     robots: {

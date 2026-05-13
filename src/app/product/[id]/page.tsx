@@ -84,6 +84,14 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
     return (
         <>
+            <JsonLd
+                type="breadcrumb"
+                breadcrumbs={[
+                    { name: "Αρχική", url: "/" },
+                    { name: "Συλλογές", url: "/products" },
+                    { name: stripHtml(productData.name), url: `/product/${id}/` }
+                ]}
+            />
             {productData && (
                 <JsonLd
                     type="product"
@@ -101,6 +109,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                     }}
                 />
             )}
+
             <Suspense
                 fallback={
                     <main className="container mx-auto px-4 md:px-8 py-8 md:py-16">
