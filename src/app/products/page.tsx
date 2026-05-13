@@ -3,7 +3,7 @@ import ProductsClient from "./ProductsClient";
 import JsonLd from "@/components/JsonLd";
 import { Metadata } from "next";
 
-export const revalidate = 3600; // Cache for 1 hour
+export const revalidate = 60; // Refresh every 60 seconds
 
 export const metadata: Metadata = {
   title: "Συλλογές Κοσμημάτων & Αξεσουάρ",

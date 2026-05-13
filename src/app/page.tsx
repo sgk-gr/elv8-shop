@@ -2,7 +2,7 @@ import { getProducts, getCategories, getTags } from "@/lib/woocommerce";
 import HomeClient from "./HomeClient";
 import { Suspense } from "react";
 
-export const revalidate = 3600; // Cache for 1 hour
+export const revalidate = 60; // Refresh every 60 seconds
 
 export default async function HomePage() {
   // Parallel fetch for speed
