@@ -60,9 +60,9 @@ export default function TermsOfServicePage() {
                         <div className="text-sm sm:text-base leading-relaxed text-muted-foreground space-y-2">
                             <p>Οι τιμές που αναφέρονται στην ιστοσελίδα μας είναι σε ευρώ (€) και περιλαμβάνουν ΦΠΑ. Αποδεχόμαστε πληρωμές μέσω τραπεζικής κατάθεσης στον ακόλουθο λογαριασμό:</p>
                             <div className="bg-secondary/30 p-4 rounded-xl font-mono text-xs sm:text-sm">
-                                <p><strong>IBAN:</strong> GR19 0260 2500 0000 9020 1517 209</p>
+                                <p><strong>IBAN:</strong> GR96 0140 8200 8200 0200 2022 797</p>
                                 <p><strong>Δικαιούχος:</strong> Ioannis Papatheodorou</p>
-                                <p><strong>Τράπεζα:</strong> Eurobank</p>
+                                <p><strong>Τράπεζα:</strong> Alpha Bank</p>
                             </div>
                             <p className="text-xs italic">Η επεξεργασία της παραγγελίας ξεκινά μετά την επιβεβαίωση της κατάθεσης.</p>
                         </div>

@@ -21,7 +21,7 @@ export default function CategoryCarousel({ categories }: CategoryCarouselProps) 
         }
     };
 
-    const validCategories = categories.filter(c => c.count > 0 && c.slug !== 'uncategorized');
+    const validCategories = categories.filter(c => c.count > 0 && c.slug !== 'uncategorized' && c.parent === 0);
 
     if (validCategories.length === 0) return null;
 

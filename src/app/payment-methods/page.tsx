@@ -68,7 +68,7 @@ export default function PaymentMethodsPage() {
                                 <div className="space-y-2">
                                     <h2 className="font-display text-xl font-bold text-slate-800">Τραπεζική Κατάθεση</h2>
                                     <p className="font-body text-slate-600 text-sm leading-relaxed">
-                                        Μπορείτε να καταθέσετε το ποσό της παραγγελίας σας στον παρακάτω λογαριασμό Eurobank.
+                                        Μπορείτε να καταθέσετε το ποσό της παραγγελίας σας στον παρακάτω λογαριασμό Alpha Bank.
                                     </p>
                                 </div>
                             </section>
@@ -77,14 +77,14 @@ export default function PaymentMethodsPage() {
                         <section className="bg-slate-50 rounded-3xl p-8 md:p-10 space-y-6 border border-slate-100">
                             <div className="flex items-center gap-3 mb-2">
                                 <Landmark className="w-5 h-5 text-[#C4196D]" />
-                                <span className="font-display text-lg font-bold uppercase tracking-wider text-slate-800">Στοιχεία Eurobank</span>
+                                <span className="font-display text-lg font-bold uppercase tracking-wider text-slate-800">Στοιχεία Alpha Bank</span>
                             </div>
                             
                             <div className="grid gap-6">
                                 <div>
                                     <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-1">IBAN</p>
                                     <p className="font-mono text-lg md:text-xl font-bold text-slate-900 break-all bg-white p-4 rounded-xl border border-slate-200">
-                                        GR19 0260 2500 0000 9020 1517 209
+                                        GR96 0140 8200 8200 0200 2022 797
                                     </p>
                                 </div>
                                 
@@ -95,7 +95,7 @@ export default function PaymentMethodsPage() {
                                     </div>
                                     <div>
                                         <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-1">Τράπεζα</p>
-                                        <p className="font-display text-lg font-bold text-slate-800">Eurobank</p>
+                                        <p className="font-display text-lg font-bold text-slate-800">Alpha Bank</p>
                                     </div>
                                 </div>
                             </div>
