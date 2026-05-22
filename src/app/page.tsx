@@ -2,7 +2,7 @@ import { getProducts, getCategories, getTags } from "@/lib/woocommerce";
 import HomeClient from "./HomeClient";
 import { Suspense } from "react";
 
-export const revalidate = 60; // Refresh every 60 seconds
+export const revalidate = 14400; // Refresh every 4 hours (avoiding Vercel rate limits)
 
 export default async function HomePage() {
   // Parallel fetch for speed

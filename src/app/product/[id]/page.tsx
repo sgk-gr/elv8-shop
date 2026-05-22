@@ -4,7 +4,7 @@ import { getProducts, getProduct } from "@/lib/woocommerce";
 import ProductDetailClient from "./ProductDetailClient";
 import JsonLd from "@/components/JsonLd";
 
-export const revalidate = 60; // Επαναδημιουργία της σελίδας κάθε 60 δευτερόλεπτα (ISR)
+export const revalidate = 14400; // Επαναδημιουργία της σελίδας κάθε 4 ώρες (ISR)
 
 const BASE_URL = "https://www.vaiacharms.gr";
 

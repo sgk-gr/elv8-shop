@@ -3,7 +3,7 @@ import ProductsClient from "./ProductsClient";
 import JsonLd from "@/components/JsonLd";
 import { Metadata } from "next";
 
-export const revalidate = 60; // Refresh every 60 seconds
+export const revalidate = 14400; // Refresh every 4 hours (avoiding Vercel rate limits)
 
 export const metadata: Metadata = {
   title: "Συλλογές Κοσμημάτων & Αξεσουάρ",
