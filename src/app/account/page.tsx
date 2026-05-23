@@ -139,7 +139,7 @@ export default function AccountPage() {
                                     </p>
                                 </div>
 
-                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                                     {[
                                         {
                                             label: "Ενεργές Παραγγελίες",
@@ -152,12 +152,6 @@ export default function AccountPage() {
                                             value: orders.reduce((acc, o) => acc + (o.line_items?.length || 0), 0).toString(),
                                             icon: Package,
                                             color: "bg-purple-500"
-                                        },
-                                        {
-                                            label: "Hustleadv Πόντοι",
-                                            value: "120",
-                                            icon: Bell,
-                                            color: "bg-amber-500"
                                         },
                                     ].map((stat, i) => (
                                         <div key={i} className="bg-slate-50 p-5 md:p-6 rounded-3xl border border-slate-100 flex md:flex-col items-center md:items-start gap-4 md:space-y-4 hover:shadow-md transition-shadow">
