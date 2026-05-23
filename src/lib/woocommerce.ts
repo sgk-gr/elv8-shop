@@ -151,36 +151,52 @@ export async function loginUser(credentials: any) {
 }
 
 export async function getUserOrders(customerId: number, email?: string) {
-  const params: any = { per_page: "50" };
+  let customerOrders: any[] = [];
+  let emailOrders: any[] = [];
 
+  // 1. Fetch by customer ID if logged in and has a valid ID
   if (customerId > 0) {
-    params.customer = String(customerId);
-  } else if (email) {
     try {
-      // If we only have an email, retrieve the WooCommerce customer ID first to filter securely
-      const customerRes = await fetch(buildUrl("customers", { email }));
-      if (customerRes.ok) {
-        const customers = await customerRes.json();
-        if (Array.isArray(customers) && customers.length > 0) {
-          params.customer = String(customers[0].id);
-        } else {
-          // If no registered customer exists for this email, return empty to prevent privacy leak
-          return [];
+      const res = await fetch(buildUrl("orders", { customer: String(customerId), per_page: "50" }));
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          customerOrders = data;
         }
-      } else {
-        return [];
       }
     } catch (e) {
-      console.error("Could not resolve customer ID via email in getUserOrders", e);
-      return [];
+      console.error("Error fetching orders by customer ID", e);
     }
-  } else {
-    return [];
   }
 
-  const res = await fetch(buildUrl("orders", params));
-  if (!res.ok) throw new Error(`WooCommerce API error: ${res.status}`);
-  return res.json();
+  // 2. Fetch by email search to find guest/registered orders matching this email securely
+  if (email) {
+    try {
+      const res = await fetch(buildUrl("orders", { search: email, per_page: "50" }));
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          // Strictly filter to ensure only exact matching email orders are shown, avoiding any partial search match leaks
+          emailOrders = data.filter((order: any) => 
+            order.billing?.email?.toLowerCase() === email.toLowerCase() ||
+            order.shipping?.email?.toLowerCase() === email.toLowerCase()
+          );
+        }
+      }
+    } catch (e) {
+      console.error("Error fetching orders by email search", e);
+    }
+  }
+
+  // Combine both sets and remove duplicates by order ID
+  const allOrdersMap = new Map<number, any>();
+  customerOrders.forEach(o => allOrdersMap.set(o.id, o));
+  emailOrders.forEach(o => allOrdersMap.set(o.id, o));
+
+  // Return combined list sorted by date_created descending (newest first)
+  return Array.from(allOrdersMap.values()).sort((a, b) => 
+    new Date(b.date_created).getTime() - new Date(a.date_created).getTime()
+  );
 }
 
 export async function getProductReviews(productId: number) {
