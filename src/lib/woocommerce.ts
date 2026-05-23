@@ -153,11 +153,27 @@ export async function loginUser(credentials: any) {
 export async function getUserOrders(customerId: number, email?: string) {
   const params: any = { per_page: "50" };
 
-  if (email) {
-    // Το WooCommerce API υποστηρίζει το parameter 'email' για να βρίσκει παραγγελίες (και guest)
-    params.email = email;
-  } else if (customerId > 0) {
+  if (customerId > 0) {
     params.customer = String(customerId);
+  } else if (email) {
+    try {
+      // If we only have an email, retrieve the WooCommerce customer ID first to filter securely
+      const customerRes = await fetch(buildUrl("customers", { email }));
+      if (customerRes.ok) {
+        const customers = await customerRes.json();
+        if (Array.isArray(customers) && customers.length > 0) {
+          params.customer = String(customers[0].id);
+        } else {
+          // If no registered customer exists for this email, return empty to prevent privacy leak
+          return [];
+        }
+      } else {
+        return [];
+      }
+    } catch (e) {
+      console.error("Could not resolve customer ID via email in getUserOrders", e);
+      return [];
+    }
   } else {
     return [];
   }
