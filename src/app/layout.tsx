@@ -76,11 +76,6 @@ export const metadata: Metadata = {
             "el-GR": "https://www.vaiacharms.gr",
         },
     },
-    icons: {
-        icon: "/favicon.png",
-        shortcut: "/favicon.png",
-        apple: "/favicon.png",
-    },
     category: "shopping",
 };
 
