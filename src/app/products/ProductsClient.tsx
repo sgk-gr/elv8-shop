@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { getProducts, getCategories, getTags } from "@/lib/woocommerce";
 import { WooProduct, WooCategory, WooTag } from "@/types/product";
 import ProductCard from "@/components/ProductCard";
+import ProductGridWithLoadMore from "@/components/ProductGridWithLoadMore";
 import { useState, useMemo, Suspense } from "react";
 import { SlidersHorizontal, ChevronDown, ChevronUp, ChevronRight, X } from "lucide-react";
 
@@ -484,19 +485,7 @@ function ProductsContent({
 
                 {/* Products Grid */}
                 <div className="flex-1">
-                    {isLoading ? (
-                        <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
-                            {Array.from({ length: 9 }).map((_, i) => (
-                                <div key={i} className="space-y-4 animate-pulse">
-                                    <div className="aspect-[3/4] bg-secondary rounded-3xl" />
-                                    <div className="space-y-2">
-                                        <div className="h-5 bg-secondary rounded-full w-3/4" />
-                                        <div className="h-4 bg-secondary rounded-full w-1/4" />
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    ) : products.length === 0 ? (
+                    {products.length === 0 && !isLoading ? (
                         <div className="text-center py-32 space-y-4 bg-secondary/20 rounded-[2rem] border border-dashed border-border">
                             <p className="text-muted-foreground font-display text-2xl font-medium">Δεν βρέθηκαν προϊόντα</p>
                             <button
@@ -507,11 +496,11 @@ function ProductsContent({
                             </button>
                         </div>
                     ) : (
-                        <div className="grid grid-cols-2 lg:grid-cols-3 gap-8 animate-in fade-in duration-1000">
-                            {products.map((product: WooProduct) => (
-                                <ProductCard key={product.id} product={product} />
-                            ))}
-                        </div>
+                        <ProductGridWithLoadMore 
+                            products={products} 
+                            isLoading={isLoading} 
+                            columnsClass="grid-cols-2 lg:grid-cols-3"
+                        />
                     )}
                 </div>
             </div>
