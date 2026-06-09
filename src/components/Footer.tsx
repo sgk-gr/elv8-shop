@@ -275,9 +275,9 @@ export default function Footer() {
                                 href="https://sgk.gr"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-xs text-white/30 hover:text-white/60 transition-colors"
+                                className="inline-block text-sm font-medium text-white/60 hover:text-white transition-all duration-300 hover:scale-105"
                             >
-                                Created by sgk.gr
+                                Κατασκευή E-shop: <span className="text-white font-bold tracking-wide">sgk.gr</span>
                             </a>
                         </div>
                     </div>
