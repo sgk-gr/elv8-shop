@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Cormorant_Garamond } from "next/font/google";
+import { Inter, Outfit } from "next/font/google";
 import "@/index.css";
 import Providers from "@/components/Providers";
 import Header from "@/components/Header";
@@ -12,13 +12,14 @@ import JsonLd from "@/components/JsonLd";
 
 const inter = Inter({
     subsets: ["latin", "greek"],
-    variable: "--font-inter",
+    variable: "--font-body",
+    display: "swap",
 });
 
-const cormorant = Cormorant_Garamond({
+const outfit = Outfit({
     subsets: ["latin"],
-    weight: ["300", "400", "500", "600", "700"],
-    variable: "--font-cormorant",
+    variable: "--font-display",
+    display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -93,7 +94,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="el" className={`${inter.variable} ${cormorant.variable}`}>
+        <html lang="el" className={`${inter.variable} ${outfit.variable}`}>
             <body className="font-body antialiased">
                 <Providers>
                     <JsonLd type="website" />

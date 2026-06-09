@@ -62,6 +62,7 @@ export default function HomeClient({
                         fill
                         className="object-cover"
                         priority
+                        fetchPriority="high"
                     />
                 </div>
 
