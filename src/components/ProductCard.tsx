@@ -6,7 +6,8 @@ import { WooProduct } from "@/types/product";
 import { Heart } from "lucide-react";
 import { useFavorites } from "@/context/FavoritesContext";
 
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface ProductCardProps {
   product: WooProduct;
@@ -15,14 +16,18 @@ interface ProductCardProps {
 
 export default function ProductCard({ product, backUrl }: ProductCardProps) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState("");
   const image = product.images?.[0];
   const hasDiscount = product.on_sale && product.regular_price;
   const { isFavorite, toggleFavorite } = useFavorites();
   const favorite = isFavorite(product.id);
 
-  // Determine the backUrl: use the prop if provided, otherwise the current URL
-  const currentPath = pathname + (searchParams.toString() ? `?${searchParams.toString()}` : "");
+  useEffect(() => {
+    setSearchQuery(window.location.search);
+  }, []);
+
+  // Determine the backUrl without triggering Next.js Suspense boundary during SSR
+  const currentPath = pathname + searchQuery;
   const effectiveBackUrl = backUrl || currentPath;
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
