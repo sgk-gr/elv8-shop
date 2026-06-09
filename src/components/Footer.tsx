@@ -231,8 +231,8 @@ export default function Footer() {
                             <li className="flex items-start gap-3">
                                 <MapPin className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#F8F4EC' }} />
                                 <span className="text-sm text-white/60">
-                                    Δράμα, Ελλάδα<br />
-                                    Τ.Κ. 66100
+                                    Καλή Βρύση<br />
+                                    Προσοτσάνη, Τ.Κ. 66200
                                 </span>
                             </li>
                             <li className="flex items-center gap-3">
@@ -254,19 +254,32 @@ export default function Footer() {
 
             {/* Bottom Bar */}
             <div className="border-t border-white/10">
-                <div className="container mx-auto px-4 md:px-8 py-6">
-                    <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                        <p className="text-sm text-white/40">
-                            © {currentYear} Vaia Charms. Όλα τα δικαιώματα κατοχυρωμένα.
-                        </p>
-                        <a
-                            href="https://sgk.gr"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-xs text-white/30 hover:text-white/60 transition-colors"
-                        >
-                            Created by sgk.gr
-                        </a>
+                <div className="container mx-auto px-4 md:px-8 py-8">
+                    <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+                        <div className="text-sm text-white/40 text-center md:text-left space-y-1">
+                            <p>© {currentYear} Vaia Charms. Όλα τα δικαιώματα κατοχυρωμένα.</p>
+                            <p className="text-xs text-white/30">
+                                Επωνυμία: ΠΑΠΑΘΕΟΔΩΡΟΥ ΙΩΑΝΝΗΣ ΘΕΟΔΩΡΟΣ | Α.Φ.Μ.: 123622009
+                            </p>
+                        </div>
+                        
+                        <div className="flex justify-center items-center gap-4 bg-white/5 px-4 py-2 rounded-xl opacity-80 hover:opacity-100 transition-opacity">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" className="h-4" />
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-5" />
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fd/Maestro_logo.svg" alt="Maestro" className="h-5" />
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Diners_Club_Logo3.svg" alt="Diners" className="h-5" />
+                        </div>
+
+                        <div className="text-center md:text-right">
+                            <a
+                                href="https://sgk.gr"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-xs text-white/30 hover:text-white/60 transition-colors"
+                            >
+                                Created by sgk.gr
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
