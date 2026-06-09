@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { WooProduct } from "@/types/product";
 import { Heart } from "lucide-react";
 import { useFavorites } from "@/context/FavoritesContext";
@@ -34,10 +35,12 @@ export default function ProductCard({ product, backUrl }: ProductCardProps) {
     <Link href={`/product/${product.id}/?backUrl=${encodeURIComponent(effectiveBackUrl)}`} className="group block h-full">
       <div className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-secondary mb-4 shadow-sm group-hover:shadow-soft transition-all duration-500">
         {image ? (
-          <img
+          <Image
             src={image.src}
             alt={image.alt || product.name}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
             loading="lazy"
           />
         ) : (

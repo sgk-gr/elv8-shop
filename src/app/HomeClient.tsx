@@ -60,6 +60,7 @@ export default function HomeClient({
                         src={heroImage}
                         alt="Fashion collection background"
                         fill
+                        sizes="100vw"
                         className="object-cover"
                         priority
                         fetchPriority="high"
