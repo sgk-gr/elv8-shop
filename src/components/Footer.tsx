@@ -212,6 +212,11 @@ export default function Footer() {
                                 </Link>
                             </li>
                             <li>
+                                <Link href="/returns/withdraw" className="text-sm text-white/60 transition-colors hover:text-[#FFF2EB]">
+                                    Υπαναχώρηση από Αγορά
+                                </Link>
+                            </li>
+                            <li>
                                 <Link href="/payment-methods" className="text-sm text-white/60 transition-colors hover:text-[#FFF2EB]">
                                     Τρόποι Πληρωμής
                                 </Link>

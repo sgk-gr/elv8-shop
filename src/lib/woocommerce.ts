@@ -204,3 +204,25 @@ export async function getProductReviews(productId: number) {
   if (!res.ok) throw new Error(`WooCommerce API error: ${res.status}`);
   return res.json();
 }
+
+export async function getOrder(orderId: number) {
+  const res = await fetch(buildUrl(`orders/${orderId}`));
+  if (!res.ok) {
+    if (res.status === 404) return null;
+    throw new Error(`WooCommerce API error: ${res.status}`);
+  }
+  return res.json();
+}
+
+export async function createOrderNote(orderId: number, noteData: { note: string; customer_note: boolean }) {
+  const res = await fetch(buildUrl(`orders/${orderId}/notes`), {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(noteData),
+  });
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({}));
+    throw new Error(error.message || `WooCommerce API error: ${res.status}`);
+  }
+  return res.json();
+}
