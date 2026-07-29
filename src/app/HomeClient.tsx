@@ -70,31 +70,31 @@ export default function HomeClient({
                 {/* Content Overlay */}
                 <div className="relative z-10 container mx-auto px-4 text-center space-y-6 md:space-y-10 animate-in fade-in zoom-in duration-1000">
                     <div className="space-y-4">
-                        <span className="font-body text-xs md:text-sm font-bold tracking-[0.4em] uppercase text-slate-800/80 block">
-                            EXCLUSIVE JEWELRY BOUTIQUE
+                        <span className="font-body text-xs md:text-sm font-bold tracking-[0.4em] uppercase text-emerald-600 dark:text-emerald-400 block bg-emerald-100/80 dark:bg-emerald-950/80 backdrop-blur-md px-4 py-1.5 rounded-full w-fit mx-auto border border-emerald-500/30">
+                            ⚡ HIGH-PERFORMANCE ENERGY & FOCUS DRINK
                         </span>
                         <h1 className="font-display text-4xl md:text-7xl font-bold tracking-tight leading-[1.1] text-slate-900">
-                            η ζωή είναι πολύ <span className="text-[#C4196D]">μικρή</span><br />
-                            για μέτρια κοσμήματα
+                            ΕΝΕΡΓΕΙΑ ΧΩΡΙΣ ΟΡΙΑ. <br />
+                            <span className="text-[#E50914] bg-clip-text">ZERO SUGAR.</span>
                         </h1>
                     </div>
 
                     <p className="font-body text-lg md:text-xl text-slate-700 max-w-2xl mx-auto leading-relaxed">
-                        Ανακαλύψτε τη μοναδική συλλογή μας από κοσμήματα.
+                        Φυσική καφεΐνη, ηλεκτρολύτες, βιταμίνες B6/B12 και μέγιστη συγκέντρωση (Focus). Νιώσε την ανώτερη ενέργεια του elv8.
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-8 pt-4">
                         <Link
                             href="/products"
-                            className="inline-flex items-center justify-center bg-[#C4196D] text-white px-12 py-5 rounded-full font-body text-sm font-bold tracking-widest hover:scale-105 transition-all shadow-2xl hover:shadow-[#C4196D]/40 min-w-[240px]"
+                            className="inline-flex items-center justify-center bg-[#E50914] text-white px-12 py-5 rounded-full font-body text-sm font-bold tracking-widest hover:scale-105 transition-all shadow-2xl hover:shadow-[#E50914]/40 min-w-[240px]"
                         >
-                            ΔΕΙΤΕ ΤΗ ΣΥΛΛΟΓΗ
+                            ΑΓΟΡΑΣΕ ΤΩΡΑ
                         </Link>
                         <Link
-                            href="/products?on_sale=true"
-                            className="inline-flex items-center justify-center bg-[#FCF8F8] text-slate-900 px-12 py-5 rounded-full font-body text-sm font-bold tracking-widest hover:scale-105 transition-all shadow-2xl min-w-[240px] border border-slate-100"
+                            href="/store-locator"
+                            className="inline-flex items-center justify-center bg-slate-900 text-white px-12 py-5 rounded-full font-body text-sm font-bold tracking-widest hover:scale-105 transition-all shadow-2xl min-w-[240px] border border-slate-800"
                         >
-                            SPECIAL OFFERS
+                            📍 STORE LOCATOR
                         </Link>
                     </div>
                 </div>

@@ -1,6 +1,7 @@
-const BASE_URL = "https://api.vaiacharms.gr/wp-json/wc/v3";
-const CK = "ck_a60909f612e329245b86ce88e876b4928cf8d419";
-const CS = "cs_8509165bda4837aed2a6f1c0d03d0e7d35570809";
+const BASE_URL = process.env.NEXT_PUBLIC_WOOCOMMERCE_URL || "https://store.elv8now.com/wp-json/wc/v3";
+const CK = process.env.NEXT_PUBLIC_WOOCOMMERCE_CK || "ck_elv8now_demo";
+const CS = process.env.NEXT_PUBLIC_WOOCOMMERCE_CS || "cs_elv8now_demo";
+
 
 function buildUrl(endpoint: string, params: Record<string, string> = {}) {
   const url = new URL(`${BASE_URL}/${endpoint}`);

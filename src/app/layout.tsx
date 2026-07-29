@@ -23,17 +23,17 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-    metadataBase: new URL("https://www.vaiacharms.gr"),
+    metadataBase: new URL("https://elv8now.com"),
     title: {
-        default: "Vaia Charms | Κοσμήματα, Cosmetics & Αξεσουάρ στην Ελλάδα",
-        template: "%s | Vaia Charms",
+        default: "elv8 Energy Drink | Ultimate Energy & Focus Drink",
+        template: "%s | elv8 Energy",
     },
     description:
-        "Η κορυφαία επιλογή σας για ποιοτικά κοσμήματα, cosmetics και αξεσουάρ. Ανακαλύψτε χειροποίητα κοσμήματα, ατσάλινα βραχιόλια, ασημένια σκουλαρίκια, ρολόγια CLUSE και πολλά άλλα. Δωρεάν αποστολή άνω των 65€.",
-    authors: [{ name: "Vaia Charms", url: "https://www.vaiacharms.gr" }],
+        "Ανακαλύψτε το elv8 Energy Drink. Zero Sugar, 200mg Φυσική Καφεΐνη, Ηλεκτρολύτες & Βιταμίνες B-Complex για μέγιστη απόδοση και εστίαση.",
+    authors: [{ name: "elv8 Energy", url: "https://elv8now.com" }],
 
-    creator: "Vaia Charms",
-    publisher: "Vaia Charms",
+    creator: "SGK Software Development",
+    publisher: "elv8 Energy",
     robots: {
         index: true,
         follow: true,
