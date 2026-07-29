@@ -311,8 +311,7 @@ export async function getProducts(params: Record<string, string> = {}) {
       ...params 
     }), { next: { revalidate: 60 } });
     if (res.ok) {
-      const data = await res.json();
-      if (Array.isArray(data) && data.length > 0) return data;
+      return await res.json();
     }
   } catch (e) {
     console.warn("WooCommerce API fetch failed, falling back to elv8 Demo Products", e);
@@ -343,8 +342,7 @@ export async function getCategories(params: Record<string, string> = {}) {
   try {
     const res = await fetch(buildUrl("products/categories", { per_page: "50", ...params }));
     if (res.ok) {
-      const data = await res.json();
-      if (Array.isArray(data) && data.length > 0) return data;
+      return await res.json();
     }
   } catch (e) {
     console.warn("WooCommerce API fetch categories failed, using demo categories");
@@ -360,8 +358,7 @@ export async function getTags(params: Record<string, string> = {}) {
   try {
     const res = await fetch(buildUrl("products/tags", { per_page: "50", ...params }));
     if (res.ok) {
-      const data = await res.json();
-      if (Array.isArray(data) && data.length > 0) return data;
+      return await res.json();
     }
   } catch (e) {
     console.warn("WooCommerce API fetch tags failed, using demo tags");
