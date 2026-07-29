@@ -1,6 +1,7 @@
 const BASE_URL = process.env.NEXT_PUBLIC_WOOCOMMERCE_URL || "https://store.elv8now.com/wp-json/wc/v3";
-const CK = process.env.NEXT_PUBLIC_WOOCOMMERCE_CK || "ck_elv8now_demo";
-const CS = process.env.NEXT_PUBLIC_WOOCOMMERCE_CS || "cs_elv8now_demo";
+const CK = process.env.NEXT_PUBLIC_WOOCOMMERCE_CK || "ck_3e1b15010b2ef237ab7cc9eee504b68ffbfbb868";
+const CS = process.env.NEXT_PUBLIC_WOOCOMMERCE_CS || "cs_f44bb8ed7c871ecdf381d9f7f2697d95514a84c2";
+
 
 
 function buildUrl(endpoint: string, params: Record<string, string> = {}) {
