@@ -11,11 +11,14 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [currentHash, setCurrentHash] = useState("");
+  const [mounted, setMounted] = useState(false);
   const { totalItems, setIsCartOpen } = useCart();
   const { favorites } = useFavorites();
   const pathname = usePathname();
 
   useEffect(() => {
+    setMounted(true);
+    setCurrentHash(window.location.hash);
     const handleScroll = () => {
       if (window.scrollY > 40) {
         setIsScrolled(true);
@@ -23,35 +26,24 @@ export default function Header() {
         setIsScrolled(false);
       }
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    setCurrentHash(window.location.hash);
     const handleHashChange = () => setCurrentHash(window.location.hash);
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
-  }, [pathname]);
 
-  const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/products", label: "Our Flavors" },
-    { href: "/about", label: "About Us" },
-    { href: "/products?category=packs-bundles", label: "Packs & Boxes" },
-    { href: "/store-locator", label: "Store Locator" },
-    { href: "/about#wholesale", label: "B2B & Χονδρική" },
-    { href: "/faq", label: "FAQ" },
-  ];
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("hashchange", handleHashChange);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("hashchange", handleHashChange);
+    };
+  }, [pathname]);
 
   const cleanPath = (pathname || "").replace(/\/$/, "") || "/";
   const isHomePage = cleanPath === "/";
 
-  const isB2BActive = cleanPath === "/about" && currentHash === "#wholesale";
-  const isAboutActive = cleanPath === "/about" && currentHash !== "#wholesale";
-  const isHomeActive = cleanPath === "/";
-  const isProductsActive = cleanPath.startsWith("/products");
-  const isStoreLocatorActive = cleanPath.startsWith("/store-locator");
+  const isB2BActive = mounted && cleanPath === "/about" && currentHash === "#wholesale";
+  const isAboutActive = mounted && cleanPath === "/about" && currentHash !== "#wholesale";
+  const isHomeActive = mounted && cleanPath === "/";
+  const isProductsActive = mounted && cleanPath.startsWith("/products");
+  const isStoreLocatorActive = mounted && (cleanPath.startsWith("/store-locator") || cleanPath === "/store-locator");
 
   return (
     <>
@@ -87,9 +79,8 @@ export default function Header() {
             <nav className="hidden md:flex items-center gap-8">
               <Link
                 href="/"
-                style={{ color: isHomeActive ? "#FF1D8E" : undefined }}
                 className={`text-sm font-black transition-all relative pb-1 ${
-                  isHomeActive ? "text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
+                  isHomeActive ? "!text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
                 }`}
               >
                 Home
@@ -99,9 +90,8 @@ export default function Header() {
               </Link>
               <Link
                 href="/products"
-                style={{ color: isProductsActive ? "#FF1D8E" : undefined }}
                 className={`text-sm font-black transition-all relative pb-1 ${
-                  isProductsActive ? "text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
+                  isProductsActive ? "!text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
                 }`}
               >
                 Our Flavors
@@ -111,9 +101,8 @@ export default function Header() {
               </Link>
               <Link
                 href="/about"
-                style={{ color: isAboutActive ? "#FF1D8E" : undefined }}
                 className={`text-sm font-black transition-all relative pb-1 ${
-                  isAboutActive ? "text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
+                  isAboutActive ? "!text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
                 }`}
               >
                 About Us
@@ -123,9 +112,8 @@ export default function Header() {
               </Link>
               <Link
                 href="/store-locator"
-                style={{ color: isStoreLocatorActive ? "#FF1D8E" : undefined }}
                 className={`text-sm font-black transition-all relative pb-1 ${
-                  isStoreLocatorActive ? "text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
+                  isStoreLocatorActive ? "!text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
                 }`}
               >
                 Store Locator
@@ -136,9 +124,8 @@ export default function Header() {
               <Link
                 href="/about#wholesale"
                 onClick={() => setCurrentHash("#wholesale")}
-                style={{ color: isB2BActive ? "#FF1D8E" : undefined }}
                 className={`text-sm font-black transition-all relative pb-1 ${
-                  isB2BActive ? "text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
+                  isB2BActive ? "!text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
                 }`}
               >
                 B2B & Χονδρική
