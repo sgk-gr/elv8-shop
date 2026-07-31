@@ -58,7 +58,19 @@ const DEMO_PRODUCTS: WooProduct[] = [
     variations: [],
     grouped_products: [],
     menu_order: 0,
-    meta_data: []
+    meta_data: [],
+    bundle_data: {
+      title: "Frequently Bought Together (Energy Pack & Focus)",
+      discount: 15,
+      items: [
+        {
+          id: 102,
+          name: "elv8 Zero Blue Raspberry Focus",
+          price: 2.20,
+          image: "/elv8-can-clean.png"
+        }
+      ]
+    }
   },
   {
     id: 102,
@@ -524,6 +536,38 @@ export async function getProductReviews(productId: number) {
     console.warn("Error fetching reviews");
   }
   return [];
+}
+
+export async function createProductReview(reviewData: {
+  product_id: number;
+  review: string;
+  reviewer: string;
+  reviewer_email: string;
+  rating: number;
+}) {
+  try {
+    const res = await fetch(buildUrl("products/reviews"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(reviewData),
+    });
+    if (res.ok) {
+      return await res.json();
+    }
+  } catch (e) {
+    console.warn("Error submitting review to WP API", e);
+  }
+  return {
+    id: Date.now(),
+    date_created: new Date().toISOString(),
+    product_id: reviewData.product_id,
+    status: "approved",
+    reviewer: reviewData.reviewer,
+    reviewer_email: reviewData.reviewer_email,
+    review: reviewData.review,
+    rating: reviewData.rating,
+    verified: true,
+  };
 }
 
 export async function getOrder(orderId: number) {

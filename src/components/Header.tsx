@@ -39,8 +39,8 @@ export default function Header() {
   const cleanPath = (pathname || "").replace(/\/$/, "") || "/";
   const isHomePage = cleanPath === "/";
 
-  const isB2BActive = mounted && cleanPath === "/about" && currentHash === "#wholesale";
-  const isAboutActive = mounted && cleanPath === "/about" && currentHash !== "#wholesale";
+  const isB2BActive = mounted && (cleanPath.startsWith("/b2b-wholesale") || cleanPath === "/b2b-wholesale");
+  const isAboutActive = mounted && (cleanPath.startsWith("/about") || cleanPath === "/about");
   const isHomeActive = mounted && cleanPath === "/";
   const isProductsActive = mounted && cleanPath.startsWith("/products");
   const isStoreLocatorActive = mounted && (cleanPath.startsWith("/store-locator") || cleanPath === "/store-locator");
@@ -122,13 +122,12 @@ export default function Header() {
                 )}
               </Link>
               <Link
-                href="/about#wholesale"
-                onClick={() => setCurrentHash("#wholesale")}
+                href="/b2b-wholesale"
                 className={`text-sm font-black transition-all relative pb-1 ${
                   isB2BActive ? "!text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
                 }`}
               >
-                B2B & Χονδρική
+                B2B Wholesale
                 {isB2BActive && (
                   <span className="absolute bottom-0 left-0 right-0 h-1 bg-[#FF1D8E] rounded-full" />
                 )}

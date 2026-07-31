@@ -292,14 +292,11 @@ export default function AboutPage() {
       <section id="wholesale" className="py-20 sm:py-24 bg-slate-50 relative border-t border-slate-200">
         <div className="container max-w-4xl mx-auto px-6">
           <div className="text-center space-y-3 mb-12">
-            <span className="text-xs font-black tracking-[0.25em] text-[#FF1D8E] uppercase bg-pink-50 border border-pink-100 px-4 py-1.5 rounded-full inline-block">
-              💼 B2B & ΧΟΝΔΡΙΚΗ ΠΩΛΗΣΗ
-            </span>
             <h2 className="text-3xl sm:text-5xl font-black font-display tracking-tight text-slate-900">
-              Ενδιαφέρεστε για Χονδρική;
+              Interested in Wholesale?
             </h2>
-            <p className="text-slate-600 text-base sm:text-lg max-w-2xl mx-auto">
-              Είστε γυμναστήριο, περίπτερο, σούπερ μάρκετ ή διανομέας; Στείλτε μας μήνυμα για να γίνετε επίσημος συνεργάτης του ELV8.
+            <p className="text-slate-600 text-base sm:text-lg max-w-xl mx-auto">
+              Are you a gym, supermarket, kiosk, or distributor? Fill out the form below and our team will get in touch with you.
             </p>
           </div>
 

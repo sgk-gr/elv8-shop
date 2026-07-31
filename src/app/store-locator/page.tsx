@@ -70,12 +70,14 @@ const DEFAULT_STORES: StoreLocation[] = [
 export default function StoreLocatorPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedType, setSelectedType] = useState<string>("all");
-  const [selectedStore, setSelectedStore] = useState<StoreLocation>(DEFAULT_STORES[0]);
-  const [stores, setStores] = useState<StoreLocation[]>(DEFAULT_STORES);
+  const [selectedStore, setSelectedStore] = useState<StoreLocation | null>(null);
+  const [stores, setStores] = useState<StoreLocation[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Attempt fetching live stores from WordPress API endpoint
     const fetchStores = async () => {
+      setIsLoading(true);
       const endpoints = [
         "https://store.elv8now.com/wp-json/elv8/v1/stores",
         "https://store.elv8now.com/wp-json/wp/v2/elv8_store"
@@ -101,13 +103,19 @@ export default function StoreLocatorPage() {
               }));
               setStores(mapped);
               setSelectedStore(mapped[0]);
-              break;
+              setIsLoading(false);
+              return;
             }
           }
         } catch (e) {
           // Continue to next endpoint or fallback
         }
       }
+
+      // Fallback if WP API fails
+      setStores(DEFAULT_STORES);
+      setSelectedStore(DEFAULT_STORES[0]);
+      setIsLoading(false);
     };
 
     fetchStores();
@@ -176,113 +184,126 @@ export default function StoreLocatorPage() {
         </div>
 
         {/* Grid Layout: Store List + Live Google Map */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
-          {/* Store List */}
-          <div className="lg:col-span-5 space-y-4 max-h-[620px] overflow-y-auto pr-1">
-            {filteredStores.length > 0 ? (
-              filteredStores.map((store) => {
-                const isSelected = selectedStore.id === store.id;
-                return (
-                  <div
-                    key={store.id}
-                    onClick={() => setSelectedStore(store)}
-                    className={`cursor-pointer bg-white border rounded-3xl p-6 transition-all space-y-3 ${
-                      isSelected
-                        ? "border-[#FF1D8E] ring-2 ring-[#FF1D8E]/20 shadow-md bg-pink-50/20"
-                        : "border-slate-200 hover:border-slate-300 shadow-sm"
-                    }`}
-                  >
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <span className="text-[10px] uppercase font-black tracking-wider px-3 py-1 bg-slate-100 text-slate-800 rounded-full">
-                          {store.type === "gym" ? "Γυμναστήριο" : store.type === "kiosk" ? "Περίπτερο" : "Supermarket"}
-                        </span>
-                        <h3 className="font-bold font-display text-slate-900 text-lg mt-2">{store.name}</h3>
+        {isLoading ? (
+          <div className="flex flex-col items-center justify-center py-24 bg-slate-50 rounded-3xl border border-slate-200/80 space-y-4">
+            <div className="w-12 h-12 border-4 border-[#FF1D8E] border-t-transparent rounded-full animate-spin" />
+            <p className="text-slate-600 font-bold text-sm tracking-wider uppercase">
+              Loading Stores...
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            {/* Store List */}
+            <div className="lg:col-span-5 space-y-4 max-h-[620px] overflow-y-auto pr-1">
+              {filteredStores.length > 0 ? (
+                filteredStores.map((store) => {
+                  const isSelected = selectedStore?.id === store.id;
+                  return (
+                    <div
+                      key={store.id}
+                      onClick={() => setSelectedStore(store)}
+                      className={`cursor-pointer bg-white border rounded-3xl p-6 transition-all space-y-3 ${
+                        isSelected
+                          ? "border-[#FF1D8E] ring-2 ring-[#FF1D8E]/20 shadow-md bg-pink-50/20"
+                          : "border-slate-200 hover:border-slate-300 shadow-sm"
+                      }`}
+                    >
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <span className="text-[10px] uppercase font-black tracking-wider px-3 py-1 bg-slate-100 text-slate-800 rounded-full">
+                            {store.type === "gym" ? "Γυμναστήριο" : store.type === "kiosk" ? "Περίπτερο" : "Supermarket"}
+                          </span>
+                          <h3 className="font-bold font-display text-slate-900 text-lg mt-2">{store.name}</h3>
+                        </div>
+                        {store.distance && (
+                          <span className="text-xs font-bold text-[#FF1D8E] bg-pink-50 px-3 py-1 rounded-full border border-pink-100">
+                            {store.distance}
+                          </span>
+                        )}
                       </div>
-                      {store.distance && (
-                        <span className="text-xs font-bold text-[#FF1D8E] bg-pink-50 px-3 py-1 rounded-full border border-pink-100">
-                          {store.distance}
-                        </span>
-                      )}
-                    </div>
 
-                    <div className="space-y-2 text-xs md:text-sm text-slate-600 font-medium">
-                      <div className="flex items-center gap-2">
-                        <MapPin className="w-4 h-4 text-[#FF1D8E] shrink-0" />
-                        <span>{store.address}, {store.city} ({store.zip})</span>
+                      <div className="space-y-2 text-xs md:text-sm text-slate-600 font-medium">
+                        <div className="flex items-center gap-2">
+                          <MapPin className="w-4 h-4 text-[#FF1D8E] shrink-0" />
+                          <span>{store.address}, {store.city} ({store.zip})</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Phone className="w-4 h-4 text-slate-400 shrink-0" />
+                          <span>{store.phone}</span>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Phone className="w-4 h-4 text-slate-400 shrink-0" />
-                        <span>{store.phone}</span>
+
+                      <div className="pt-2 flex gap-3">
+                        <a
+                          href={`https://maps.google.com/?q=${encodeURIComponent(store.name + " " + store.address)}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="inline-flex items-center justify-center gap-2 flex-1 py-3 bg-slate-900 hover:bg-[#FF1D8E] text-white rounded-2xl text-xs font-bold uppercase tracking-wider transition-all shadow-sm"
+                        >
+                          <Navigation className="w-3.5 h-3.5" />
+                          Οδηγίες Χάρτη
+                        </a>
                       </div>
                     </div>
+                  );
+                })
+              ) : (
+                <div className="text-center py-16 bg-slate-50 rounded-3xl border border-dashed border-slate-300 space-y-3">
+                  <Store className="w-12 h-12 text-slate-400 mx-auto" />
+                  <p className="text-slate-600 font-bold text-sm">
+                    Δεν βρέθηκαν σημεία πώλησης για την αναζήτησή σας.
+                  </p>
+                </div>
+              )}
+            </div>
 
-                    <div className="pt-2 flex gap-3">
-                      <a
-                        href={`https://maps.google.com/?q=${encodeURIComponent(store.name + " " + store.address)}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="inline-flex items-center justify-center gap-2 flex-1 py-3 bg-slate-900 hover:bg-[#FF1D8E] text-white rounded-2xl text-xs font-bold uppercase tracking-wider transition-all shadow-sm"
-                      >
-                        <Navigation className="w-3.5 h-3.5" />
-                        Οδηγίες Χάρτη
-                      </a>
+            {/* Interactive Google Map Box */}
+            <div className="lg:col-span-7 bg-slate-100 rounded-3xl overflow-hidden min-h-[500px] lg:h-[620px] border border-slate-200 shadow-md relative flex flex-col">
+              {selectedStore && (
+                <>
+                  <div className="bg-slate-900 text-white px-6 py-4 flex items-center justify-between z-10">
+                    <div className="flex items-center gap-2">
+                      <MapPin className="w-5 h-5 text-[#FF1D8E]" />
+                      <span className="font-bold text-sm font-display">{selectedStore.name}</span>
+                    </div>
+                    <a
+                      href={`https://maps.google.com/?q=${encodeURIComponent(selectedStore.name + " " + selectedStore.address)}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-xs text-slate-300 hover:text-white flex items-center gap-1 font-medium"
+                    >
+                      Άνοιγμα σε Google Maps
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+
+                  <div className="flex-1 w-full h-full relative">
+                    <iframe
+                      title="Store Location Map"
+                      width="100%"
+                      height="100%"
+                      className="w-full h-full border-0"
+                      loading="lazy"
+                      allowFullScreen
+                      src={getMapEmbedUrl(selectedStore)}
+                    />
+                    {/* Custom ELV8 Map Pin Overlay */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-full pointer-events-none z-20 flex flex-col items-center animate-bounce">
+                      <div className="bg-black text-white px-3 py-1.5 rounded-full font-black text-xs tracking-tighter uppercase italic shadow-2xl border-2 border-[#FF1D8E] flex items-center gap-1.5">
+                        <span className="text-[#FF1D8E] font-extrabold text-sm">elv8</span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF1D8E] animate-ping" />
+                      </div>
+                      <div className="w-4 h-4 bg-[#FF1D8E] rotate-45 -mt-2 shadow-lg border border-black" />
                     </div>
                   </div>
-                );
-              })
-            ) : (
-              <div className="text-center py-16 bg-slate-50 rounded-3xl border border-dashed border-slate-300 space-y-3">
-                <Store className="w-12 h-12 text-slate-400 mx-auto" />
-                <p className="text-slate-600 font-bold text-sm">
-                  Δεν βρέθηκαν σημεία πώλησης για την αναζήτησή σας.
-                </p>
-              </div>
-            )}
-          </div>
-
-          {/* Interactive Google Map Box */}
-          <div className="lg:col-span-7 bg-slate-100 rounded-3xl overflow-hidden min-h-[500px] lg:h-[620px] border border-slate-200 shadow-md relative flex flex-col">
-            <div className="bg-slate-900 text-white px-6 py-4 flex items-center justify-between z-10">
-              <div className="flex items-center gap-2">
-                <MapPin className="w-5 h-5 text-[#FF1D8E]" />
-                <span className="font-bold text-sm font-display">{selectedStore.name}</span>
-              </div>
-              <a
-                href={`https://maps.google.com/?q=${encodeURIComponent(selectedStore.name + " " + selectedStore.address)}`}
-                target="_blank"
-                rel="noreferrer"
-                className="text-xs text-slate-300 hover:text-white flex items-center gap-1 font-medium"
-              >
-                Άνοιγμα σε Google Maps
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
+                </>
+              )}
             </div>
 
-            <div className="flex-1 w-full h-full relative">
-              <iframe
-                title="Store Location Map"
-                width="100%"
-                height="100%"
-                className="w-full h-full border-0"
-                loading="lazy"
-                allowFullScreen
-                src={getMapEmbedUrl(selectedStore)}
-              />
-              {/* Custom ELV8 Map Pin Overlay */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-full pointer-events-none z-20 flex flex-col items-center animate-bounce">
-                <div className="bg-black text-white px-3 py-1.5 rounded-full font-black text-xs tracking-tighter uppercase italic shadow-2xl border-2 border-[#FF1D8E] flex items-center gap-1.5">
-                  <span className="text-[#FF1D8E] font-extrabold text-sm">elv8</span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF1D8E] animate-ping" />
-                </div>
-                <div className="w-4 h-4 bg-[#FF1D8E] rotate-45 -mt-2 shadow-lg border border-black" />
-              </div>
-            </div>
           </div>
-
-        </div>
+        )}
 
       </div>
     </main>

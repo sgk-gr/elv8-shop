@@ -101,7 +101,7 @@ export default function CartDrawer() {
                             <Plus className="w-3 h-3" />
                           </button>
                         </div>
-                        <p className="font-display text-lg font-bold">${item.product.price}</p>
+                        <p className="font-display text-lg font-bold">€{item.product.price}</p>
                       </div>
                     </div>
                   </div>
@@ -118,14 +118,8 @@ export default function CartDrawer() {
                 <span className="text-muted-foreground text-xs font-bold uppercase tracking-widest">Subtotal</span>
                 <p className="text-muted-foreground text-[10px]">Taxes and shipping calculated at checkout</p>
               </div>
-              <span className="font-display text-3xl font-bold">${totalPrice.toFixed(2)}</span>
+              <span className="font-display text-3xl font-bold">€{totalPrice.toFixed(2)}</span>
             </div>
-
-            {items.reduce((sum, i) => sum + i.quantity, 0) < 4 && (
-              <p className="text-[11px] font-bold text-[#FF1D8E] bg-pink-100/80 border border-pink-200 px-3 py-1.5 rounded-full text-center">
-                ⚠️ Minimum order: 4 cans (You have {items.reduce((sum, i) => sum + i.quantity, 0)})
-              </p>
-            )}
 
             <Button
               className="w-full h-14 font-body text-sm font-bold uppercase tracking-widest rounded-full shadow-lg hover:scale-[1.02] bg-black text-white hover:bg-[#FF1D8E] transition-all"

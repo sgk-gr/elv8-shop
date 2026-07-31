@@ -84,8 +84,8 @@ export default function Footer() {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/about#wholesale" className="text-sm text-[#FF1D8E] font-bold transition-colors hover:underline">
-                                    💼 B2B & Χονδρική
+                                <Link href="/b2b-wholesale" className="text-sm text-[#FF1D8E] font-bold transition-colors hover:underline">
+                                    B2B Wholesale
                                 </Link>
                             </li>
                         </ul>
@@ -153,7 +153,9 @@ export default function Footer() {
                         </div>
                         
                         <div className="flex justify-center items-center gap-4 bg-white/5 px-4 py-2 rounded-xl opacity-80 hover:opacity-100 transition-opacity">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" className="h-4" />
+                            <svg className="h-4 w-auto text-white fill-current" viewBox="0 0 100 32" aria-label="Visa">
+                              <path d="M37.1 2.3L24.3 30.5h-6.7L10.5 8.7c-.5-1.9-1.3-2.6-2.9-3.4C5.2 4 1.7 2.8 0 2.4l.2-.9h10.9c1.4 0 2.7 1 3 2.6l2.7 14.1L23.7 2.3h13.4zm28.8 19c.1-7.4-10.3-7.8-10.2-11.1 0-1 1-2.1 3.2-2.3 1.1-.1 4.1-.2 7.5 1.4l1.3-6.2C66.1 2.5 63.3 2 60 2c-6.6 0-11.3 3.5-11.3 8.6 0 3.7 3.3 5.8 5.8 7 2.6 1.3 3.5 2.1 3.5 3.3 0 1.8-2.1 2.6-4.1 2.6-3.4 0-5.4-.5-8.3-1.8l-1.4 6.7c2.1.9 6 1.7 10 1.7 7.1 0 11.7-3.5 11.7-8.8zm18.3 9.2h5.8L85 2.3h-5.4c-1.2 0-2.2.7-2.7 1.8L66.7 30.5h6.7l1.3-3.7h8.2l1.3 3.7zm-7.1-8.7l3.4-9.3 1.9 9.3h-5.3zM45.7 2.3l-5.3 28.2h-6.4L39.3 2.3h6.4z"/>
+                            </svg>
                             <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-5" />
                             <img src="https://upload.wikimedia.org/wikipedia/commons/f/fd/Maestro_logo.svg" alt="Maestro" className="h-5" />
                         </div>
@@ -163,9 +165,10 @@ export default function Footer() {
                                 href="https://sgk.gr"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-block text-sm font-medium text-white/60 hover:text-white transition-all duration-300 hover:scale-105"
+                                className="inline-flex items-center gap-2 text-lg font-bold text-white hover:scale-105 transition-transform duration-300"
                             >
-                                Developed by: <span className="text-white font-bold tracking-wide">sgk.gr</span>
+                                <span className="text-white/70 font-medium text-base">Developed by:</span>
+                                <span className="text-white font-black tracking-wider text-xl uppercase font-display">sgk.gr</span>
                             </a>
                         </div>
                     </div>

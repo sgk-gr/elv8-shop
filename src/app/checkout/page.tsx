@@ -28,9 +28,7 @@ export default function CheckoutPage() {
     const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
 
     const handleCheckout = () => {
-        if (totalQuantity < 4) {
-            return;
-        }
+        if (items.length === 0) return;
 
         // Open WooCommerce checkout
         const itemsParam = items.map((i) => `${i.variationId || i.product.id}:${i.quantity}`).join(',');
@@ -46,9 +44,9 @@ export default function CheckoutPage() {
 
     if (items.length === 0) {
         return (
-            <main className="container mx-auto px-4 md:px-8 py-16 md:py-24 text-center">
+            <main className="container mx-auto px-4 md:px-8 py-16 md:py-24 text-center flex-1 flex flex-col items-center justify-center min-h-[65vh]">
                 <h1 className="font-display text-3xl md:text-4xl font-light mb-4">Το καλάθι σας είναι άδειο</h1>
-                <p className="text-muted-foreground font-body text-sm mb-8">Προσθέστε προϊόντα για να συνεχίσετε (Ελάχιστη παραγγελία: 4 τεμάχια).</p>
+                <p className="text-muted-foreground font-body text-sm mb-8">Προσθέστε προϊόντα για να συνεχίσετε.</p>
                 <Link
                     href="/products"
                     className="inline-flex items-center gap-2 font-body text-sm uppercase tracking-widest hover:text-muted-foreground transition-colors"
@@ -61,10 +59,10 @@ export default function CheckoutPage() {
     }
 
     return (
-        <main className="container mx-auto px-3 sm:px-4 md:px-8 py-4 sm:py-6 md:py-16">
+        <main className="container mx-auto px-3 sm:px-4 md:px-8 pt-24 md:pt-28 pb-16">
             <Link
                 href="/products"
-                className="inline-flex items-center gap-1 font-body text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors mb-4 sm:mb-6 md:mb-8"
+                className="inline-flex items-center gap-1.5 font-body text-xs sm:text-sm font-bold text-slate-600 hover:text-[#FF1D8E] transition-colors mb-6 md:mb-8 bg-slate-100/80 px-4 py-2 rounded-full w-fit shadow-2xs"
             >
                 <ChevronLeft className="w-4 h-4" />
                 Συνέχεια Αγορών
@@ -180,7 +178,7 @@ export default function CheckoutPage() {
 
                                 {/* Desktop line total */}
                                 <div className="hidden md:block text-right">
-                                    <span className="font-body text-sm font-medium">{lineTotal.toFixed(2)}€</span>
+                                    <span className="font-body text-sm font-medium">€{lineTotal.toFixed(2)}</span>
                                 </div>
 
                                 {/* Desktop remove */}
@@ -218,7 +216,7 @@ export default function CheckoutPage() {
                                                 </span>
                                             )}
                                         </div>
-                                        <span className="font-medium whitespace-nowrap">{(parseFloat(item.product.price || "0") * item.quantity).toFixed(2)}€</span>
+                                        <span className="font-medium whitespace-nowrap">€{(parseFloat(item.product.price || "0") * item.quantity).toFixed(2)}</span>
                                     </div>
                                 );
                             })}
@@ -227,30 +225,14 @@ export default function CheckoutPage() {
                         <div className="border-t border-border pt-3 sm:pt-4 mb-5 sm:mb-6">
                             <div className="flex justify-between items-center">
                                 <span className="font-body text-xs sm:text-sm uppercase tracking-widest">Σύνολο</span>
-                                <span className="font-display text-xl sm:text-2xl">{totalPrice.toFixed(2)}€</span>
+                                <span className="font-display text-xl sm:text-2xl">€{totalPrice.toFixed(2)}</span>
                             </div>
                             <p className="font-body text-[10px] sm:text-xs text-muted-foreground mt-1 sm:mt-1.5">Τα μεταφορικά υπολογίζονται στο ταμείο</p>
                         </div>
 
-                        {totalQuantity < 4 && (
-                            <div className="bg-amber-50 border border-amber-200 text-amber-900 rounded-xl p-3 mb-4 text-xs space-y-1">
-                                <p className="font-bold flex items-center gap-1.5 text-[#FF1D8E]">
-                                    ⚠️ Ελάχιστη Παραγγελία: 4 Τεμάχια
-                                </p>
-                                <p className="text-slate-600">
-                                    Έχετε {totalQuantity} {totalQuantity === 1 ? "τεμάχιο" : "τεμάχια"} στο καλάθι. Προσθέστε ακόμη {4 - totalQuantity} για να ολοκληρώσετε την παραγγελία σας.
-                                </p>
-                            </div>
-                        )}
-
                         <Button
                             onClick={handleCheckout}
-                            disabled={totalQuantity < 4}
-                            className={`w-full h-12 font-body text-xs sm:text-sm uppercase tracking-widest rounded-full transition-all shadow-md ${
-                                totalQuantity >= 4
-                                    ? "bg-black hover:bg-[#FF1D8E] text-white"
-                                    : "bg-slate-300 text-slate-500 cursor-not-allowed"
-                            }`}
+                            className="w-full h-12 font-body text-xs sm:text-sm uppercase tracking-widest rounded-full transition-all shadow-md bg-black hover:bg-[#FF1D8E] text-white"
                         >
                             Ολοκλήρωση Παραγγελίας
                             <ArrowRight className="w-4 h-4 ml-2" />
@@ -264,14 +246,14 @@ export default function CheckoutPage() {
             </div>
 
             {relatedProducts && relatedProducts.length > 0 && (
-                <div className="mt-16 sm:mt-24 pt-8 sm:pt-12 border-t border-border">
+                <div className="mt-16 sm:mt-24 pt-8 sm:pt-12 border-t border-border pb-6">
                     <h2 className="font-display text-2xl sm:text-3xl font-bold mb-8 text-center">Μπορεί να σας αρέσει επίσης</h2>
                     <Carousel
                         opts={{
                             align: "start",
                             loop: true,
                         }}
-                        className="w-full"
+                        className="w-full pb-4"
                     >
                         <CarouselContent className="-ml-3 sm:-ml-4">
                             {relatedProducts.map((product) => (

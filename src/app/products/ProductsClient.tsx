@@ -325,47 +325,6 @@ function ProductsContent({
                                     </select>
                                 </div>
 
-                                {/* Categories */}
-                                <div className="space-y-3 border-t border-border/30 pt-4">
-                                    <button
-                                        onClick={() => setShowCategories(prev => !prev)}
-                                        className="w-full flex items-center justify-between group"
-                                    >
-                                        <h3 className="font-display text-sm font-bold tracking-wide group-hover:text-primary transition-colors">
-                                            Κατηγορίες
-                                        </h3>
-                                        {showCategories ? (
-                                            <ChevronUp className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                                        ) : (
-                                            <ChevronDown className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                                        )}
-                                    </button>
-
-                                    {showCategories && (
-                                        <div className="space-y-1 animate-in slide-in-from-top-2 duration-300">
-                                            <button
-                                                onClick={() => {
-                                                    updateSearchParam("category");
-                                                    if (window.innerWidth < 768) setShowFilters(false);
-                                                }}
-                                                className={`w-full text-left font-body text-sm py-1.5 transition-colors ${!categoryId && !onSale ? "text-[#C4196D] font-bold" : "text-muted-foreground hover:text-[#C4196D]"}`}
-                                            >
-                                                Όλα τα Προϊόντα
-                                            </button>
-                                            {categories.filter(c => c.count > 0).map((cat) => (
-                                                <button
-                                                    key={cat.id}
-                                                    onClick={() => {
-                                                        updateSearchParam("category", String(cat.id));
-                                                        if (window.innerWidth < 768) setShowFilters(false);
-                                                    }}
-                                                    className={`w-full text-left font-body text-sm py-1.5 transition-colors ${categoryId === String(cat.id) ? "text-[#C4196D] font-bold" : "text-muted-foreground hover:text-[#C4196D]"}`}
-                                                    dangerouslySetInnerHTML={{ __html: cat.name }}
-                                                />
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
 
                                 {/* Price Range */}
                                 <div className="space-y-3 border-t border-border/30 pt-4">

@@ -213,7 +213,7 @@ export default function HomeClient({
       </section>
 
       {/* ================= INGREDIENTS / FEATURES SECTION ================= */}
-      <section id="section-2" className="relative min-h-[600px] lg:min-h-[700px] w-full flex items-center bg-white overflow-hidden py-12 lg:py-16">
+      <section id="section-2" className="relative h-screen w-full flex items-center justify-center bg-white overflow-hidden py-12 pt-16">
         
         {/* Left Yellow & Right Red Shapes */}
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
@@ -230,12 +230,12 @@ export default function HomeClient({
           </svg>
         </div>
 
-        <div className="container max-w-[1360px] mx-auto px-4 md:px-8 z-10 relative">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
+        <div className="container max-w-[1360px] mx-auto px-4 md:px-8 z-10 relative h-full flex items-center">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-10 w-full my-auto">
             
             {/* Left: Vertical ELV8 Clean Can */}
             <div className="w-full lg:w-5/12 flex justify-center lg:justify-start items-center lg:-ml-12 xl:-ml-32 z-20">
-              <div className="relative w-[320px] sm:w-[400px] md:w-[440px] lg:w-[480px] xl:w-[540px] h-[500px] sm:h-[620px] md:h-[700px] lg:h-[760px] xl:h-[820px] drop-shadow-[0_25px_35px_rgba(0,0,0,0.2)]">
+              <div className="relative w-[300px] sm:w-[380px] md:w-[440px] lg:w-[480px] xl:w-[540px] h-[55vh] sm:h-[68vh] md:h-[72vh] lg:h-[78vh] drop-shadow-[0_25px_35px_rgba(0,0,0,0.2)]">
                 <Image
                   src="/elv8-can-clean.png"
                   alt="ELV8 Energy Can"
@@ -325,7 +325,7 @@ export default function HomeClient({
       </section>
 
       {/* ================= PRODUCT CAROUSEL SECTION ================= */}
-      <div className="w-full snap-align-none bg-[#F8F9FA] text-slate-900 py-16 border-t border-slate-200">
+      <div className="w-full snap-align-none bg-gradient-to-br from-pink-50/60 via-white to-yellow-50/80 text-slate-900 py-16 border-t border-slate-200/80">
         <ProductCarousel
           title="Catalog"
           products={[...initialFeaturedProducts].reverse()}
@@ -334,16 +334,7 @@ export default function HomeClient({
         />
       </div>
 
-      {/* ================= SOCIAL PROOF MARQUEE STRIP ================= */}
-      <div className="bg-[#FF1D8E] py-4 overflow-hidden">
-        <div className="flex gap-12 whitespace-nowrap animate-marquee">
-          {[...Array(3)].map((_, i) =>
-            ["★★★★★  RATED BY 2,000+ CUSTOMERS", "⚡  ZERO SUGAR ENERGY", "🇬🇷  MADE IN GREECE", "💪  TRUSTED BY ATHLETES", "🍓  REAL FRUIT FLAVORS", "🧠  SCIENCE-BACKED FORMULA"].map((item) => (
-              <span key={`${i}-${item}`} className="text-white font-black text-xs tracking-[0.2em] uppercase shrink-0">{item}</span>
-            ))
-          )}
-        </div>
-      </div>
+
 
       {/* ================= TESTIMONIALS SECTION ================= */}
       <section className="w-full bg-white py-20 md:py-28">

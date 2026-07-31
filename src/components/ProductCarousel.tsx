@@ -81,27 +81,27 @@ export default function ProductCarousel({ title, subtitle, products, isLoading, 
                 </a>
             </div>
 
-            <div className="relative group/carousel w-full">
+            <div className="relative group/carousel w-full px-2 md:px-12">
                 {/* Navigation Arrows */}
                 <button
                     onClick={() => scroll('left')}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 z-10 p-4 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 shadow-xl text-slate-800 opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 hover:bg-[#FF1D8E] hover:text-white hidden md:flex"
+                    className="absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 z-30 p-3.5 sm:p-4 rounded-full bg-white/95 backdrop-blur-md border border-slate-200 shadow-xl text-slate-800 opacity-90 sm:opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 hover:bg-[#FF1D8E] hover:text-white hover:border-[#FF1D8E] flex items-center justify-center cursor-pointer"
                     aria-label="Scroll left"
                 >
-                    <ChevronLeft className="w-6 h-6" />
+                    <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
                 <button
                     onClick={() => scroll('right')}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 z-10 p-4 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 shadow-xl text-slate-800 opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 hover:bg-[#FF1D8E] hover:text-white hidden md:flex"
+                    className="absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 z-30 p-3.5 sm:p-4 rounded-full bg-white/95 backdrop-blur-md border border-slate-200 shadow-xl text-slate-800 opacity-90 sm:opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 hover:bg-[#FF1D8E] hover:text-white hover:border-[#FF1D8E] flex items-center justify-center cursor-pointer"
                     aria-label="Scroll right"
                 >
-                    <ChevronRight className="w-6 h-6" />
+                    <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
 
                 {isLoading ? (
                     <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
                         {Array.from({ length: 10 }).map((_, i) => (
-                            <div key={i} className="flex-shrink-0 w-[280px] space-y-4 animate-pulse">
+                            <div key={i} className="flex-shrink-0 w-[300px] sm:w-[340px] space-y-4 animate-pulse">
                                 <div className="aspect-[3/4] bg-secondary rounded-3xl" />
                                 <div className="space-y-2">
                                     <div className="h-5 bg-secondary rounded-full w-3/4" />
@@ -117,10 +117,10 @@ export default function ProductCarousel({ title, subtitle, products, isLoading, 
                         onMouseLeave={handleMouseLeave}
                         onMouseUp={handleMouseUp}
                         onMouseMove={handleMouseMove}
-                        className="flex gap-6 overflow-x-auto pb-4 cursor-grab active:cursor-grabbing select-none touch-pan-x [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+                        className="flex gap-6 sm:gap-8 overflow-x-auto pb-6 pt-2 px-2 cursor-grab active:cursor-grabbing select-none touch-pan-x [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
                     >
                         {products.map((product: WooProduct) => (
-                            <div key={product.id} className="flex-shrink-0 w-[280px]">
+                            <div key={product.id} className="flex-shrink-0 w-[300px] sm:w-[340px]">
                                 <ProductCard product={product} backUrl={backUrl} />
                             </div>
                         ))}

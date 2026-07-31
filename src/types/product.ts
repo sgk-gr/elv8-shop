@@ -47,6 +47,16 @@ export interface WooProduct {
   stock_status: string;
   stock_quantity: number | null;
   average_rating: string;
+  bundle_data?: {
+    title: string;
+    discount: number;
+    items: {
+      id: number;
+      name: string;
+      price: number;
+      image: string;
+    }[];
+  };
 }
 
 export interface WooVariation {

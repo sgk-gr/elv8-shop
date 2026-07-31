@@ -51,7 +51,7 @@ export default function ProductCard({ product, backUrl }: ProductCardProps) {
     <div className="relative group block h-full pt-2 pb-6">
       {/* Main Card */}
       <Link href={`/product/${product.id}/?backUrl=${encodeURIComponent(effectiveBackUrl)}`}>
-        <div className={`relative rounded-3xl p-6 transition-all duration-500 flex flex-col items-center justify-between h-full min-h-[380px] text-center border ${
+        <div className={`relative rounded-3xl p-6 transition-all duration-500 flex flex-col items-center justify-between h-full min-h-[420px] text-center border ${
           product.id % 2 === 0
             ? "bg-gradient-to-b from-[#22C55E]/90 to-[#15803D] text-white border-green-500 shadow-lg shadow-green-900/20"
             : "bg-white text-slate-900 border-slate-100 shadow-sm hover:shadow-md"
@@ -80,7 +80,7 @@ export default function ProductCard({ product, backUrl }: ProductCardProps) {
           </button>
 
           {/* Product Image Area */}
-          <div className="relative w-full h-56 my-2 flex items-center justify-center">
+          <div className="relative w-full h-64 my-2 flex items-center justify-center">
             {/* Product Image */}
             {image ? (
               <Image
@@ -98,43 +98,48 @@ export default function ProductCard({ product, backUrl }: ProductCardProps) {
             )}
           </div>
 
-          {/* Product Info (Title & Price) */}
-          <div className="space-y-1 mt-auto pb-2">
+          {/* Product Info & Action Row */}
+          <div className="w-full space-y-1 mt-auto pb-1 relative">
             <h3
-              className={`font-display text-base font-bold leading-snug line-clamp-1 px-2 ${
+              className={`font-display text-base font-bold leading-tight line-clamp-2 min-h-[2.5rem] flex items-center justify-center px-2 ${
                 product.id % 2 === 0 ? "text-white" : "text-slate-900"
               }`}
               dangerouslySetInnerHTML={{ __html: product.name }}
             />
 
-            <div className="flex items-center justify-center gap-2 pt-1">
-              {hasDiscount && (
-                <span className={`text-xs line-through ${
-                  product.id % 2 === 0 ? "text-white/70" : "text-slate-400"
+            <div className="flex items-center justify-between pt-2 px-1">
+              <div className="flex items-baseline gap-1.5">
+                {hasDiscount && (
+                  <span className={`text-xs line-through ${
+                    product.id % 2 === 0 ? "text-white/70" : "text-slate-400"
+                  }`}>
+                    €{product.regular_price}
+                  </span>
+                )}
+                <span className={`font-display font-black text-lg ${
+                  product.id % 2 === 0 ? "text-white" : "text-slate-900"
                 }`}>
-                  ${product.regular_price}
+                  €{product.price}
                 </span>
-              )}
-              <span className={`font-display font-black text-base ${
-                product.id % 2 === 0 ? "text-white" : "text-slate-900"
-              }`}>
-                ${product.price}
-              </span>
+              </div>
+
+              {/* Shopping Bag Button inside card */}
+              <button
+                onClick={handleAddToCart}
+                aria-label="Add to cart"
+                className={`w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:scale-110 active:scale-95 transition-all duration-300 ${
+                  product.id % 2 === 0
+                    ? "bg-white text-slate-900 hover:bg-slate-100"
+                    : "bg-black text-white hover:bg-[#FF1D8E]"
+                }`}
+              >
+                <ShoppingBag className="w-4 h-4" />
+              </button>
             </div>
           </div>
 
         </div>
       </Link>
-
-      {/* Floating Black Shopping Bag Button at Bottom Center */}
-      <button
-        onClick={handleAddToCart}
-        aria-label="Add to cart"
-        className="absolute -bottom-1 left-1/2 -translate-x-1/2 z-30 w-11 h-11 rounded-full bg-black text-white flex items-center justify-center shadow-lg hover:scale-110 transition-all duration-300"
-      >
-        <ShoppingBag className="w-5 h-5" />
-      </button>
-
     </div>
   );
 }

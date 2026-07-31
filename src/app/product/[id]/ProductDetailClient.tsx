@@ -1,12 +1,13 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { getProduct, getProductVariations, getProductReviews } from "@/lib/woocommerce";
+import React, { useState, useMemo, useEffect } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { getProduct, getProductVariations, getProductReviews, createProductReview } from "@/lib/woocommerce";
 import { WooProduct, WooVariation } from "@/types/product";
 import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Minus, Plus, Star, MessageSquare, X, Check } from "lucide-react";
-import { useState, useMemo, useEffect } from "react";
+import { ChevronLeft, ChevronRight, Minus, Plus, Star, MessageSquare, X, Check, Send } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import {
@@ -25,7 +26,9 @@ import {
 } from "@/components/ui/select";
 
 export default function ProductDetailClient({ id }: { id: string }) {
-    const { addItem } = useCart();
+    const { addItem, setIsCartOpen } = useCart();
+    const { user, isAuthenticated } = useAuth();
+    const queryClient = useQueryClient();
     const searchParams = useSearchParams();
     const backUrlParam = searchParams.get("backUrl");
     const [quantity, setQuantity] = useState(1);
@@ -33,6 +36,23 @@ export default function ProductDetailClient({ id }: { id: string }) {
     const [isLightboxOpen, setIsLightboxOpen] = useState(false);
     const [selectedAttributes, setSelectedAttributes] = useState<Record<string, string>>({});
     const [variationsInitialized, setVariationsInitialized] = useState(false);
+
+    // Review form state
+    const [reviewRating, setReviewRating] = useState(5);
+    const [reviewText, setReviewText] = useState("");
+    const [isSubmittingReview, setIsSubmittingReview] = useState(false);
+    const [reviewSubmittedSuccess, setReviewSubmittedSuccess] = useState(false);
+
+    const submitReviewMutation = useMutation({
+        mutationFn: createProductReview,
+        onSuccess: (newReview) => {
+            queryClient.setQueryData(["product-reviews", id], (old: any[] = []) => [newReview, ...old]);
+            setReviewText("");
+            setReviewRating(5);
+            setReviewSubmittedSuccess(true);
+            setTimeout(() => setReviewSubmittedSuccess(false), 4000);
+        },
+    });
 
     const { data: product, isLoading: isLoadingProduct } = useQuery<WooProduct>({
         queryKey: ["product", id],
@@ -324,9 +344,9 @@ export default function ProductDetailClient({ id }: { id: string }) {
                             <div className="flex items-center gap-2">
                                 <div className={`w-2 h-2 rounded-full ${stockStatus === 'instock' ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-rose-500'}`} />
                                 <span className={`font-body text-xs font-bold ${stockStatus === 'instock' ? 'text-emerald-600' : 'text-rose-600'}`}>
-                                    {stockStatus === 'instock' ? 'Σε απόθεμα' : 'Εξαντλημένο'}
+                                    {stockStatus === 'instock' ? 'In Stock' : 'Out of Stock'}
                                     {stockStatus === 'instock' && stockQuantity !== null && stockQuantity > 0 && (
-                                        <span className="ml-1.5 opacity-70">({stockQuantity} διαθέσιμα)</span>
+                                        <span className="ml-1.5 opacity-70">({stockQuantity} available)</span>
                                     )}
                                 </span>
                             </div>
@@ -343,7 +363,7 @@ export default function ProductDetailClient({ id }: { id: string }) {
                                         attr.variation && (
                                             <div key={attr.id} className="space-y-2.5 col-span-full">
                                                 <label className="font-body text-[10px] font-bold tracking-[0.15em] uppercase text-muted-foreground ml-1">
-                                                    {attr.name === "Χρώμα" ? "Διάλεξε χρώμα" : attr.name}
+                                                    {attr.name === "Χρώμα" ? "Choose option" : attr.name}
                                                 </label>
                                                 {attr.name === "Χρώμα" ? (
                                                     <div className="flex flex-wrap gap-3 mt-1">
@@ -356,8 +376,8 @@ export default function ProductDetailClient({ id }: { id: string }) {
                                                                     onClick={() => setSelectedAttributes(prev => ({ ...prev, [attr.name]: option }))}
                                                                     className={`px-6 py-2.5 rounded-full font-body text-xs font-bold transition-all duration-300 border-2 ${
                                                                         isSelected 
-                                                                        ? "bg-[#C4196D] border-[#C4196D] text-white shadow-lg scale-105" 
-                                                                        : "bg-white border-slate-200 text-slate-600 hover:border-[#C4196D]/30 hover:bg-slate-50"
+                                                                        ? "bg-[#FF1D8E] border-[#FF1D8E] text-white shadow-lg scale-105" 
+                                                                        : "bg-white border-slate-200 text-slate-600 hover:border-[#FF1D8E]/30 hover:bg-slate-50"
                                                                     }`}
                                                                 >
                                                                     {option}
@@ -371,7 +391,7 @@ export default function ProductDetailClient({ id }: { id: string }) {
                                                         onValueChange={(val) => setSelectedAttributes(prev => ({ ...prev, [attr.name]: val }))}
                                                     >
                                                         <SelectTrigger className="w-full h-12 rounded-2xl bg-white border-slate-200 focus:ring-primary/20 font-body text-sm font-semibold">
-                                                            <SelectValue placeholder={`Επιλέξτε ${attr.name}`} />
+                                                            <SelectValue placeholder={`Select ${attr.name}`} />
                                                         </SelectTrigger>
                                                         <SelectContent className="rounded-2xl shadow-xl border-slate-100">
                                                             {attr.options.map((option) => (
@@ -385,36 +405,6 @@ export default function ProductDetailClient({ id }: { id: string }) {
                                             </div>
                                         )
                                     ))}
-                                </div>
-                            )}
-
-                            {/* Custom Selectors for Simple Products (204, 211) */}
-                            {product.type === "simple" && (product.id === 204 || product.id === 211) && (
-                                <div className="p-6 bg-slate-50/30 rounded-[2rem] border border-slate-100 shadow-sm space-y-4">
-                                    <label className="font-body text-[10px] font-bold tracking-[0.15em] uppercase text-muted-foreground ml-1">
-                                        Διάλεξε χρώμα
-                                    </label>
-                                    <div className="flex flex-wrap gap-3">
-                                        {(product.id === 204 
-                                            ? ["Ανοιχτό Πράσινο", "Πέρλα", "Κυπαρισσί"] 
-                                            : ["Χρυσό", "Ασημί"]
-                                        ).map((color) => {
-                                            const isSelected = selectedAttributes["Χρώμα"] === color;
-                                            return (
-                                                <button
-                                                    key={color}
-                                                    onClick={() => setSelectedAttributes(prev => ({ ...prev, "Χρώμα": color }))}
-                                                    className={`px-6 py-2.5 rounded-full font-body text-xs font-bold transition-all duration-300 border-2 ${
-                                                        isSelected 
-                                                        ? "bg-[#C4196D] border-[#C4196D] text-white shadow-lg scale-105" 
-                                                        : "bg-white border-slate-200 text-slate-600 hover:border-[#C4196D]/30 hover:bg-slate-50"
-                                                    }`}
-                                                >
-                                                    {color}
-                                                </button>
-                                            );
-                                        })}
-                                    </div>
                                 </div>
                             )}
                         </div>
@@ -442,37 +432,151 @@ export default function ProductDetailClient({ id }: { id: string }) {
 
                             <Button
                                 onClick={handleAddToCart}
-                                className="flex-1 h-14 font-body text-xs font-bold uppercase tracking-widest rounded-2xl shadow-lg shadow-primary/20 bg-[#C4196D] text-white hover:bg-[#C4196D]/90 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                                className="flex-1 h-14 font-body text-xs font-bold uppercase tracking-widest rounded-2xl shadow-lg shadow-primary/20 bg-[#FF1D8E] text-white hover:bg-[#d80f74] hover:scale-[1.02] active:scale-[0.98] transition-all"
                                 disabled={stockStatus === "outofstock" || (product.type === "variable" && variations && variations.length > 0 && !selectedVariation)}
                             >
-                                {stockStatus === "outofstock" ? "Εξαντλημένο" : "Προσθήκη στο Καλάθι"}
+                                {stockStatus === "outofstock" ? "Out of Stock" : "Add to Cart"}
                             </Button>
                         </div>
                     </div>
 
+                    {/* ELV8 Product Bundle / Frequently Bought Together Section */}
+                    {product.bundle_data && product.bundle_data.items && product.bundle_data.items.length > 0 && (
+                      <div className="my-5 bg-gradient-to-r from-pink-50/70 via-white to-yellow-50/50 border border-pink-200/70 rounded-2xl p-4 sm:p-5 shadow-xs space-y-3.5">
+                        <div className="flex items-center justify-between gap-2">
+                          <h3 className="text-base sm:text-lg font-black font-display text-slate-900">
+                            {product.bundle_data.title || "Frequently Bought Together"}
+                          </h3>
+                          <span className="text-[9px] font-black uppercase tracking-wider text-[#FF1D8E] bg-pink-100/90 px-2.5 py-0.5 rounded-full shrink-0">
+                            BUNDLE -{product.bundle_data.discount}%
+                          </span>
+                        </div>
 
+                        {/* Items Compact Row */}
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                          {/* Current Main Product */}
+                          <div className="flex items-center gap-2 bg-white px-2.5 py-1.5 rounded-xl border border-slate-200 shadow-2xs">
+                            <div className="w-8 h-8 relative shrink-0">
+                              <img
+                                src={product.images[0]?.src || "/elv8-can-clean.png"}
+                                alt={product.name}
+                                className="w-full h-full object-contain"
+                              />
+                            </div>
+                            <div className="text-left leading-tight">
+                              <span className="block font-bold text-[11px] text-slate-800 max-w-[100px] sm:max-w-[120px] truncate">{product.name}</span>
+                              <span className="text-[11px] font-black text-[#FF1D8E]">€{parseFloat(product.price).toFixed(2)}</span>
+                            </div>
+                          </div>
+
+                          {/* Plus Icon */}
+                          <span className="text-sm font-black text-[#FF1D8E]">+</span>
+
+                          {/* Bundled Products */}
+                          {product.bundle_data.items.map((bItem, idx) => (
+                            <React.Fragment key={bItem.id}>
+                              <Link
+                                href={`/product/${bItem.id}`}
+                                className="flex items-center gap-2 bg-white hover:bg-pink-50/50 px-2.5 py-1.5 rounded-xl border border-slate-200 hover:border-[#FF1D8E]/40 shadow-2xs hover:shadow-xs transition-all cursor-pointer group"
+                              >
+                                <div className="w-8 h-8 relative shrink-0">
+                                  <img
+                                    src={bItem.image || "/elv8-can-clean.png"}
+                                    alt={bItem.name}
+                                    className="w-full h-full object-contain group-hover:scale-105 transition-transform"
+                                  />
+                                </div>
+                                <div className="text-left leading-tight">
+                                  <span className="block font-bold text-[11px] text-slate-800 group-hover:text-[#FF1D8E] transition-colors max-w-[100px] sm:max-w-[120px] truncate">{bItem.name}</span>
+                                  <span className="text-[11px] font-black text-[#FF1D8E]">€{bItem.price.toFixed(2)}</span>
+                                </div>
+                              </Link>
+                              {idx < product.bundle_data!.items.length - 1 && (
+                                <span className="text-sm font-black text-[#FF1D8E]">+</span>
+                              )}
+                            </React.Fragment>
+                          ))}
+                        </div>
+
+                        {/* Bundle Price & Add All Button */}
+                        {(() => {
+                          const mainPrice = parseFloat(product.price) || 0;
+                          const bundledPriceSum = product.bundle_data.items.reduce((sum, item) => sum + item.price, 0);
+                          const totalPrice = mainPrice + bundledPriceSum;
+                          const discountPercent = product.bundle_data.discount / 100;
+                          const finalBundlePrice = totalPrice * (1 - discountPercent);
+
+                          return (
+                            <div className="pt-2.5 border-t border-pink-100 flex items-center justify-between gap-3">
+                              <div className="text-left leading-none">
+                                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-0.5">Bundle Price:</span>
+                                <div className="flex items-baseline gap-1.5">
+                                  <span className="text-lg font-black text-slate-900 font-display">€{finalBundlePrice.toFixed(2)}</span>
+                                  <span className="text-xs font-medium text-slate-400 line-through">€{totalPrice.toFixed(2)}</span>
+                                </div>
+                              </div>
+
+                              <button
+                                onClick={() => {
+                                  // Add main product
+                                  addItem(product, quantity);
+                                  // Add bundled products
+                                  product.bundle_data?.items.forEach((bItem) => {
+                                    addItem({
+                                      id: bItem.id,
+                                      name: bItem.name,
+                                      slug: "",
+                                      description: "",
+                                      short_description: "",
+                                      type: "simple",
+                                      price: bItem.price.toString(),
+                                      regular_price: bItem.price.toString(),
+                                      sale_price: "",
+                                      on_sale: false,
+                                      images: [{ id: 1, src: bItem.image, alt: bItem.name }],
+                                      categories: [],
+                                      sku: "",
+                                      attributes: [],
+                                      variations: [],
+                                      stock_status: "instock",
+                                      stock_quantity: 100,
+                                      average_rating: "5.0",
+                                    }, 1);
+                                  });
+                                  setIsCartOpen(true);
+                                }}
+                                className="px-4 py-2.5 bg-[#FF1D8E] hover:bg-[#d80f74] text-white rounded-full font-black text-[11px] uppercase tracking-wider transition-all shadow-xs hover:shadow-md flex items-center justify-center gap-1.5 cursor-pointer shrink-0"
+                              >
+                                <span>Add Bundle</span>
+                                <Plus className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          );
+                        })()}
+                      </div>
+                    )}
 
                     {/* Description & Reviews Tabs */}
                     <div className="pt-10">
                         <Tabs defaultValue="description" className="w-full">
                             <TabsList className="bg-slate-50 p-1 rounded-2xl border border-slate-100 w-full sm:w-auto h-auto flex flex-wrap">
                                 <TabsTrigger value="description" className="rounded-xl font-body text-xs font-bold uppercase px-6 py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm">
-                                    Περιγραφή
+                                    Description
                                 </TabsTrigger>
                                 {(![29, 33, 40, 44, 48, 52, 56, 60, 64, 68, 72, 102, 105, 108, 110, 113, 115, 117, 119, 123, 127, 130, 133, 136, 138, 141, 144, 148, 151, 155, 158, 161, 164, 167, 170, 173, 176, 180, 182, 186, 189, 193, 197, 201, 208, 211, 220, 225, 229, 235, 238, 242, 264, 270, 273, 280].includes(product.id) && product.id < 296) && (
                                     <TabsTrigger value="short" className="rounded-xl font-body text-xs font-bold uppercase px-6 py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm">
-                                        Χαρακτηριστικά
+                                        Features
                                     </TabsTrigger>
                                 )}
                                 <TabsTrigger value="reviews" className="rounded-xl font-body text-xs font-bold uppercase px-6 py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm">
-                                    Αξιολογήσεις ({reviews?.length || 0})
+                                    Reviews ({reviews?.length || 0})
                                 </TabsTrigger>
                             </TabsList>
 
                             <TabsContent value="description" className="mt-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
                                 <div
                                     className="font-body text-base text-slate-600 leading-relaxed prose prose-slate max-w-none text-justify"
-                                    dangerouslySetInnerHTML={{ __html: product.description || "Δεν υπάρχει διαθέσιμη περιγραφή." }}
+                                    dangerouslySetInnerHTML={{ __html: product.description || "No description available." }}
                                 />
                             </TabsContent>
 
@@ -773,14 +877,98 @@ export default function ProductDetailClient({ id }: { id: string }) {
 
                             <TabsContent value="reviews" className="mt-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
                                 <div className="space-y-8">
+                                    {/* Review Submission Form */}
+                                    <div className="bg-gradient-to-r from-pink-50/40 via-slate-50 to-yellow-50/40 p-6 sm:p-8 rounded-[2rem] border border-slate-200/80 shadow-xs space-y-4">
+                                        {isAuthenticated && user ? (
+                                            <form
+                                                onSubmit={(e) => {
+                                                    e.preventDefault();
+                                                    if (!reviewText.trim()) return;
+                                                    submitReviewMutation.mutate({
+                                                        product_id: Number(id),
+                                                        review: reviewText.trim(),
+                                                        reviewer: `${user.firstName || user.nicename || 'User'} ${user.lastName || ''}`.trim(),
+                                                        reviewer_email: user.email,
+                                                        rating: reviewRating,
+                                                    });
+                                                }}
+                                                className="space-y-4"
+                                            >
+                                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/60 pb-4">
+                                                    <div>
+                                                        <h4 className="font-display font-black text-slate-900 text-lg">Write a Review</h4>
+                                                        <p className="text-xs text-slate-500 font-body">Posting as <span className="font-bold text-[#FF1D8E]">{user.firstName || user.nicename} ({user.email})</span></p>
+                                                    </div>
+                                                    
+                                                    {/* Rating Stars Selection */}
+                                                    <div className="flex items-center gap-1 bg-white px-3 py-1.5 rounded-full border border-slate-200 w-fit">
+                                                        <span className="text-xs font-bold text-slate-500 mr-1.5">Rating:</span>
+                                                        {[1, 2, 3, 4, 5].map((star) => (
+                                                            <button
+                                                                key={star}
+                                                                type="button"
+                                                                onClick={() => setReviewRating(star)}
+                                                                className="p-0.5 hover:scale-125 transition-transform"
+                                                            >
+                                                                <Star
+                                                                    className={`w-5 h-5 ${star <= reviewRating ? "fill-amber-400 text-amber-400" : "text-slate-300"}`}
+                                                                />
+                                                            </button>
+                                                        ))}
+                                                    </div>
+                                                </div>
+
+                                                <textarea
+                                                    rows={3}
+                                                    value={reviewText}
+                                                    onChange={(e) => setReviewText(e.target.value)}
+                                                    placeholder="Share your thoughts about this product..."
+                                                    className="w-full p-4 rounded-2xl bg-white border border-slate-200 text-slate-900 placeholder:text-slate-400 font-body text-sm focus:outline-none focus:ring-2 focus:ring-[#FF1D8E]/30 transition-all resize-none"
+                                                    required
+                                                />
+
+                                                {reviewSubmittedSuccess && (
+                                                    <div className="p-3 bg-emerald-100/80 border border-emerald-300 text-emerald-800 rounded-xl text-xs font-bold flex items-center gap-2">
+                                                        <Check className="w-4 h-4 text-emerald-600" />
+                                                        Thank you! Your review has been submitted successfully.
+                                                    </div>
+                                                )}
+
+                                                <div className="flex justify-end">
+                                                    <button
+                                                        type="submit"
+                                                        disabled={submitReviewMutation.isPending || !reviewText.trim()}
+                                                        className="px-6 py-3 bg-[#FF1D8E] hover:bg-[#d80f74] text-white rounded-full font-black text-xs uppercase tracking-wider transition-all shadow-md hover:shadow-lg disabled:opacity-50 flex items-center gap-2 cursor-pointer"
+                                                    >
+                                                        <span>{submitReviewMutation.isPending ? "Submitting..." : "Submit Review"}</span>
+                                                        <Send className="w-3.5 h-3.5" />
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        ) : (
+                                            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-2">
+                                                <div className="space-y-1 text-center sm:text-left">
+                                                    <h4 className="font-display font-bold text-slate-900 text-base">Want to leave a review?</h4>
+                                                    <p className="text-xs text-slate-500 font-body">Only logged-in customers can submit product reviews.</p>
+                                                </div>
+                                                <Link
+                                                    href={`/auth?redirect=/product/${id}`}
+                                                    className="px-6 py-2.5 bg-black hover:bg-[#FF1D8E] text-white rounded-full font-bold text-xs uppercase tracking-wider transition-all shadow-sm shrink-0"
+                                                >
+                                                    Log In to Review
+                                                </Link>
+                                            </div>
+                                        )}
+                                    </div>
+
                                     {reviews && reviews.length > 0 ? (
                                         <div className="grid gap-6">
                                             {reviews.map((review) => (
                                                 <div key={review.id} className="bg-slate-50 p-6 rounded-3xl border border-slate-100 space-y-4">
                                                     <div className="flex justify-between items-start">
                                                         <div className="flex items-center gap-3">
-                                                            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary border border-slate-100 shadow-sm">
-                                                                {review.reviewer.charAt(0).toUpperCase()}
+                                                            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary border border-slate-100 shadow-sm font-bold text-sm">
+                                                                {review.reviewer ? review.reviewer.charAt(0).toUpperCase() : 'U'}
                                                             </div>
                                                             <div>
                                                                 <h4 className="font-body font-bold text-sm text-slate-800">{review.reviewer}</h4>
@@ -793,7 +981,7 @@ export default function ProductDetailClient({ id }: { id: string }) {
                                                             {[...Array(5)].map((_, i) => (
                                                                 <Star
                                                                     key={i}
-                                                                    className={`w-3 h-3 ${i < review.rating ? "fill-amber-400 text-amber-400" : "text-slate-200"}`}
+                                                                    className={`w-3.5 h-3.5 ${i < review.rating ? "fill-amber-400 text-amber-400" : "text-slate-200"}`}
                                                                 />
                                                             ))}
                                                         </div>
@@ -808,7 +996,7 @@ export default function ProductDetailClient({ id }: { id: string }) {
                                     ) : (
                                         <div className="text-center py-12 bg-slate-50 rounded-[2rem] border border-slate-100 border-dashed">
                                             <MessageSquare className="w-12 h-12 text-slate-200 mx-auto mb-4" />
-                                            <p className="text-muted-foreground font-body text-sm italic">Δεν υπάρχουν ακόμα αξιολογήσεις γι' αυτό το προϊόν.</p>
+                                            <p className="text-muted-foreground font-body text-sm italic">No reviews yet for this product. Be the first to leave a review!</p>
                                         </div>
                                     )}
                                 </div>
