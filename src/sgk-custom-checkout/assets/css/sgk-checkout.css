@@ -1,17 +1,17 @@
 /* ==========================================================================
-   SGK CUSTOM CHECKOUT CSS (Vaia Charms Edition)
+   SGK CUSTOM CHECKOUT CSS (ELV8 Energy Drink Edition)
    Designed by SGK Digital (https://sgk.gr)
    ========================================================================== */
 
 :root {
-    --sgk-primary: #C4196D; /* Magenta Vaia Charms */
-    --sgk-primary-hover: #A31257;
-    --sgk-dark: #111827;
-    --sgk-light-bg: #FAF7F7; /* Warm soft pinkish white background */
+    --sgk-primary: #FF1D8E; /* Vibrant ELV8 Pink */
+    --sgk-primary-hover: #e00f78;
+    --sgk-dark: #0f172a;
+    --sgk-light-bg: #FAFAFA;
     --sgk-white: #ffffff;
-    --sgk-border: #E5E7EB;
-    --sgk-text-muted: #6B7280;
-    --sgk-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04), 0 4px 12px -2px rgba(0, 0, 0, 0.02);
+    --sgk-border: #E2E8F0;
+    --sgk-text-muted: #64748B;
+    --sgk-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 4px 12px -2px rgba(0, 0, 0, 0.02);
     --sgk-font: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 

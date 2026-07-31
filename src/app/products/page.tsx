@@ -6,10 +6,10 @@ import { Metadata } from "next";
 export const revalidate = 14400; // Refresh every 4 hours (avoiding Vercel rate limits)
 
 export const metadata: Metadata = {
-  title: "Συλλογές Κοσμημάτων & Αξεσουάρ",
-  description: "Ανακαλύψτε την πλήρη συλλογή μας από χειροποίητα κοσμήματα, αξεσουάρ και είδη ομορφιάς. Φίλτρα ανά κατηγορία, τιμή και χαρακτηριστικά.",
+  title: "ELV8 Energy Drink Collection | Our Flavors & Packs",
+  description: "Explore the full collection of ELV8 Energy Drinks. Zero Sugar, 200mg Natural Caffeine, Electrolytes & Real Fruit Flavors.",
   alternates: {
-    canonical: "https://www.vaiacharms.gr/products",
+    canonical: "https://www.elv8.gr/products",
   }
 };
 
@@ -22,8 +22,8 @@ export default async function ProductsPage() {
   ]);
 
   const breadcrumbs = [
-    { name: "Αρχική", url: "/" },
-    { name: "Συλλογές", url: "/products" }
+    { name: "Home", url: "/" },
+    { name: "Our Flavors", url: "/products" }
   ];
 
   return (

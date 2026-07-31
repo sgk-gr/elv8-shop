@@ -37,17 +37,7 @@ export default function CookieBanner() {
 
     return (
         <>
-            {/* Floating Cookie Tag (Visible when cookies are configured and banner is closed) */}
-            {cookiesConfigured && !showBanner && (
-                <button
-                    onClick={() => setShowBanner(true)}
-                    className="fixed bottom-6 right-6 z-40 bg-white hover:bg-slate-50 text-slate-800 p-3.5 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-slate-100 transition-transform hover:-translate-y-1 animate-in fade-in zoom-in group"
-                    aria-label="Ρυθμίσεις Cookies"
-                    title="Ρυθμίσεις Cookies"
-                >
-                    <Cookie className="w-5 h-5 text-[#c4196d] group-hover:rotate-12 transition-transform duration-300" />
-                </button>
-            )}
+
 
             {/* Banner Modal */}
             {showBanner && (

@@ -22,7 +22,7 @@ export default function CartDrawer() {
         <div className="p-6 md:p-8 border-b bg-slate-200/50">
           <SheetHeader>
             <SheetTitle className="font-display text-3xl font-bold tracking-tight">
-              Το Καλάθι μου
+              My Cart
             </SheetTitle>
           </SheetHeader>
         </div>
@@ -33,12 +33,12 @@ export default function CartDrawer() {
               <div className="w-16 h-16 bg-secondary/50 rounded-full flex items-center justify-center">
                 <ShoppingBag className="w-8 h-8 text-muted-foreground" />
               </div>
-              <p className="text-muted-foreground font-body text-sm font-medium italic">Το καλάθι σας είναι άδειο</p>
+              <p className="text-muted-foreground font-body text-sm font-medium italic">Your cart is empty</p>
               <Button
-                className="rounded-full px-8 bg-[#C4196D] hover:bg-[#43334C] text-white border-none"
+                className="rounded-full px-8 bg-[#FF1D8E] hover:bg-black text-white border-none"
                 onClick={() => setIsCartOpen(false)}
               >
-                Πάμε για Ψώνια
+                Start Shopping
               </Button>
             </div>
           ) : (
@@ -52,7 +52,7 @@ export default function CartDrawer() {
                     <button
                       onClick={() => goToProduct(item.product.id)}
                       className="w-24 h-32 bg-secondary rounded-2xl flex-shrink-0 overflow-hidden shadow-sm hover:opacity-80 transition-opacity cursor-pointer"
-                      aria-label={`Δες το προϊόν: ${item.product.name}`}
+                      aria-label={`View product: ${item.product.name}`}
                     >
                       {image && (
                         <img src={image.src} alt={image.alt || item.product.name} className="w-full h-full object-cover" />
@@ -101,7 +101,7 @@ export default function CartDrawer() {
                             <Plus className="w-3 h-3" />
                           </button>
                         </div>
-                        <p className="font-display text-lg font-bold">{item.product.price}€</p>
+                        <p className="font-display text-lg font-bold">${item.product.price}</p>
                       </div>
                     </div>
                   </div>
@@ -112,19 +112,26 @@ export default function CartDrawer() {
         </div>
 
         {items.length > 0 && (
-          <div className="p-6 md:p-8 bg-slate-200 border-t space-y-6">
+          <div className="p-6 md:p-8 bg-slate-200 border-t space-y-4">
             <div className="flex justify-between items-end">
               <div className="space-y-1">
-                <span className="text-muted-foreground text-xs font-bold uppercase tracking-widest">Μερικό Σύνολο</span>
-                <p className="text-muted-foreground text-[10px]">Φόροι και μεταφορικά υπολογίζονται στο ταμείο</p>
+                <span className="text-muted-foreground text-xs font-bold uppercase tracking-widest">Subtotal</span>
+                <p className="text-muted-foreground text-[10px]">Taxes and shipping calculated at checkout</p>
               </div>
-              <span className="font-display text-3xl font-bold">{totalPrice.toFixed(2)}€</span>
+              <span className="font-display text-3xl font-bold">${totalPrice.toFixed(2)}</span>
             </div>
+
+            {items.reduce((sum, i) => sum + i.quantity, 0) < 4 && (
+              <p className="text-[11px] font-bold text-[#FF1D8E] bg-pink-100/80 border border-pink-200 px-3 py-1.5 rounded-full text-center">
+                ⚠️ Minimum order: 4 cans (You have {items.reduce((sum, i) => sum + i.quantity, 0)})
+              </p>
+            )}
+
             <Button
-              className="w-full h-14 font-body text-sm font-bold uppercase tracking-widest rounded-full shadow-lg shadow-primary/20 hover:scale-[1.02] hover:bg-[#C4196D] hover:text-white transition-all"
+              className="w-full h-14 font-body text-sm font-bold uppercase tracking-widest rounded-full shadow-lg hover:scale-[1.02] bg-black text-white hover:bg-[#FF1D8E] transition-all"
               onClick={() => { setIsCartOpen(false); router.push("/checkout"); }}
             >
-              Ολοκλήρωση Αγορών
+              Checkout
             </Button>
           </div>
         )}

@@ -1,83 +1,242 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShoppingBag, Heart, Search } from "lucide-react";
+import { ShoppingBag, User, Heart, Menu, X, ArrowRight } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useFavorites } from "@/context/FavoritesContext";
 
 export default function Header() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const { totalItems, setIsCartOpen } = useCart();
   const { favorites } = useFavorites();
   const pathname = usePathname();
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 40) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const navLinks = [
     { href: "/", label: "Home" },
-    { href: "/products", label: "Shop" },
+    { href: "/products", label: "Our Flavors" },
+    { href: "/about", label: "About Us" },
     { href: "/products?category=packs-bundles", label: "Packs & Boxes" },
     { href: "/store-locator", label: "Store Locator" },
+    { href: "/about#wholesale", label: "B2B & Χονδρική" },
     { href: "/faq", label: "FAQ" },
   ];
 
-  return (
-    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md py-4 border-b border-slate-100 transition-all">
-      <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
-        
-        {/* Left: Brand Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-7 h-7 bg-[#0F382C] rounded-md flex items-center justify-center text-white font-black text-xs group-hover:rotate-6 transition-transform">
-            elv
-          </div>
-          <span className="font-display font-extrabold text-2xl tracking-tight text-[#0F382C]">
-            elv8
-          </span>
-        </Link>
+  const isHomePage = pathname === "/";
 
-        {/* Center: Pill Navigation Bar (matching RIDGED design) */}
-        <nav className="hidden md:flex items-center bg-[#F3F3F3] p-1.5 rounded-full border border-slate-200/60 shadow-inner">
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href;
-            return (
+  return (
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 py-3.5 px-4 md:px-8 transition-all duration-300 ${
+          isHomePage && !isScrolled
+            ? "bg-transparent border-b border-transparent"
+            : "bg-white/90 backdrop-blur-md border-b border-slate-200/60 shadow-sm"
+        }`}
+      >
+        <div className="container mx-auto flex items-center justify-between">
+          
+          {/* Left: Mobile Menu Toggle & Brand Logo */}
+          <div className="flex items-center gap-3 md:gap-10">
+            {/* Mobile Hamburger Toggle Button (Mobile Only) */}
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              aria-label="Open Mobile Menu"
+              className="md:hidden p-2 rounded-full text-black hover:bg-black/10 transition-colors"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+
+            {/* Brand Logo */}
+            <Link href="/" className="flex items-center gap-2 group select-none">
+              <span className="font-display font-black text-2xl md:text-3xl tracking-tighter text-black uppercase italic">
+                elv8
+              </span>
+              <span className="w-2 h-2 rounded-full bg-black mb-2.5 animate-pulse" />
+            </Link>
+
+            {/* Desktop Navigation Links */}
+            <nav className="hidden md:flex items-center gap-8">
               <Link
-                key={link.href}
-                href={link.href}
-                className={`px-6 py-2 rounded-full text-xs md:text-sm font-semibold transition-all ${
-                  isActive
-                    ? "bg-white text-[#0F382C] shadow-sm font-bold"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-white/50"
+                href="/"
+                className={`text-sm font-extrabold transition-all relative pb-1 ${
+                  pathname === "/" ? "text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
                 }`}
               >
-                {link.label}
+                Home
+                {pathname === "/" && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF1D8E] rounded-full" />
+                )}
               </Link>
-            );
-          })}
-        </nav>
+              <Link
+                href="/products"
+                className={`text-sm font-extrabold transition-all relative pb-1 ${
+                  pathname === "/products" ? "text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
+                }`}
+              >
+                Our Flavors
+                {pathname === "/products" && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF1D8E] rounded-full" />
+                )}
+              </Link>
+              <Link
+                href="/about"
+                className={`text-sm font-extrabold transition-all relative pb-1 ${
+                  pathname === "/about" ? "text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
+                }`}
+              >
+                About Us
+                {pathname === "/about" && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF1D8E] rounded-full" />
+                )}
+              </Link>
+              <Link
+                href="/store-locator"
+                className={`text-sm font-extrabold transition-all relative pb-1 ${
+                  pathname === "/store-locator" ? "text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
+                }`}
+              >
+                Store Locator
+                {pathname === "/store-locator" && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF1D8E] rounded-full" />
+                )}
+              </Link>
+              <Link
+                href="/about#wholesale"
+                className="text-sm font-extrabold text-slate-900 hover:text-[#FF1D8E] transition-all"
+              >
+                B2B & Χονδρική
+              </Link>
+            </nav>
+          </div>
 
-        {/* Right: Actions (Wishlist & Cart) */}
-        <div className="flex items-center gap-3">
-          <Link
-            href="/favorites"
-            aria-label="Wishlist"
-            className="relative bg-[#F3F3F3] hover:bg-slate-200/80 p-3 rounded-full text-slate-800 transition-all shadow-sm flex items-center justify-center"
-          >
-            <Heart className="w-4 h-4 fill-slate-800 text-slate-800" />
-            {favorites.length > 0 && (
-              <span className="absolute -top-1 -right-1 bg-[#E2FB71] text-[#0F382C] font-extrabold text-[10px] w-4 h-4 rounded-full flex items-center justify-center border border-white">
-                {favorites.length}
-              </span>
-            )}
-          </Link>
+          {/* Right: Actions (Favorites, Cart & User Icons) */}
+          <div className="flex items-center gap-1 md:gap-3 text-black">
+            {/* Favorites Icon Button */}
+            <Link
+              href="/favorites"
+              aria-label="Favorites"
+              className="relative p-2 rounded-full hover:bg-black/10 transition-colors"
+            >
+              <Heart className="w-6 h-6 text-black" />
+              {favorites.length > 0 && (
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#FF1D8E] text-white font-black text-[10px] rounded-full flex items-center justify-center shadow-md">
+                  {favorites.length}
+                </span>
+              )}
+            </Link>
 
-          <button
-            onClick={() => setIsCartOpen(true)}
-            className="bg-[#F3F3F3] hover:bg-slate-200/80 px-5 py-2.5 rounded-full flex items-center gap-2.5 text-xs md:text-sm font-bold text-[#0F382C] transition-all shadow-sm"
-          >
-            <ShoppingBag className="w-4 h-4" />
-            <span>Cart({totalItems})</span>
-          </button>
+            {/* Cart Icon Button */}
+            <button
+              onClick={() => setIsCartOpen(true)}
+              aria-label="Shopping Cart"
+              className="relative p-2 rounded-full hover:bg-black/10 transition-colors"
+            >
+              <ShoppingBag className="w-6 h-6 text-black" />
+              {totalItems > 0 && (
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-black text-white font-black text-[10px] rounded-full flex items-center justify-center shadow-md">
+                  {totalItems}
+                </span>
+              )}
+            </button>
+
+            {/* User Icon Button */}
+            <Link 
+              href="/account" 
+              aria-label="Account" 
+              className="p-2 rounded-full hover:bg-black/10 transition-colors"
+            >
+              <User className="w-6 h-6 text-black" />
+            </Link>
+          </div>
+
         </div>
+      </header>
 
-      </div>
-    </header>
+      {/* Mobile Slide-Over Drawer Navigation */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-50 md:hidden">
+          {/* Backdrop */}
+          <div 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300"
+          />
+
+          {/* Drawer Container (Pure White & Solid Black Accents) */}
+          <div className="fixed inset-y-0 left-0 w-[80%] max-w-sm bg-white text-black p-6 shadow-2xl flex flex-col justify-between z-50 animate-in slide-in-from-left duration-300 border-r border-slate-200">
+            
+            {/* Drawer Top Header */}
+            <div>
+              <div className="flex items-center justify-between pb-6 border-b border-slate-100">
+                <Link 
+                  href="/" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="font-display font-black text-3xl tracking-tighter text-black uppercase italic"
+                >
+                  elv8
+                </Link>
+                <button
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  aria-label="Close Mobile Menu"
+                  className="p-2 rounded-full bg-slate-100 text-black hover:bg-slate-200 transition-colors"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              {/* Navigation Links List */}
+              <nav className="mt-8 flex flex-col gap-3">
+                {navLinks.map((link) => {
+                  const isActive = pathname === link.href;
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={`flex items-center justify-between p-3.5 rounded-2xl font-extrabold text-base transition-all ${
+                        isActive
+                          ? "bg-black text-white pl-5 shadow-md"
+                          : "text-black hover:bg-slate-100"
+                      }`}
+                    >
+                      <span>{link.label}</span>
+                      <ArrowRight className={`w-5 h-5 ${isActive ? "text-white" : "text-slate-400"}`} />
+                    </Link>
+                  );
+                })}
+              </nav>
+            </div>
+
+            {/* Drawer Bottom Actions */}
+            <div className="pt-6 border-t border-slate-100">
+              <button
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  setIsCartOpen(true);
+                }}
+                className="w-full bg-black text-white py-4 rounded-full font-black text-base flex items-center justify-center gap-2 shadow-xl hover:bg-slate-900 transition-colors"
+              >
+                <ShoppingBag className="w-5 h-5 text-white" />
+                <span>View Cart ({totalItems})</span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+    </>
   );
 }

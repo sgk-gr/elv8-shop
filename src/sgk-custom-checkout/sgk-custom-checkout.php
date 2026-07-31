@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: SGK Custom Checkout by SGK Digital
- * Description: Ένα premium, minimal και πλήρως mobile-responsive checkout για το WooCommerce στα χρώματα του Vaia Charms.
+ * Description: Ένα premium, minimal και πλήρως mobile-responsive checkout για το WooCommerce στα χρώματα του ELV8 Energy Drink.
  * Version: 1.0.0
  * Author: SGK Digital
  * Author URI: https://sgk.gr

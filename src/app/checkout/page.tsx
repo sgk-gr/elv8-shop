@@ -12,7 +12,7 @@ import { WooProduct } from "@/types/product";
 import ProductCard from "@/components/ProductCard";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 
-const WC_STORE_URL = "https://api.vaiacharms.gr";
+const WC_STORE_URL = "https://store.elv8now.com";
 
 export default function CheckoutPage() {
     const { items, removeItem, updateQuantity, totalPrice } = useCart();
@@ -25,7 +25,13 @@ export default function CheckoutPage() {
         enabled: items.length > 0,
     });
 
+    const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
+
     const handleCheckout = () => {
+        if (totalQuantity < 4) {
+            return;
+        }
+
         // Open WooCommerce checkout
         const itemsParam = items.map((i) => `${i.variationId || i.product.id}:${i.quantity}`).join(',');
         let checkoutUrl = `${WC_STORE_URL}/?fill-cart=${itemsParam}`;
@@ -42,7 +48,7 @@ export default function CheckoutPage() {
         return (
             <main className="container mx-auto px-4 md:px-8 py-16 md:py-24 text-center">
                 <h1 className="font-display text-3xl md:text-4xl font-light mb-4">Το καλάθι σας είναι άδειο</h1>
-                <p className="text-muted-foreground font-body text-sm mb-8">Προσθέστε προϊόντα για να συνεχίσετε.</p>
+                <p className="text-muted-foreground font-body text-sm mb-8">Προσθέστε προϊόντα για να συνεχίσετε (Ελάχιστη παραγγελία: 4 τεμάχια).</p>
                 <Link
                     href="/products"
                     className="inline-flex items-center gap-2 font-body text-sm uppercase tracking-widest hover:text-muted-foreground transition-colors"
@@ -226,16 +232,32 @@ export default function CheckoutPage() {
                             <p className="font-body text-[10px] sm:text-xs text-muted-foreground mt-1 sm:mt-1.5">Τα μεταφορικά υπολογίζονται στο ταμείο</p>
                         </div>
 
+                        {totalQuantity < 4 && (
+                            <div className="bg-amber-50 border border-amber-200 text-amber-900 rounded-xl p-3 mb-4 text-xs space-y-1">
+                                <p className="font-bold flex items-center gap-1.5 text-[#FF1D8E]">
+                                    ⚠️ Ελάχιστη Παραγγελία: 4 Τεμάχια
+                                </p>
+                                <p className="text-slate-600">
+                                    Έχετε {totalQuantity} {totalQuantity === 1 ? "τεμάχιο" : "τεμάχια"} στο καλάθι. Προσθέστε ακόμη {4 - totalQuantity} για να ολοκληρώσετε την παραγγελία σας.
+                                </p>
+                            </div>
+                        )}
+
                         <Button
                             onClick={handleCheckout}
-                            className="w-full h-11 sm:h-12 font-body text-xs sm:text-sm uppercase tracking-widest rounded-none hover:bg-[#C4196D] hover:text-white transition-colors"
+                            disabled={totalQuantity < 4}
+                            className={`w-full h-12 font-body text-xs sm:text-sm uppercase tracking-widest rounded-full transition-all shadow-md ${
+                                totalQuantity >= 4
+                                    ? "bg-black hover:bg-[#FF1D8E] text-white"
+                                    : "bg-slate-300 text-slate-500 cursor-not-allowed"
+                            }`}
                         >
                             Ολοκλήρωση Παραγγελίας
                             <ArrowRight className="w-4 h-4 ml-2" />
                         </Button>
 
-                        <p className="font-body text-[10px] sm:text-[11px] text-muted-foreground text-center mt-2.5 sm:mt-3">
-                            Θα μεταφερθείτε στο ασφαλές ταμείο
+                        <p className="font-body text-[10px] sm:text-[11px] text-slate-500 text-center mt-2.5 sm:mt-3">
+                            Ασφαλής ολοκλήρωση στο store.elv8now.com
                         </p>
                     </div>
                 </div>

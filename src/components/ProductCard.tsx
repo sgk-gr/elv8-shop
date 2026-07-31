@@ -3,8 +3,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { WooProduct } from "@/types/product";
-import { Heart } from "lucide-react";
+import { Heart, ShoppingBag } from "lucide-react";
 import { useFavorites } from "@/context/FavoritesContext";
+import { useCart } from "@/context/CartContext";
 
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -20,6 +21,7 @@ export default function ProductCard({ product, backUrl }: ProductCardProps) {
   const image = product.images?.[0];
   const hasDiscount = product.on_sale && product.regular_price;
   const { isFavorite, toggleFavorite } = useFavorites();
+  const { addItem, setIsCartOpen } = useCart();
   const favorite = isFavorite(product.id);
 
   useEffect(() => {
@@ -36,73 +38,103 @@ export default function ProductCard({ product, backUrl }: ProductCardProps) {
     toggleFavorite(product);
   };
 
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addItem(product);
+    setIsCartOpen(true);
+  };
+
+  const isNew = true; // Highlight / badge state
+
   return (
-    <Link href={`/product/${product.id}/?backUrl=${encodeURIComponent(effectiveBackUrl)}`} className="group block h-full">
-      <div className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-secondary mb-4 shadow-sm group-hover:shadow-soft transition-all duration-500">
-        {image ? (
-          <Image
-            src={image.src}
-            alt={image.alt || product.name}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-            loading="lazy"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-muted-foreground font-body text-xs">
-            Χωρίς εικόνα
-          </div>
-        )}
+    <div className="relative group block h-full pt-2 pb-6">
+      {/* Main Card */}
+      <Link href={`/product/${product.id}/?backUrl=${encodeURIComponent(effectiveBackUrl)}`}>
+        <div className={`relative rounded-3xl p-6 transition-all duration-500 flex flex-col items-center justify-between h-full min-h-[380px] text-center border ${
+          product.id % 2 === 0
+            ? "bg-gradient-to-b from-[#22C55E]/90 to-[#15803D] text-white border-green-500 shadow-lg shadow-green-900/20"
+            : "bg-white text-slate-900 border-slate-100 shadow-sm hover:shadow-md"
+        }`}>
 
-        {product.on_sale && (
-          <div className="absolute top-4 left-4 z-10">
-            <span className="bg-destructive text-white text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full shadow-lg">
-              ΕΚΠΤΩΣΕΙΣ
-            </span>
-          </div>
-        )}
-
-        {/* Favorite Button */}
-        <div
-          role="button"
-          tabIndex={0}
-          onClick={handleFavoriteClick}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              toggleFavorite(product);
-            }
-          }}
-          className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-all hover:scale-110 shadow-lg cursor-pointer"
-          aria-label={favorite ? "Αφαίρεση από αγαπημένα" : "Προσθήκη στα αγαπημένα"}
-        >
-          <Heart
-            className={`w-5 h-5 transition-all ${favorite
-              ? "fill-red-500 text-red-500"
-              : "text-gray-600 hover:text-red-500"
-              }`}
-          />
-        </div>
-
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-      </div>
-
-      <div className="space-y-1">
-        <h3
-          className="font-display text-lg font-semibold leading-tight group-hover:text-primary transition-colors line-clamp-2"
-          dangerouslySetInnerHTML={{ __html: product.name }}
-        />
-        <div className="flex items-center gap-2">
-          <span className="font-body text-base font-medium">
-            {product.price}€
-          </span>
-          {hasDiscount && (
-            <span className="font-body text-sm text-muted-foreground line-through opacity-70">
-              {product.regular_price}€
-            </span>
+          {/* Top Left "NEW" Badge */}
+          {isNew && (
+            <div className="absolute top-4 left-0 z-20">
+              <span className="bg-black text-white text-[10px] font-black tracking-widest uppercase px-3 py-1 rounded-r-full shadow-sm">
+                NEW
+              </span>
+            </div>
           )}
+
+          {/* Top Right Favorites Heart Button */}
+          <button
+            onClick={handleFavoriteClick}
+            aria-label="Add to favorites"
+            className={`absolute top-4 right-4 z-20 w-8 h-8 rounded-full flex items-center justify-center transition-all shadow-sm ${
+              product.id % 2 === 0
+                ? "bg-white/20 text-white hover:bg-white hover:text-red-500"
+                : "bg-slate-100 text-slate-500 hover:bg-red-50 hover:text-red-500"
+            }`}
+          >
+            <Heart className={`w-4 h-4 ${favorite ? "fill-red-500 text-red-500" : ""}`} />
+          </button>
+
+          {/* Product Image Area */}
+          <div className="relative w-full h-56 my-2 flex items-center justify-center">
+            {/* Product Image */}
+            {image ? (
+              <Image
+                src={image.src}
+                alt={image.alt || product.name}
+                fill
+                sizes="(max-width: 768px) 100vw, 280px"
+                className="object-contain px-4 group-hover:scale-105 transition-transform duration-500 ease-out"
+                loading="lazy"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-slate-400 font-body text-xs">
+                No Image
+              </div>
+            )}
+          </div>
+
+          {/* Product Info (Title & Price) */}
+          <div className="space-y-1 mt-auto pb-2">
+            <h3
+              className={`font-display text-base font-bold leading-snug line-clamp-1 px-2 ${
+                product.id % 2 === 0 ? "text-white" : "text-slate-900"
+              }`}
+              dangerouslySetInnerHTML={{ __html: product.name }}
+            />
+
+            <div className="flex items-center justify-center gap-2 pt-1">
+              {hasDiscount && (
+                <span className={`text-xs line-through ${
+                  product.id % 2 === 0 ? "text-white/70" : "text-slate-400"
+                }`}>
+                  ${product.regular_price}
+                </span>
+              )}
+              <span className={`font-display font-black text-base ${
+                product.id % 2 === 0 ? "text-white" : "text-slate-900"
+              }`}>
+                ${product.price}
+              </span>
+            </div>
+          </div>
+
         </div>
-      </div>
-    </Link>
+      </Link>
+
+      {/* Floating Black Shopping Bag Button at Bottom Center */}
+      <button
+        onClick={handleAddToCart}
+        aria-label="Add to cart"
+        className="absolute -bottom-1 left-1/2 -translate-x-1/2 z-30 w-11 h-11 rounded-full bg-black text-white flex items-center justify-center shadow-lg hover:scale-110 transition-all duration-300"
+      >
+        <ShoppingBag className="w-5 h-5" />
+      </button>
+
+    </div>
   );
 }

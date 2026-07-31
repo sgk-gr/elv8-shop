@@ -1,5 +1,4 @@
-import type { Metadata } from "next";
-import { Inter, Outfit } from "next/font/google";
+import { Inter, Outfit, Caveat } from "next/font/google";
 import "@/index.css";
 import Providers from "@/components/Providers";
 import Header from "@/components/Header";
@@ -19,6 +18,12 @@ const inter = Inter({
 const outfit = Outfit({
     subsets: ["latin"],
     variable: "--font-display",
+    display: "swap",
+});
+
+const caveat = Caveat({
+    subsets: ["latin"],
+    variable: "--font-handwriting",
     display: "swap",
 });
 
@@ -48,33 +53,33 @@ export const metadata: Metadata = {
     openGraph: {
         type: "website",
         locale: "el_GR",
-        url: "https://www.vaiacharms.gr",
-        siteName: "Vaia Charms",
-        title: "Vaia Charms | Κοσμήματα, Cosmetics & Αξεσουάρ",
+        url: "https://elv8now.com",
+        siteName: "ELV8 Energy Drink",
+        title: "ELV8 Energy Drink | Ultimate Energy & Focus Drink",
         description:
-            "Η κορυφαία επιλογή σας για ποιοτικά κοσμήματα, cosmetics και αξεσουάρ. Δωρεάν αποστολή άνω των 65€.",
+            "Ανακαλύψτε το elv8 Energy Drink. Zero Sugar, 200mg Φυσική Καφεΐνη, Ηλεκτρολύτες & Βιταμίνες B-Complex για μέγιστη απόδοση.",
         images: [
             {
                 url: "/opengraph-image.png",
                 width: 1200,
                 height: 630,
-                alt: "Vaia Charms - Κοσμήματα & Αξεσουάρ",
+                alt: "elv8 Energy Drink",
             },
         ],
     },
     twitter: {
         card: "summary_large_image",
-        site: "@vaiacharms",
-        creator: "@vaiacharms",
-        title: "Vaia Charms | Κοσμήματα, Cosmetics & Αξεσουάρ",
+        site: "@elv8energy",
+        creator: "@elv8energy",
+        title: "ELV8 Energy Drink | Ultimate Energy & Focus Drink",
         description:
-            "Η κορυφαία επιλογή σας για ποιοτικά κοσμήματα και αξεσουάρ. Ανακαλύψτε τη συλλογή μας σήμερα.",
+            "Zero Sugar, 200mg Φυσική Καφεΐνη, Ηλεκτρολύτες & Βιταμίνες B-Complex για μέγιστη απόδοση.",
         images: ["/opengraph-image.png"],
     },
     alternates: {
-        canonical: "https://www.vaiacharms.gr",
+        canonical: "https://elv8now.com",
         languages: {
-            "el-GR": "https://www.vaiacharms.gr",
+            "el-GR": "https://elv8now.com",
         },
     },
     icons: {
@@ -94,8 +99,8 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="el" className={`${inter.variable} ${outfit.variable}`}>
-            <body className="font-body antialiased">
+        <html lang="el" className={`${inter.variable} ${outfit.variable} ${caveat.variable}`} suppressHydrationWarning>
+            <body className="font-body antialiased" suppressHydrationWarning>
                 <Providers>
                     <JsonLd type="website" />
                     <ScrollRestoration />

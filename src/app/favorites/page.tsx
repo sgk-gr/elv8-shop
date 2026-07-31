@@ -9,49 +9,43 @@ export default function FavoritesPage() {
     const { favorites } = useFavorites();
 
     return (
-        <main className="min-h-screen py-20">
-            <div className="container mx-auto px-4 md:px-8">
-                {/* Header */}
-                <div className="mb-12 space-y-4 animate-in slide-in-from-top-4 duration-700">
-                    <div className="flex items-center gap-3">
-                        <h1 className="font-display text-4xl md:text-6xl font-bold tracking-tight">
-                            Τα Αγαπημένα μου
-                        </h1>
-                    </div>
-                    <p className="text-muted-foreground font-body text-sm max-w-lg leading-relaxed">
-                        {favorites.length > 0
-                            ? `Έχετε ${favorites.length} ${favorites.length === 1 ? "προϊόν" : "προϊόντα"} στη λίστα αγαπημένων σας`
-                            : "Δεν έχετε προσθέσει ακόμα προϊόντα στα αγαπημένα σας"}
-                    </p>
-                </div>
+        <main className="min-h-screen pt-20 pb-20 bg-white relative overflow-hidden flex flex-col items-center justify-center">
+            {/* Background Blobs */}
+            <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+                <div className="absolute -left-[10vw] top-[5%] w-[40vw] h-[40vw] bg-[#FF1D8E]/10 rounded-full blur-3xl" />
+                <div className="absolute -right-[10vw] top-[20%] w-[40vw] h-[40vw] bg-[#FDE047]/20 rounded-full blur-3xl" />
+            </div>
+
+            <div className="container max-w-7xl mx-auto px-6 md:px-12 relative z-10 w-full flex justify-center items-center">
+
 
                 {/* Products Grid */}
                 {favorites.length > 0 ? (
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 animate-in fade-in duration-1000">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
                         {favorites.map((product) => (
                             <ProductCard key={product.id} product={product} backUrl="/favorites" />
                         ))}
                     </div>
                 ) : (
                     /* Empty State */
-                    <div className="flex flex-col items-center justify-center py-20 space-y-6 animate-in fade-in zoom-in duration-700">
-                        <div className="w-32 h-32 rounded-full bg-secondary/50 flex items-center justify-center">
-                            <Heart className="w-16 h-16 text-muted-foreground" />
+                    <div className="flex flex-col items-center justify-center py-16 px-6 w-full max-w-xl text-center bg-slate-50/80 border border-slate-200/80 rounded-3xl space-y-6 shadow-sm">
+                        <div className="w-24 h-24 rounded-full bg-white border border-pink-200 shadow-md flex items-center justify-center text-[#FF1D8E]">
+                            <Heart className="w-12 h-12 text-[#FF1D8E]" />
                         </div>
-                        <div className="text-center space-y-2">
-                            <h2 className="font-display text-2xl font-bold">
-                                Η λίστα αγαπημένων σας είναι άδεια
+                        <div className="space-y-2">
+                            <h2 className="font-display text-2xl sm:text-3xl font-black text-slate-900">
+                                Your Wishlist is Empty
                             </h2>
-                            <p className="text-muted-foreground max-w-md">
-                                Ανακαλύψτε τα προϊόντα μας και προσθέστε τα αγαπημένα σας πατώντας το εικονίδιο καρδιάς
+                            <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-md mx-auto">
+                                Discover our natural, zero-sugar energy drinks and tap the heart icon on any flavor to save it here.
                             </p>
                         </div>
                         <Link
                             href="/products"
-                            className="inline-flex items-center gap-2 bg-[#c4196d] text-white px-8 py-4 rounded-full font-body text-sm font-bold uppercase tracking-wider hover:scale-105 transition-all shadow-lg hover:shadow-[#c4196d]/20"
+                            className="inline-flex items-center gap-3 bg-slate-900 hover:bg-[#FF1D8E] text-white px-8 py-4 rounded-full font-bold text-xs sm:text-sm uppercase tracking-[0.2em] transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-[#FF1D8E]/20"
                         >
-                            <ShoppingBag className="w-5 h-5" />
-                            Δείτε τα Προϊόντα
+                            <ShoppingBag className="w-4 h-4" />
+                            Explore Flavors
                         </Link>
                     </div>
                 )}
