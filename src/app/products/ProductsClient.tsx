@@ -243,11 +243,11 @@ function ProductsContent({
                 </nav>
 
                 <div className="space-y-4">
-                    <h1 className="font-display text-4xl md:text-6xl font-bold tracking-tight text-[#C4196D]">
-                        {onSale ? "Εποχιακές Εκπτώσεις" : activeTag ? activeTag.name : activeCategory ? activeCategory.name : searchQuery ? `Αποτελέσματα για: ${searchQuery}` : "Συλλογές"}
+                    <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-slate-900">
+                        Our <span className="text-[#FF1D8E]">Flavors</span> & Packs
                     </h1>
-                    <p className="text-muted-foreground font-body text-sm max-w-lg leading-relaxed">
-                        Ανακαλύψτε επιλεγμένα κομμάτια που συνδυάζουν την διαχρονική κομψότητα με τη σύγχρονη αισθητική.
+                    <p className="text-slate-600 font-body text-sm sm:text-base max-w-lg leading-relaxed">
+                        Explore our full collection of clean energy drinks. Zero Sugar, 200mg Natural Caffeine, Electrolytes & Real Fruit Flavors.
                     </p>
                 </div>
             </div>

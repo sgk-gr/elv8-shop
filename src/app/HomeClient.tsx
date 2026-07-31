@@ -234,8 +234,8 @@ export default function HomeClient({
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
             
             {/* Left: Vertical ELV8 Clean Can */}
-            <div className="w-full lg:w-5/12 flex justify-center lg:justify-start items-center lg:-ml-36 xl:-ml-52 z-20">
-              <div className="relative w-[320px] sm:w-[400px] md:w-[460px] lg:w-[520px] xl:w-[580px] h-[600px] sm:h-[700px] md:h-[780px] lg:h-[860px] drop-shadow-[0_25px_35px_rgba(0,0,0,0.2)]">
+            <div className="w-full lg:w-5/12 flex justify-center lg:justify-start items-center lg:-ml-12 xl:-ml-32 z-20">
+              <div className="relative w-[320px] sm:w-[400px] md:w-[440px] lg:w-[480px] xl:w-[540px] h-[500px] sm:h-[620px] md:h-[700px] lg:h-[760px] xl:h-[820px] drop-shadow-[0_25px_35px_rgba(0,0,0,0.2)]">
                 <Image
                   src="/elv8-can-clean.png"
                   alt="ELV8 Energy Can"
@@ -247,7 +247,7 @@ export default function HomeClient({
             </div>
 
             {/* Right: Exact Feature Rows matching Screenshot */}
-            <div className="w-full lg:w-8/12 flex flex-col justify-center gap-7 sm:gap-9 py-2 font-sans lg:-mt-6 xl:-mt-10">
+            <div className="w-full lg:w-7/12 flex flex-col justify-center gap-6 sm:gap-8 py-2 font-sans">
               
               {/* Feature 1: Caffeine */}
               <div className="flex items-center gap-6 sm:gap-7">
