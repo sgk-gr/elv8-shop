@@ -10,6 +10,7 @@ import { useFavorites } from "@/context/FavoritesContext";
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [currentHash, setCurrentHash] = useState("");
   const { totalItems, setIsCartOpen } = useCart();
   const { favorites } = useFavorites();
   const pathname = usePathname();
@@ -26,6 +27,13 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    setCurrentHash(window.location.hash);
+    const handleHashChange = () => setCurrentHash(window.location.hash);
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, [pathname]);
+
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/products", label: "Our Flavors" },
@@ -36,7 +44,14 @@ export default function Header() {
     { href: "/faq", label: "FAQ" },
   ];
 
-  const isHomePage = pathname === "/";
+  const cleanPath = (pathname || "").replace(/\/$/, "") || "/";
+  const isHomePage = cleanPath === "/";
+
+  const isB2BActive = cleanPath === "/about" && currentHash === "#wholesale";
+  const isAboutActive = cleanPath === "/about" && currentHash !== "#wholesale";
+  const isHomeActive = cleanPath === "/";
+  const isProductsActive = cleanPath.startsWith("/products");
+  const isStoreLocatorActive = cleanPath.startsWith("/store-locator");
 
   return (
     <>
@@ -72,53 +87,64 @@ export default function Header() {
             <nav className="hidden md:flex items-center gap-8">
               <Link
                 href="/"
-                className={`text-sm font-extrabold transition-all relative pb-1 ${
-                  pathname === "/" ? "text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
+                style={{ color: isHomeActive ? "#FF1D8E" : undefined }}
+                className={`text-sm font-black transition-all relative pb-1 ${
+                  isHomeActive ? "text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
                 }`}
               >
                 Home
-                {pathname === "/" && (
-                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF1D8E] rounded-full" />
+                {isHomeActive && (
+                  <span className="absolute bottom-0 left-0 right-0 h-1 bg-[#FF1D8E] rounded-full" />
                 )}
               </Link>
               <Link
                 href="/products"
-                className={`text-sm font-extrabold transition-all relative pb-1 ${
-                  pathname === "/products" ? "text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
+                style={{ color: isProductsActive ? "#FF1D8E" : undefined }}
+                className={`text-sm font-black transition-all relative pb-1 ${
+                  isProductsActive ? "text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
                 }`}
               >
                 Our Flavors
-                {pathname === "/products" && (
-                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF1D8E] rounded-full" />
+                {isProductsActive && (
+                  <span className="absolute bottom-0 left-0 right-0 h-1 bg-[#FF1D8E] rounded-full" />
                 )}
               </Link>
               <Link
                 href="/about"
-                className={`text-sm font-extrabold transition-all relative pb-1 ${
-                  pathname === "/about" ? "text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
+                style={{ color: isAboutActive ? "#FF1D8E" : undefined }}
+                className={`text-sm font-black transition-all relative pb-1 ${
+                  isAboutActive ? "text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
                 }`}
               >
                 About Us
-                {pathname === "/about" && (
-                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF1D8E] rounded-full" />
+                {isAboutActive && (
+                  <span className="absolute bottom-0 left-0 right-0 h-1 bg-[#FF1D8E] rounded-full" />
                 )}
               </Link>
               <Link
                 href="/store-locator"
-                className={`text-sm font-extrabold transition-all relative pb-1 ${
-                  pathname === "/store-locator" ? "text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
+                style={{ color: isStoreLocatorActive ? "#FF1D8E" : undefined }}
+                className={`text-sm font-black transition-all relative pb-1 ${
+                  isStoreLocatorActive ? "text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
                 }`}
               >
                 Store Locator
-                {pathname === "/store-locator" && (
-                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF1D8E] rounded-full" />
+                {isStoreLocatorActive && (
+                  <span className="absolute bottom-0 left-0 right-0 h-1 bg-[#FF1D8E] rounded-full" />
                 )}
               </Link>
               <Link
                 href="/about#wholesale"
-                className="text-sm font-extrabold text-slate-900 hover:text-[#FF1D8E] transition-all"
+                onClick={() => setCurrentHash("#wholesale")}
+                style={{ color: isB2BActive ? "#FF1D8E" : undefined }}
+                className={`text-sm font-black transition-all relative pb-1 ${
+                  isB2BActive ? "text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
+                }`}
               >
                 B2B & Χονδρική
+                {isB2BActive && (
+                  <span className="absolute bottom-0 left-0 right-0 h-1 bg-[#FF1D8E] rounded-full" />
+                )}
               </Link>
             </nav>
           </div>
