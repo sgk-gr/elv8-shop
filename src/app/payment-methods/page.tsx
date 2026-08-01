@@ -2,8 +2,8 @@ import { ChevronRight, CreditCard, Landmark, Info, Zap, Truck, Wallet } from "lu
 import Link from "next/link";
 
 export const metadata = {
-    title: "Τρόποι Πληρωμής | Vaia Charms",
-    description: "Πληροφορίες σχετικά με τους τρόπους πληρωμής: Πιστωτική Κάρτα, Αντικαταβολή, IRIS και Τραπεζική Κατάθεση.",
+    title: "Τρόποι Πληρωμής | ELV8 Energy",
+    description: "Πληροφορίες σχετικά με τους τρόπους πληρωμής στο ELV8 Energy: Πιστωτική Κάρτα, Αντικαταβολή, IRIS και Τραπεζική Κατάθεση.",
 };
 
 export default function PaymentMethodsPage() {
@@ -12,9 +12,9 @@ export default function PaymentMethodsPage() {
             <div className="container mx-auto px-4 md:px-8">
                 {/* Breadcrumbs */}
                 <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-12">
-                    <Link href="/" className="hover:text-primary transition-colors">Αρχική</Link>
+                    <Link href="/" className="hover:text-[#FF1D8E] transition-colors">Αρχική</Link>
                     <ChevronRight className="w-4 h-4" />
-                    <span className="text-primary font-medium">Τρόποι Πληρωμής</span>
+                    <span className="text-[#FF1D8E] font-medium">Τρόποι Πληρωμής</span>
                 </nav>
 
                 <div className="max-w-3xl mx-auto">
@@ -26,13 +26,13 @@ export default function PaymentMethodsPage() {
                         {/* Payment Methods Grid */}
                         <div className="grid gap-8">
                             <section className="flex gap-5 items-start">
-                                <div className="w-12 h-12 bg-[#C4196D]/10 rounded-2xl flex items-center justify-center shrink-0">
-                                    <CreditCard className="w-6 h-6 text-[#C4196D]" />
+                                <div className="w-12 h-12 bg-[#FF1D8E]/10 rounded-2xl flex items-center justify-center shrink-0">
+                                    <CreditCard className="w-6 h-6 text-[#FF1D8E]" />
                                 </div>
                                 <div className="space-y-2">
                                     <h2 className="font-display text-xl font-bold text-slate-800">Πιστωτική / Χρεωστική Κάρτα</h2>
                                     <p className="font-body text-slate-600 text-sm leading-relaxed">
-                                        Δεχόμαστε όλες τις κύριες κάρτες (Visa, Mastercard, Maestro). Η πληρωμή γίνεται μέσω του ασφαλούς περιβάλλοντος της τράπεζας.
+                                        Δεχόμαστε όλες τις κύριες κάρτες (Visa, Mastercard, Maestro). Η πληρωμή γίνεται μέσω του ασφαλούς περιβάλλοντος της τράπεζας με κρυπτογράφηση SSL.
                                     </p>
                                 </div>
                             </section>
@@ -56,7 +56,7 @@ export default function PaymentMethodsPage() {
                                 <div className="space-y-2">
                                     <h2 className="font-display text-xl font-bold text-slate-800">Αντικαταβολή</h2>
                                     <p className="font-body text-slate-600 text-sm leading-relaxed">
-                                        Πληρώστε το αντίτιμο της παραγγελίας σας κατά την παράδοση στον κούριερ.
+                                        Πληρώστε το αντίτιμο της παραγγελίας σας κατά την παράδοση στον κούριερ. Επιπλέον χρέωση αντικαταβολής: 2€.
                                     </p>
                                 </div>
                             </section>
@@ -68,48 +68,21 @@ export default function PaymentMethodsPage() {
                                 <div className="space-y-2">
                                     <h2 className="font-display text-xl font-bold text-slate-800">Τραπεζική Κατάθεση</h2>
                                     <p className="font-body text-slate-600 text-sm leading-relaxed">
-                                        Μπορείτε να καταθέσετε το ποσό της παραγγελίας σας στον παρακάτω λογαριασμό Alpha Bank.
+                                        Μπορείτε να καταθέσετε το ποσό της παραγγελίας σας στον τραπεζικό λογαριασμό ELV8 Energy.
                                     </p>
                                 </div>
                             </section>
                         </div>
-
-                        <section className="bg-slate-50 rounded-3xl p-8 md:p-10 space-y-6 border border-slate-100">
-                            <div className="flex items-center gap-3 mb-2">
-                                <Landmark className="w-5 h-5 text-[#C4196D]" />
-                                <span className="font-display text-lg font-bold uppercase tracking-wider text-slate-800">Στοιχεία Alpha Bank</span>
-                            </div>
-                            
-                            <div className="grid gap-6">
-                                <div>
-                                    <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-1">IBAN</p>
-                                    <p className="font-mono text-lg md:text-xl font-bold text-slate-900 break-all bg-white p-4 rounded-xl border border-slate-200">
-                                        GR96 0140 8200 8200 0200 2022 797
-                                    </p>
-                                </div>
-                                
-                                <div className="grid md:grid-cols-2 gap-6">
-                                    <div>
-                                        <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-1">Δικαιούχος</p>
-                                        <p className="font-display text-lg font-bold text-slate-800">Ioannis Papatheodorou</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-1">Τράπεζα</p>
-                                        <p className="font-display text-lg font-bold text-slate-800">Alpha Bank</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
 
                         <section className="space-y-6 pt-4 border-t border-slate-100">
                             <div className="flex gap-4 p-6 bg-blue-50/50 rounded-2xl border border-blue-100/50">
                                 <Info className="w-6 h-6 text-blue-500 shrink-0" />
                                 <div className="space-y-4">
                                     <p className="font-body text-sm text-slate-700 leading-relaxed italic">
-                                        Παρακαλούμε, κατά την κατάθεση να αναγράφετε ως αιτιολογία το ονοματεπώνυμό σας ή/και τον αριθμό παραγγελίας σας, ώστε να είναι δυνατή η ταχύτερη εξυπηρέτησή σας.
+                                        Κατά την κατάθεση, αναγράφετε ως αιτιολογία το ονοματεπώνυμό σας και τον αριθμό παραγγελίας σας για ταχύτερη εξυπηρέτηση.
                                     </p>
-                                    <p className="font-body text-sm font-bold text-[#C4196D]">
-                                        Η επεξεργασία της παραγγελίας σας ξεκινά μετά την επιβεβαίωση της πληρωμής. (Θα υπάρξει ακύρωση αν δεν πληρωθεί σε 2-3 μέρες).
+                                    <p className="font-body text-sm font-bold text-[#FF1D8E]">
+                                        Η επεξεργασία της παραγγελίας ξεκινά μετά την επιβεβαίωση της πληρωμής. Μη επιβεβαιωμένες πληρωμές εντός 2-3 ημερών οδηγούν σε ακύρωση.
                                     </p>
                                 </div>
                             </div>
@@ -117,9 +90,9 @@ export default function PaymentMethodsPage() {
                     </div>
 
                     <div className="mt-12 text-center">
-                        <Link 
-                            href="/products" 
-                            className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-[#C4196D] hover:underline"
+                        <Link
+                            href="/products"
+                            className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-[#FF1D8E] hover:underline"
                         >
                             Επιστροφή στις Αγορές
                         </Link>
