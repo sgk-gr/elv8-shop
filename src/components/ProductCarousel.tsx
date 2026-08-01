@@ -4,8 +4,9 @@ import { WooProduct } from "@/types/product";
 import { ChevronLeft, ChevronRight, MapPin, ShoppingCart } from "lucide-react";
 import { useRef } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
+
 
 interface ProductCarouselProps {
     title: string;
@@ -17,6 +18,7 @@ interface ProductCarouselProps {
 
 function ProductAqaCard({ product }: { product: WooProduct }) {
     const { addItem, setIsCartOpen } = useCart();
+    const router = useRouter();
 
     const imageUrl =
         product.images?.[0]?.src ||
@@ -33,8 +35,16 @@ function ProductAqaCard({ product }: { product: WooProduct }) {
         setIsCartOpen(true);
     };
 
+    const handleStoreLocator = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        router.push("/store-locator");
+    };
+
     return (
-        <Link href={`/product/${product.id}`} className="block group">
+        <div
+            className="block group cursor-pointer"
+            onClick={() => router.push(`/product/${product.id}`)}
+        >
             <div className="relative bg-[#DFF0FA] rounded-3xl pt-16 pb-5 px-5 flex flex-col items-center min-w-[200px] w-full transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1">
                 {/* Product Can — overflows top */}
                 <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-28 h-36 z-10 drop-shadow-xl transition-transform duration-300 group-hover:scale-105">
@@ -60,14 +70,13 @@ function ProductAqaCard({ product }: { product: WooProduct }) {
 
                 {/* Buttons */}
                 <div className="flex gap-2 w-full">
-                    <Link
-                        href="/store-locator"
-                        onClick={(e) => e.stopPropagation()}
+                    <button
+                        onClick={handleStoreLocator}
                         className="flex-1 flex items-center justify-center gap-1.5 bg-[#1a3a5c] hover:bg-[#0f2744] text-white text-[11px] font-bold rounded-xl py-2.5 px-2 transition-colors duration-200"
                     >
                         <MapPin className="w-3 h-3 shrink-0" />
                         Find stockist
-                    </Link>
+                    </button>
                     <button
                         onClick={handleAddToCart}
                         className="flex-1 flex items-center justify-center gap-1.5 bg-[#1a3a5c] hover:bg-[#FF1D8E] text-white text-[11px] font-bold rounded-xl py-2.5 px-2 transition-colors duration-200"
@@ -77,7 +86,8 @@ function ProductAqaCard({ product }: { product: WooProduct }) {
                     </button>
                 </div>
             </div>
-        </Link>
+        </div>
+
     );
 }
 
