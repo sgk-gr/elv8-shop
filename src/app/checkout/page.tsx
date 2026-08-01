@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
@@ -27,19 +28,18 @@ export default function CheckoutPage() {
 
     const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
 
+    const [showEmbeddedCheckout, setShowEmbeddedCheckout] = useState(false);
+
+    const itemsParam = items.map((i) => `${i.variationId || i.product.id}:${i.quantity}`).join(',');
+    let checkoutUrl = `${WC_STORE_URL}/?fill-cart=${itemsParam}`;
+    if (user?.email) {
+        checkoutUrl += `&billing_email=${encodeURIComponent(user.email)}`;
+    }
+
     const handleCheckout = () => {
         if (items.length === 0) return;
-
-        // Open WooCommerce checkout
-        const itemsParam = items.map((i) => `${i.variationId || i.product.id}:${i.quantity}`).join(',');
-        let checkoutUrl = `${WC_STORE_URL}/?fill-cart=${itemsParam}`;
-
-        // Αν ο χρήστης είναι συνδεδεμένος, στέλνουμε το email του για να προ-συμπληρωθεί
-        if (user?.email) {
-            checkoutUrl += `&billing_email=${encodeURIComponent(user.email)}`;
-        }
-
-        window.location.href = checkoutUrl;
+        setShowEmbeddedCheckout(true);
+        window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
     if (items.length === 0) {
@@ -54,6 +54,34 @@ export default function CheckoutPage() {
                     <ChevronLeft className="w-4 h-4" />
                     Συνέχεια Αγορών
                 </Link>
+            </main>
+        );
+    }
+
+    if (showEmbeddedCheckout) {
+        return (
+            <main className="container mx-auto px-2 sm:px-4 pt-24 md:pt-28 pb-16 min-h-[85vh] flex flex-col">
+                <div className="flex items-center justify-between mb-4 px-2">
+                    <button
+                        onClick={() => setShowEmbeddedCheckout(false)}
+                        className="inline-flex items-center gap-1.5 font-body text-xs sm:text-sm font-bold text-slate-600 hover:text-[#FF1D8E] transition-colors bg-slate-100/80 px-4 py-2 rounded-full shadow-2xs"
+                    >
+                        <ChevronLeft className="w-4 h-4" />
+                        Πίσω στο Καλάθι
+                    </button>
+                    <span className="text-xs font-bold text-slate-400 font-body uppercase tracking-wider hidden sm:inline">
+                        🔒 Ασφαλής Ολοκλήρωση Αγοράς
+                    </span>
+                </div>
+
+                <div className="w-full flex-1 bg-white rounded-3xl border border-slate-200 shadow-lg overflow-hidden min-h-[750px] relative">
+                    <iframe
+                        src={checkoutUrl}
+                        title="Secure Checkout"
+                        className="w-full h-full min-h-[750px] border-none"
+                        allow="payment"
+                    />
+                </div>
             </main>
         );
     }
