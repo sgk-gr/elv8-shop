@@ -31,7 +31,7 @@ export default function CheckoutPage() {
     const [showEmbeddedCheckout, setShowEmbeddedCheckout] = useState(false);
 
     const itemsParam = items.map((i) => `${i.variationId || i.product.id}:${i.quantity}`).join(',');
-    let checkoutUrl = `${WC_STORE_URL}/?fill-cart=${itemsParam}`;
+    let checkoutUrl = `${WC_STORE_URL}/checkout/?fill-cart=${itemsParam}`;
     if (user?.email) {
         checkoutUrl += `&billing_email=${encodeURIComponent(user.email)}`;
     }
