@@ -21,6 +21,18 @@ const nextConfig: NextConfig = {
     turbopack: {
         root: process.cwd(),
     },
+    async rewrites() {
+        return [
+            {
+                source: "/store-checkout/:path*",
+                destination: "https://store.elv8now.com/checkout/:path*",
+            },
+            {
+                source: "/store-api/:path*",
+                destination: "https://store.elv8now.com/:path*",
+            },
+        ];
+    },
     experimental: {
         scrollRestoration: false,
     },
