@@ -37,7 +37,7 @@ export default function CheckoutPage() {
             checkoutUrl += `&billing_email=${encodeURIComponent(user.email)}`;
         }
 
-        window.location.href = checkoutUrl;
+        window.location.assign(checkoutUrl);
     };
 
     if (items.length === 0) {
