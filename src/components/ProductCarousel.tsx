@@ -1,9 +1,11 @@
 "use client";
 
 import { WooProduct } from "@/types/product";
-import ProductCard from "@/components/ProductCard";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, MapPin, ShoppingCart } from "lucide-react";
 import { useRef } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { useCart } from "@/context/CartContext";
 
 interface ProductCarouselProps {
     title: string;
@@ -13,7 +15,73 @@ interface ProductCarouselProps {
     backUrl?: string;
 }
 
-export default function ProductCarousel({ title, subtitle, products, isLoading, backUrl }: ProductCarouselProps) {
+function ProductAqaCard({ product }: { product: WooProduct }) {
+    const { addItem, setIsCartOpen } = useCart();
+
+    const imageUrl =
+        product.images?.[0]?.src ||
+        product.images?.[0]?.thumbnail ||
+        "/elv8-can-clean.png";
+
+    const price = parseFloat(product.price || product.regular_price || "0");
+    const formattedPrice = `€${price.toFixed(2)}`;
+
+    const handleAddToCart = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        addItem(product, 1);
+        setIsCartOpen(true);
+    };
+
+    return (
+        <Link href={`/product/${product.id}`} className="block group">
+            <div className="relative bg-[#DFF0FA] rounded-3xl pt-16 pb-5 px-5 flex flex-col items-center min-w-[200px] w-full transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1">
+                {/* Product Can — overflows top */}
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-28 h-36 z-10 drop-shadow-xl transition-transform duration-300 group-hover:scale-105">
+                    <Image
+                        src={imageUrl}
+                        alt={product.name}
+                        fill
+                        className="object-contain"
+                        sizes="112px"
+                    />
+                </div>
+
+                {/* Name */}
+                <h3 className="font-display font-bold text-slate-900 text-base mt-2 text-center line-clamp-2 min-h-[2.5rem]">
+                    {product.name}
+                </h3>
+
+                {/* Size & Price Row */}
+                <div className="flex items-center justify-between w-full mt-1 mb-4">
+                    <span className="text-slate-500 text-xs font-medium">330mL</span>
+                    <span className="font-bold text-slate-900 text-base">{formattedPrice}</span>
+                </div>
+
+                {/* Buttons */}
+                <div className="flex gap-2 w-full">
+                    <Link
+                        href="/store-locator"
+                        onClick={(e) => e.stopPropagation()}
+                        className="flex-1 flex items-center justify-center gap-1.5 bg-[#1a3a5c] hover:bg-[#0f2744] text-white text-[11px] font-bold rounded-xl py-2.5 px-2 transition-colors duration-200"
+                    >
+                        <MapPin className="w-3 h-3 shrink-0" />
+                        Find stockist
+                    </Link>
+                    <button
+                        onClick={handleAddToCart}
+                        className="flex-1 flex items-center justify-center gap-1.5 bg-[#1a3a5c] hover:bg-[#FF1D8E] text-white text-[11px] font-bold rounded-xl py-2.5 px-2 transition-colors duration-200"
+                    >
+                        <ShoppingCart className="w-3 h-3 shrink-0" />
+                        Order now
+                    </button>
+                </div>
+            </div>
+        </Link>
+    );
+}
+
+export default function ProductCarousel({ title, products, isLoading }: ProductCarouselProps) {
     const scrollRef = useRef<HTMLDivElement>(null);
     const isMouseDown = useRef(false);
     const startX = useRef(0);
@@ -24,20 +92,16 @@ export default function ProductCarousel({ title, subtitle, products, isLoading, 
         isMouseDown.current = true;
         startX.current = e.pageX - scrollRef.current.offsetLeft;
         scrollLeftPos.current = scrollRef.current.scrollLeft;
-        scrollRef.current.style.scrollBehavior = 'auto'; // Disable CSS smooth scroll while dragging
+        scrollRef.current.style.scrollBehavior = "auto";
     };
 
     const handleMouseLeave = () => {
-        if (scrollRef.current) {
-            scrollRef.current.style.scrollBehavior = 'smooth';
-        }
+        if (scrollRef.current) scrollRef.current.style.scrollBehavior = "smooth";
         isMouseDown.current = false;
     };
 
     const handleMouseUp = () => {
-        if (scrollRef.current) {
-            scrollRef.current.style.scrollBehavior = 'smooth';
-        }
+        if (scrollRef.current) scrollRef.current.style.scrollBehavior = "smooth";
         isMouseDown.current = false;
     };
 
@@ -45,69 +109,60 @@ export default function ProductCarousel({ title, subtitle, products, isLoading, 
         if (!isMouseDown.current || !scrollRef.current) return;
         e.preventDefault();
         const x = e.pageX - scrollRef.current.offsetLeft;
-        const walk = (x - startX.current) * 1.5;
-        scrollRef.current.scrollLeft = scrollLeftPos.current - walk;
+        scrollRef.current.scrollLeft = scrollLeftPos.current - (x - startX.current) * 1.5;
     };
 
-    const scroll = (direction: 'left' | 'right') => {
+    const scroll = (direction: "left" | "right") => {
         if (scrollRef.current) {
             const { scrollLeft, clientWidth } = scrollRef.current;
-            const scrollTo = direction === 'left' ? scrollLeft - clientWidth : scrollLeft + clientWidth;
-            scrollRef.current.scrollTo({ left: scrollTo, behavior: 'smooth' });
+            scrollRef.current.scrollTo({
+                left: direction === "left" ? scrollLeft - clientWidth * 0.7 : scrollLeft + clientWidth * 0.7,
+                behavior: "smooth",
+            });
         }
     };
 
     if (!isLoading && products.length === 0) return null;
 
+    // Split title into two parts for styled heading
+    const titleWords = title.split(" ");
+    const firstWord = titleWords[0];
+    const restWords = titleWords.slice(1).join(" ");
+
     return (
-        <section className="w-full px-4 md:px-8">
-            <div className="flex items-center justify-between mb-8 max-w-7xl mx-auto">
-                <div className="flex items-baseline gap-4">
-                    <h2 className="font-display text-2xl md:text-3xl font-bold tracking-tight text-slate-900">
-                        {title}
-                    </h2>
-                    {subtitle && (
-                        <p className="text-slate-500 text-xs md:text-sm font-medium hidden sm:block">
-                            {subtitle}
-                        </p>
-                    )}
+        <section className="w-full px-4 md:px-8 py-4">
+            {/* Header Row */}
+            <div className="flex items-center justify-between mb-10 max-w-7xl mx-auto">
+                <h2 className="font-display text-2xl md:text-3xl font-light text-slate-900">
+                    <span className="font-black text-[#1a3a5c]">{firstWord} </span>
+                    <span className="font-black italic text-[#FF1D8E]">{restWords || "Suited to Your Expectations"}</span>
+                </h2>
+
+                {/* Arrow Buttons */}
+                <div className="flex gap-2">
+                    <button
+                        onClick={() => scroll("left")}
+                        className="w-10 h-10 rounded-full bg-[#DFF0FA] hover:bg-[#1a3a5c] hover:text-white text-[#1a3a5c] flex items-center justify-center transition-colors duration-200 shadow-sm"
+                        aria-label="Scroll left"
+                    >
+                        <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    <button
+                        onClick={() => scroll("right")}
+                        className="w-10 h-10 rounded-full bg-[#DFF0FA] hover:bg-[#1a3a5c] hover:text-white text-[#1a3a5c] flex items-center justify-center transition-colors duration-200 shadow-sm"
+                        aria-label="Scroll right"
+                    >
+                        <ChevronRight className="w-5 h-5" />
+                    </button>
                 </div>
-                <a
-                    href="/products"
-                    className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-slate-300 bg-white text-xs font-semibold text-slate-700 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300 shadow-sm"
-                >
-                    View All
-                    <ChevronRight className="w-3.5 h-3.5" />
-                </a>
             </div>
 
-            <div className="relative group/carousel w-full px-2 md:px-12">
-                {/* Navigation Arrows */}
-                <button
-                    onClick={() => scroll('left')}
-                    className="absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 z-30 p-3.5 sm:p-4 rounded-full bg-white/95 backdrop-blur-md border border-slate-200 shadow-xl text-slate-800 opacity-90 sm:opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 hover:bg-[#FF1D8E] hover:text-white hover:border-[#FF1D8E] flex items-center justify-center cursor-pointer"
-                    aria-label="Scroll left"
-                >
-                    <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
-                </button>
-                <button
-                    onClick={() => scroll('right')}
-                    className="absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 z-30 p-3.5 sm:p-4 rounded-full bg-white/95 backdrop-blur-md border border-slate-200 shadow-xl text-slate-800 opacity-90 sm:opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 hover:bg-[#FF1D8E] hover:text-white hover:border-[#FF1D8E] flex items-center justify-center cursor-pointer"
-                    aria-label="Scroll right"
-                >
-                    <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
-                </button>
-
+            {/* Carousel */}
+            <div className="relative w-full max-w-7xl mx-auto">
                 {isLoading ? (
-                    <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
-                        {Array.from({ length: 10 }).map((_, i) => (
-                            <div key={i} className="flex-shrink-0 w-[300px] sm:w-[340px] space-y-4 animate-pulse">
-                                <div className="aspect-[3/4] bg-secondary rounded-3xl" />
-                                <div className="space-y-2">
-                                    <div className="h-5 bg-secondary rounded-full w-3/4" />
-                                    <div className="h-4 bg-secondary rounded-full w-1/4" />
-                                </div>
-                            </div>
+                    <div className="flex gap-6 overflow-x-auto pb-6 pt-14">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                            <div key={i} className="flex-shrink-0 w-[200px] h-[260px] bg-[#DFF0FA] rounded-3xl animate-pulse" />
                         ))}
                     </div>
                 ) : (
@@ -117,11 +172,11 @@ export default function ProductCarousel({ title, subtitle, products, isLoading, 
                         onMouseLeave={handleMouseLeave}
                         onMouseUp={handleMouseUp}
                         onMouseMove={handleMouseMove}
-                        className="flex gap-6 sm:gap-8 overflow-x-auto pb-6 pt-2 px-2 cursor-grab active:cursor-grabbing select-none touch-pan-x [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+                        className="flex gap-5 sm:gap-7 overflow-x-auto pb-6 pt-14 px-2 cursor-grab active:cursor-grabbing select-none touch-pan-x [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
                     >
                         {products.map((product: WooProduct) => (
-                            <div key={product.id} className="flex-shrink-0 w-[300px] sm:w-[340px]">
-                                <ProductCard product={product} backUrl={backUrl} />
+                            <div key={product.id} className="flex-shrink-0 w-[200px] sm:w-[220px]">
+                                <ProductAqaCard product={product} />
                             </div>
                         ))}
                     </div>

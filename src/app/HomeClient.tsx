@@ -324,10 +324,9 @@ export default function HomeClient({
         </div>
       </section>
 
-      {/* ================= PRODUCT CAROUSEL SECTION ================= */}
-      <div className="w-full snap-align-none bg-gradient-to-br from-pink-50/60 via-white to-yellow-50/80 text-slate-900 py-16 border-t border-slate-200/80">
+      <div className="w-full snap-align-none bg-white text-slate-900 py-6 border-t border-slate-100">
         <ProductCarousel
-          title="Catalog"
+          title="ELV8 Suited to Your Expectations"
           products={[...initialFeaturedProducts].reverse()}
           isLoading={false}
           backUrl="/"
