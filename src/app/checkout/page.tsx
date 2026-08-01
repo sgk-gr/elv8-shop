@@ -32,7 +32,7 @@ export default function CheckoutPage() {
         if (items.length === 0) return;
 
         const itemsParam = items.map((i) => `${i.variationId || i.product.id}:${i.quantity}`).join(',');
-        let checkoutUrl = `/store-checkout/?fill-cart=${itemsParam}`;
+        let checkoutUrl = `${WC_STORE_URL}/checkout/?fill-cart=${itemsParam}`;
         if (user?.email) {
             checkoutUrl += `&billing_email=${encodeURIComponent(user.email)}`;
         }
