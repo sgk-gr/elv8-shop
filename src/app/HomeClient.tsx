@@ -22,45 +22,21 @@ export default function HomeClient({
 
   const containerRef = useState<HTMLDivElement | null>(null)[0];
 
+  const [isMobile, setIsMobile] = useState(false);
+
   // Restore scroll position on refresh and handle smart auto-scroll between Hero & Section 2
   useEffect(() => {
+    setIsMobile(window.innerWidth < 1024);
     if (typeof window !== "undefined" && "scrollRestoration" in window.history) {
       window.history.scrollRestoration = "auto";
     }
 
-    let ticking = false;
-    let isAutoScrolling = false;
-
     const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const currentScroll = window.scrollY;
-          setScrollY(currentScroll);
-          const maxScroll = Math.min(window.innerHeight, 600);
-          const progress = Math.min(Math.max(currentScroll / maxScroll, 0), 1);
-          setScrollProgress(progress);
-
-          // Smart Auto Scroll between Hero (0) and Section 2 (window.innerHeight)
-          const heroHeight = window.innerHeight;
-          if (!isAutoScrolling) {
-            if (currentScroll > 60 && currentScroll < heroHeight * 0.45) {
-              isAutoScrolling = true;
-              const section2 = document.getElementById("section-2");
-              if (section2) {
-                section2.scrollIntoView({ behavior: "smooth" });
-                setTimeout(() => { isAutoScrolling = false; }, 800);
-              }
-            } else if (currentScroll > heroHeight * 0.55 && currentScroll < heroHeight - 60) {
-              isAutoScrolling = true;
-              window.scrollTo({ top: 0, behavior: "smooth" });
-              setTimeout(() => { isAutoScrolling = false; }, 800);
-            }
-          }
-
-          ticking = false;
-        });
-        ticking = true;
-      }
+      const currentScroll = window.scrollY;
+      setScrollY(currentScroll);
+      const maxScroll = Math.max(Math.min(window.innerHeight, 600), 100);
+      const progress = Math.min(Math.max(currentScroll / maxScroll, 0), 1);
+      setScrollProgress(progress);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -113,7 +89,7 @@ export default function HomeClient({
 
         {/* 2. Strawberry (Middle Left) */}
         <div 
-          className="absolute top-[52%] left-[8%] lg:left-[32%] z-10 pointer-events-none transition-transform duration-75 ease-out flex flex-col md:flex-col-reverse items-center gap-2"
+          className="absolute top-[52%] left-[8%] lg:left-[32%] z-10 pointer-events-none transition-transform duration-75 ease-out flex flex-col items-center gap-2"
           style={{
             transform: fruit2Transform,
             opacity: fruitOpacity,
@@ -132,7 +108,7 @@ export default function HomeClient({
 
         {/* 3. Strawberry (Top Right) */}
         <div 
-          className="absolute top-[20%] right-[4%] md:right-[10%] z-10 pointer-events-none transition-transform duration-75 ease-out flex flex-col md:flex-col-reverse items-center gap-2"
+          className="absolute top-[20%] right-[4%] md:right-[10%] z-10 pointer-events-none transition-transform duration-75 ease-out flex flex-col items-center gap-2"
           style={{
             transform: fruit3Transform,
             opacity: fruitOpacity,
@@ -146,12 +122,12 @@ export default function HomeClient({
               className="object-contain drop-shadow-xl"
             />
           </div>
-          <span className="text-white text-[11px] md:text-sm font-semibold tracking-[0.18em] uppercase drop-shadow-lg">Antioxidants</span>
+          <span className="text-white text-[11px] md:text-sm font-semibold tracking-[0.18em] uppercase drop-shadow-lg">Nootropics & Focus</span>
         </div>
 
         {/* 4. Lemon Slice (Middle Right) */}
         <div 
-          className="absolute top-[54%] right-[8%] lg:right-[34%] z-10 pointer-events-none transition-transform duration-75 ease-out flex flex-col items-center gap-2"
+          className="absolute top-[58%] md:top-[54%] right-[8%] lg:right-[34%] z-10 pointer-events-none transition-transform duration-75 ease-out flex flex-col items-center gap-2"
           style={{
             transform: fruit4Transform,
             opacity: fruitOpacity,
@@ -177,7 +153,7 @@ export default function HomeClient({
           }}
         >
           <span 
-            className="text-[34vw] sm:text-[28vw] md:text-[22vw] lg:text-[18vw] font-display font-black tracking-widest text-transparent uppercase whitespace-nowrap select-none"
+            className="text-[34vw] sm:text-[28vw] md:text-[22vw] lg:text-[18vw] font-display font-black tracking-widest text-transparent uppercase whitespace-nowrap select-none responsive-stroke"
             style={{ WebkitTextStroke: "3px #FFFFFF" }}
           >
             ELV8
@@ -203,7 +179,7 @@ export default function HomeClient({
         </div>
 
         {/* STATIC ORDER BUTTON (Fixed at Hero Bottom) */}
-        <div className="z-30 flex justify-center pb-4">
+        <div className="z-30 flex justify-center pb-10 md:pb-4">
           <EnergyButton />
         </div>
 
@@ -213,7 +189,7 @@ export default function HomeClient({
       </section>
 
       {/* ================= INGREDIENTS / FEATURES SECTION ================= */}
-      <section id="section-2" className="relative h-screen w-full flex items-center justify-center bg-white overflow-hidden py-12 pt-16">
+      <section id="section-2" className="relative min-h-screen lg:h-screen w-full flex items-center justify-center bg-white overflow-hidden py-20 lg:py-12 lg:pt-16">
         
         {/* Left Yellow & Right Red Shapes */}
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
@@ -257,7 +233,7 @@ export default function HomeClient({
                   </svg>
                 </div>
                 <p className="text-black text-base sm:text-lg md:text-[18px] lg:text-[19px] font-normal leading-relaxed m-0">
-                  <span className="font-bold">Caffeine</span> gives you an instant boost of energy, increases brain function & gets your Hustle Mode On!
+                  <span className="font-bold">Natural Caffeine</span> gives you an instant boost of energy, increases brain function & gets your Hustle Mode On!
                 </p>
               </div>
 
@@ -273,7 +249,7 @@ export default function HomeClient({
                   </svg>
                 </div>
                 <p className="text-black text-base sm:text-lg md:text-[18px] lg:text-[19px] font-normal leading-relaxed m-0">
-                  <span className="font-bold">B vitamins</span> like B2 enable your body to create natural energy by converting body fat into Glucose.<br className="hidden sm:block" />
+                  <span className="font-bold">Electrolytes & Vitamins</span> like B2 enable your body to create natural energy by converting body fat into Glucose.<br className="hidden sm:block" />
                   B6 Improves brain & immune function. B12 helps combat fatigue.
                 </p>
               </div>
@@ -291,8 +267,7 @@ export default function HomeClient({
                   </svg>
                 </div>
                 <p className="text-black text-base sm:text-lg md:text-[18px] lg:text-[19px] font-normal leading-relaxed m-0">
-                  <span className="font-bold">Taurine</span> increases force generation in muscles, allowing athletes to hold a given intensity for a longer<br className="hidden sm:block" />
-                  period.
+                  <span className="font-bold">Nootropics / Focus</span> sharpen cognitive performance, keeping you focused, alert and productive during the most demanding hours of your day.
                 </p>
               </div>
 
@@ -304,7 +279,7 @@ export default function HomeClient({
                   </svg>
                 </div>
                 <p className="text-black text-base sm:text-lg md:text-[18px] lg:text-[19px] font-normal leading-relaxed m-0">
-                  <span className="font-bold">Niacin</span> assists in your body's natural energy production, keeps you focused & on top of your game.
+                  <span className="font-bold">Zero Sugar</span> enables a slow release of energy, no spikes, no crash. Just steady, clean fuel that keeps you at peak performance all day long.
                 </p>
               </div>
 

@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Πολιτική Επιστροφών",
+    title: "Return Policy | ELV8 Energy",
     description:
-        "Μάθετε για την πολιτική επιστροφών και ανταλλαγών του Vaia Charms. Επιστροφές εντός 14 ημερών για ελαττωματικά ή λανθασμένα προϊόντα. Δωρεάν επιστροφή.",
+        "Learn about the ELV8 Energy return policy. Replacement within 14 days for damaged or defective products.",
     openGraph: {
-        title: "Πολιτική Επιστροφών | Vaia Charms",
-        description: "Επιστροφές εντός 14 ημερών για ελαττωματικά προϊόντα. Δωρεάν επιστροφή.",
-        url: "https://www.vaiacharms.gr/returns",
+        title: "Return Policy | ELV8 Energy",
+        description: "Replacements within 14 days for damaged or defective products.",
+        url: "https://elv8now.com/returns",
     },
-    alternates: { canonical: "https://www.vaiacharms.gr/returns" },
+    alternates: { canonical: "https://elv8now.com/returns" },
 };
 
 export default function ReturnsLayout({ children }: { children: React.ReactNode }) {

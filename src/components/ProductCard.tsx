@@ -51,11 +51,9 @@ export default function ProductCard({ product, backUrl }: ProductCardProps) {
     <div className="relative group block h-full pt-2 pb-6">
       {/* Main Card */}
       <Link href={`/product/${product.id}/?backUrl=${encodeURIComponent(effectiveBackUrl)}`}>
-        <div className={`relative rounded-3xl p-6 transition-all duration-500 flex flex-col items-center justify-between h-full min-h-[420px] text-center border ${
-          product.id % 2 === 0
-            ? "bg-gradient-to-b from-[#22C55E]/90 to-[#15803D] text-white border-green-500 shadow-lg shadow-green-900/20"
-            : "bg-white text-slate-900 border-slate-100 shadow-sm hover:shadow-md"
-        }`}>
+        <div
+          className="relative rounded-[20px] sm:rounded-3xl p-4 sm:p-6 transition-all duration-500 flex flex-col items-center justify-between h-full min-h-[380px] sm:min-h-[420px] text-center !bg-white text-slate-900 border border-slate-200 shadow-md hover:shadow-xl group-hover:-translate-y-1"
+        >
 
           {/* Top Left "NEW" Badge */}
           {isNew && (
@@ -70,11 +68,7 @@ export default function ProductCard({ product, backUrl }: ProductCardProps) {
           <button
             onClick={handleFavoriteClick}
             aria-label="Add to favorites"
-            className={`absolute top-4 right-4 z-20 w-8 h-8 rounded-full flex items-center justify-center transition-all shadow-sm ${
-              product.id % 2 === 0
-                ? "bg-white/20 text-white hover:bg-white hover:text-red-500"
-                : "bg-slate-100 text-slate-500 hover:bg-red-50 hover:text-red-500"
-            }`}
+            className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full flex items-center justify-center transition-all shadow-sm bg-[#ffffff] border border-slate-200 text-slate-400 hover:scale-110 hover:text-red-500"
           >
             <Heart className={`w-4 h-4 ${favorite ? "fill-red-500 text-red-500" : ""}`} />
           </button>
@@ -101,24 +95,18 @@ export default function ProductCard({ product, backUrl }: ProductCardProps) {
           {/* Product Info & Action Row */}
           <div className="w-full space-y-1 mt-auto pb-1 relative">
             <h3
-              className={`font-display text-base font-bold leading-tight line-clamp-2 min-h-[2.5rem] flex items-center justify-center px-2 ${
-                product.id % 2 === 0 ? "text-white" : "text-slate-900"
-              }`}
+              className="font-display text-base font-bold leading-tight line-clamp-2 min-h-[2.5rem] flex items-center justify-center px-2 text-slate-900"
               dangerouslySetInnerHTML={{ __html: product.name }}
             />
 
             <div className="flex items-center justify-between pt-2 px-1">
               <div className="flex items-baseline gap-1.5">
                 {hasDiscount && (
-                  <span className={`text-xs line-through ${
-                    product.id % 2 === 0 ? "text-white/70" : "text-slate-400"
-                  }`}>
+                  <span className="text-xs line-through text-slate-400">
                     €{product.regular_price}
                   </span>
                 )}
-                <span className={`font-display font-black text-lg ${
-                  product.id % 2 === 0 ? "text-white" : "text-slate-900"
-                }`}>
+                <span className="font-display font-black text-lg text-slate-900">
                   €{product.price}
                 </span>
               </div>
@@ -127,11 +115,7 @@ export default function ProductCard({ product, backUrl }: ProductCardProps) {
               <button
                 onClick={handleAddToCart}
                 aria-label="Add to cart"
-                className={`w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:scale-110 active:scale-95 transition-all duration-300 ${
-                  product.id % 2 === 0
-                    ? "bg-white text-slate-900 hover:bg-slate-100"
-                    : "bg-black text-white hover:bg-[#FF1D8E]"
-                }`}
+                className="w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:scale-110 active:scale-95 transition-all duration-300 bg-black text-white hover:bg-[#FF1D8E]"
               >
                 <ShoppingBag className="w-4 h-4" />
               </button>

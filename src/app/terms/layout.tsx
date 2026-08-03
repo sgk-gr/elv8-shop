@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Όροι Χρήσης",
+    title: "Terms of Use | ELV8 Energy",
     description:
-        "Οι όροι και προϋποθέσεις χρήσης του eshop Vaia Charms. Πληροφορίες για αγορές, παραδόσεις, επιστροφές και τα δικαιώματά σας ως καταναλωτής.",
+        "Terms and conditions of use for ELV8 Energy. Information on purchases, delivery, returns, and consumer rights.",
     openGraph: {
-        title: "Όροι Χρήσης | Vaia Charms",
-        description: "Όροι και προϋποθέσεις χρήσης του Vaia Charms eshop.",
-        url: "https://www.vaiacharms.gr/terms",
+        title: "Terms of Use | ELV8 Energy",
+        description: "Terms and conditions of use for ELV8 Energy.",
+        url: "https://elv8now.com/terms",
     },
-    alternates: { canonical: "https://www.vaiacharms.gr/terms" },
+    alternates: { canonical: "https://elv8now.com/terms" },
     robots: { index: false, follow: false },
 };
 

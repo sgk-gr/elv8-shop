@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Συλλογές & Κατηγορίες",
+    title: "Flavors & Collection | ELV8 Energy",
     description:
-        "Εξερευνήστε όλες τις κατηγορίες κοσμημάτων, cosmetics και αξεσουάρ στο Vaia Charms. Βραχιόλια, σκουλαρίκια, κολιέ, δαχτυλίδια, ρολόγια CLUSE και πολλά άλλα. Δωρεάν αποστολή άνω των 65€.",
+        "Explore all ELV8 Energy drink flavors and multi-packs. Zero Sugar, 200mg Natural Caffeine, Electrolytes & B-Vitamins. Free shipping on orders over €65.",
     openGraph: {
-        title: "Συλλογές & Κατηγορίες | Vaia Charms",
-        description: "Εξερευνήστε όλες τις κατηγορίες κοσμημάτων, cosmetics και αξεσουάρ.",
-        url: "https://www.vaiacharms.gr/products",
+        title: "Flavors & Collection | ELV8 Energy",
+        description: "Explore all ELV8 Energy drink flavors and multi-packs.",
+        url: "https://elv8now.com/products",
     },
     alternates: {
-        canonical: "https://www.vaiacharms.gr/products",
+        canonical: "https://elv8now.com/products",
     },
 };
 

@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Πολιτική Απορρήτου",
+    title: "Privacy Policy | ELV8 Energy",
     description:
-        "Η πολιτική απορρήτου του Vaia Charms. Πληροφορίες για τον τρόπο συλλογής, χρήσης και προστασίας των προσωπικών δεδομένων σας σύμφωνα με τον GDPR.",
+        "ELV8 Energy privacy policy. Information on how we collect, use, and protect your personal data in compliance with GDPR.",
     openGraph: {
-        title: "Πολιτική Απορρήτου | Vaia Charms",
-        description: "Πληροφορίες για την προστασία των προσωπικών δεδομένων σας (GDPR).",
-        url: "https://www.vaiacharms.gr/privacy",
+        title: "Privacy Policy | ELV8 Energy",
+        description: "Information on how we protect your personal data (GDPR).",
+        url: "https://elv8now.com/privacy",
     },
-    alternates: { canonical: "https://www.vaiacharms.gr/privacy" },
+    alternates: { canonical: "https://elv8now.com/privacy" },
     robots: { index: false, follow: false },
 };
 

@@ -10,8 +10,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2, ArrowRight, Mail, Lock, User, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
-import Image from "next/image";
-import logoImg from "@/assets/logotipo13.png";
 
 export default function AuthPage() {
     const [isLogin, setIsLogin] = useState(true);
@@ -67,50 +65,43 @@ export default function AuthPage() {
     };
 
     return (
-        <main className="min-h-[80vh] flex items-center justify-center py-12 px-4 md:px-8 bg-slate-50/50">
+        <main className="min-h-[80vh] flex items-center justify-center py-12 px-4 md:px-8 bg-gradient-to-br from-pink-50/60 via-white to-yellow-50/60">
             <div className="w-full max-w-5xl grid md:grid-cols-2 bg-white rounded-[2.5rem] overflow-hidden shadow-2xl border border-slate-100 animate-in fade-in zoom-in duration-700">
 
                 {/* Left Side: Image/Branding */}
-                <div className="hidden md:block relative overflow-hidden" style={{ backgroundColor: '#C4196D' }}>
-                    {/* no gradient */}
-                    <div className="absolute inset-0 flex flex-col p-10 text-white space-y-0">
-                        {/* Logo - top left with white background */}
+                <div className="hidden md:block relative overflow-hidden bg-gradient-to-br from-[#FF1D8E] via-[#FF5E97] to-[#FDE047]">
+                    <div className="absolute inset-0 bg-black/10 backdrop-blur-[1px]" />
+                    <div className="relative z-10 flex flex-col p-10 text-white space-y-0 h-full">
+                        {/* Logo - top left */}
                         <div className="flex items-center">
-                            <div className="bg-white rounded-full p-4 flex items-center justify-center shadow-lg w-48 h-20">
-                                <Image
-                                    src={logoImg}
-                                    alt="Vaia Charms"
-                                    width={160}
-                                    height={70}
-                                    className="object-contain mix-blend-multiply"
-                                    priority
-                                />
-                            </div>
+                            <span className="font-display text-4xl font-black tracking-widest text-white uppercase border-2 border-white px-4 py-1.5 rounded-2xl">
+                                ELV8
+                            </span>
                         </div>
                         {/* Main content - centered */}
-                        <div className="flex flex-col justify-start flex-1 space-y-6 pt-4">
+                        <div className="flex flex-col justify-start flex-1 space-y-6 pt-8">
                             <div className="space-y-4">
                                 <h2 className="font-display text-4xl font-bold leading-tight">
-                                    {isLogin ? "Καλώς ήρθατε στο Vaia Charms" : "Γίνετε μέλος της κοινότητας Vaia Charms"}
+                                    {isLogin ? "Welcome to ELV8 Energy" : "Join the ELV8 Movement"}
                                 </h2>
-                                <p className="font-body text-white/70 text-lg leading-relaxed">
+                                <p className="font-body text-white/80 text-base leading-relaxed">
                                     {isLogin
-                                        ? "Συνδεθείτε για να δείτε τις παραγγελίες σας και να διαχειριστείτε το προφίλ σας."
-                                        : "Δημιουργήστε λογαριασμό για ταχύτερο checkout και αποκλειστικές προσφορές."}
+                                        ? "Sign in to track your orders, manage your profile, and fuel your daily hustle."
+                                        : "Create an account for faster checkout, exclusive drops, and special offers."}
                                 </p>
                             </div>
-                            <div className="space-y-4 pt-8">
+                            <div className="space-y-4 pt-6">
                                 <div className="flex items-center gap-3">
-                                    <CheckCircle2 className="w-5 h-5 text-green-400" />
-                                    <span className="text-sm font-medium">Διαχείριση Παραγγελιών</span>
+                                    <CheckCircle2 className="w-5 h-5 text-white" />
+                                    <span className="text-sm font-medium">Order Tracking</span>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <CheckCircle2 className="w-5 h-5 text-green-400" />
-                                    <span className="text-sm font-medium">Αποθήκευση Διεύθυνσης</span>
+                                    <CheckCircle2 className="w-5 h-5 text-white" />
+                                    <span className="text-sm font-medium">Saved Addresses</span>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <CheckCircle2 className="w-5 h-5 text-green-400" />
-                                    <span className="text-sm font-medium">Προσωποποιημένες Προτάσεις</span>
+                                    <CheckCircle2 className="w-5 h-5 text-white" />
+                                    <span className="text-sm font-medium">Exclusive Offers & Drops</span>
                                 </div>
                             </div>
                         </div>
@@ -121,16 +112,16 @@ export default function AuthPage() {
                 <div className="p-8 md:p-16 flex flex-col justify-center">
                     <div className="max-w-md mx-auto w-full space-y-10">
                         <div className="space-y-2">
-                            <h3 className="font-display text-3xl font-bold tracking-tight text-[#C4196D]">
-                                {isLogin ? "Σύνδεση" : "Εγγραφή"}
+                            <h3 className="font-display text-3xl font-bold tracking-tight text-[#FF1D8E]">
+                                {isLogin ? "Sign In" : "Register"}
                             </h3>
                             <p className="text-muted-foreground text-sm font-body">
-                                {isLogin ? "Δεν έχετε λογαριασμό;" : "Έχετε ήδη λογαριασμό;"}
+                                {isLogin ? "Don't have an account?" : "Already have an account?"}
                                 <button
                                     onClick={() => setIsLogin(!isLogin)}
-                                    className="ml-2 text-primary font-bold hover:underline"
+                                    className="ml-2 text-[#FF1D8E] font-bold hover:underline"
                                 >
-                                    {isLogin ? "Δημιουργήστε έναν εδώ" : "Συνδεθείτε εδώ"}
+                                    {isLogin ? "Create one here" : "Sign in here"}
                                 </button>
                             </p>
                         </div>
@@ -139,12 +130,12 @@ export default function AuthPage() {
                             {!isLogin && (
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="space-y-2">
-                                        <Label htmlFor="firstName">Όνομα</Label>
+                                        <Label htmlFor="firstName">First Name</Label>
                                         <div className="relative">
                                             <User className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
                                             <Input
                                                 id="firstName"
-                                                placeholder="Πέτρος"
+                                                placeholder="John"
                                                 className="pl-10 rounded-xl"
                                                 value={formData.firstName}
                                                 onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
@@ -153,10 +144,10 @@ export default function AuthPage() {
                                         </div>
                                     </div>
                                     <div className="space-y-2">
-                                        <Label htmlFor="lastName">Επώνυμο</Label>
+                                        <Label htmlFor="lastName">Last Name</Label>
                                         <Input
                                             id="lastName"
-                                            placeholder="Παπαδόπουλος"
+                                            placeholder="Doe"
                                             className="rounded-xl"
                                             value={formData.lastName}
                                             onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
@@ -167,12 +158,12 @@ export default function AuthPage() {
                             )}
 
                             <div className="space-y-2">
-                                <Label htmlFor="username">{isLogin ? "Username ή Email" : "Στοιχείο Χρήστη (Username)"}</Label>
+                                <Label htmlFor="username">{isLogin ? "Username or Email" : "Username"}</Label>
                                 <div className="relative">
                                     <User className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
                                     <Input
                                         id="username"
-                                        placeholder="petros88"
+                                        placeholder="username"
                                         className="pl-10 rounded-xl"
                                         value={formData.username}
                                         onChange={(e) => setFormData({ ...formData, username: e.target.value })}
@@ -189,7 +180,7 @@ export default function AuthPage() {
                                         <Input
                                             id="email"
                                             type="email"
-                                            placeholder="petros@example.com"
+                                            placeholder="john@example.com"
                                             className="pl-10 rounded-xl"
                                             value={formData.email}
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -201,10 +192,10 @@ export default function AuthPage() {
 
                             <div className="space-y-2">
                                 <div className="flex items-center justify-between">
-                                    <Label htmlFor="password">Συνθηματικό</Label>
+                                    <Label htmlFor="password">Password</Label>
                                     {isLogin && (
                                         <Link href="#" className="text-xs text-muted-foreground hover:text-primary transition-colors font-semibold">
-                                            Ξεχάσατε το συνθηματικό;
+                                            Forgot password?
                                         </Link>
                                     )}
                                 </div>
@@ -224,14 +215,14 @@ export default function AuthPage() {
 
                             <Button
                                 type="submit"
-                                className="w-full h-12 rounded-xl font-bold tracking-wide shadow-lg shadow-[#C4196D]/30 bg-[#C4196D] hover:bg-[#a8155d] text-white"
+                                className="w-full h-12 rounded-xl font-bold tracking-wide shadow-lg shadow-[#FF1D8E]/30 bg-[#FF1D8E] hover:bg-[#e0187f] text-white"
                                 disabled={isLoading}
                             >
                                 {isLoading ? (
                                     <Loader2 className="w-5 h-5 animate-spin" />
                                 ) : (
                                     <>
-                                        {isLogin ? "Συνδεση" : "Εγγραφη Τωρα"}
+                                        {isLogin ? "Sign In" : "Register Now"}
                                         <ArrowRight className="ml-2 w-4 h-4" />
                                     </>
                                 )}
@@ -239,7 +230,7 @@ export default function AuthPage() {
                         </form>
 
                         <p className="text-center text-[10px] text-muted-foreground pt-4">
-                            Συνεχίζοντας, συμφωνείτε με τους <Link href="/terms" className="underline">Όρους Χρήσης</Link> και την <Link href="/privacy" className="underline">Πολιτική Απορρήτου</Link> της Vaia Charms.
+                            By continuing, you agree to ELV8 Energy's <Link href="/terms" className="underline">Terms of Service</Link> and <Link href="/privacy" className="underline">Privacy Policy</Link>.
                         </p>
                     </div>
                 </div>

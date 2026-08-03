@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Συχνές Ερωτήσεις (FAQ)",
+    title: "Frequently Asked Questions (FAQ) | ELV8 Energy",
     description:
-        "Απαντήσεις σε όλες τις συχνές ερωτήσεις για παραγγελίες, αποστολές, πληρωμές, επιστροφές και προϊόντα του Vaia Charms. Αποστολή 3-5 εργάσιμες μέρες, δωρεάν άνω των 65€.",
+        "Answers to frequently asked questions about ELV8 Energy drinks, orders, shipping, payment methods, and returns. Delivery in 2-4 business days, free shipping over €65.",
     openGraph: {
-        title: "Συχνές Ερωτήσεις | Vaia Charms",
-        description: "Βρείτε απαντήσεις σε ερωτήσεις για παραγγελίες, αποστολές και επιστροφές.",
-        url: "https://www.vaiacharms.gr/faq",
+        title: "Frequently Asked Questions | ELV8 Energy",
+        description: "Find answers to questions about orders, shipping, and ELV8 products.",
+        url: "https://elv8now.com/faq",
     },
-    alternates: { canonical: "https://www.vaiacharms.gr/faq" },
+    alternates: { canonical: "https://elv8now.com/faq" },
 };
 
 export default function FaqLayout({ children }: { children: React.ReactNode }) {

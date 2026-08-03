@@ -32,7 +32,7 @@ export default function AboutPage() {
               </h1>
 
               <p className="text-slate-600 text-base sm:text-lg leading-relaxed font-normal">
-                ELV8 was born in Greece to break the myth that energy drinks are only for extreme athletes. Whether you are working at your desk, studying for exams, enjoying outdoor adventures, or hitting the gym — ELV8 delivers clean, refreshing energy for your daily hustle.
+                ELV8 was created for ambitious people who refuse to slow down. Whether you are an athlete pushing limits, a professional chasing deadlines, a student grinding through exams, or a gamer locked in for hours, ELV8 delivers clean, sustained energy with <strong>zero crash</strong>. No spikes. No jitters. Just steady, elevated performance.
               </p>
 
               <div className="pt-2 flex flex-wrap items-center gap-4">
@@ -115,7 +115,7 @@ export default function AboutPage() {
           </div>
           <div className="space-y-1">
             <p className="text-3xl sm:text-4xl font-black font-display">⚡</p>
-            <p className="text-xs sm:text-sm font-bold uppercase tracking-wider">Zero Sugar Crash</p>
+            <p className="text-xs sm:text-sm font-bold uppercase tracking-wider">Slow Release Energy</p>
           </div>
         </div>
       </section>
@@ -126,10 +126,10 @@ export default function AboutPage() {
           
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
             <h2 className="text-3xl sm:text-5xl font-black text-slate-900 font-display tracking-tight">
-              Whatever Your Day Demands
+              Built For Every Kind of Achiever
             </h2>
             <p className="text-slate-600 text-base sm:text-lg">
-              ELV8 isn't just for hard workouts. It's designed to elevate your focus and vitality in every situation.
+              From the gym to the studio, from the office to the classroom, ELV8's slow-release formula keeps you focused and energized without the crash.
             </p>
           </div>
 
@@ -141,9 +141,9 @@ export default function AboutPage() {
                 <Image src="/about-office.jpg" alt="Office & Studying" fill className="object-cover" />
               </div>
               <div className="p-6 space-y-2">
-                <h3 className="text-xl font-bold font-display text-slate-900">Office & Studying</h3>
+                <h3 className="text-xl font-bold font-display text-slate-900">Professionals & Students</h3>
                 <p className="text-slate-600 text-sm leading-relaxed">
-                  Stay sharp during long office hours, coding sessions, or exam prep without the afternoon brain fog.
+                  Stay razor-sharp during long work sessions, coding marathons, or exam prep. Sustained focus, zero afternoon slump.
                 </p>
               </div>
             </div>
@@ -154,9 +154,9 @@ export default function AboutPage() {
                 <Image src="/about-gym.jpg" alt="Gym & Sports" fill className="object-cover" />
               </div>
               <div className="p-6 space-y-2">
-                <h3 className="text-xl font-bold font-display text-slate-900">Gym & Sports</h3>
+                <h3 className="text-xl font-bold font-display text-slate-900">Athletes & Gym</h3>
                 <p className="text-slate-600 text-sm leading-relaxed">
-                  Fuel your workouts and sports activities with natural stamina, Taurine, and electrolyte hydration.
+                  Fuel your training with natural caffeine, Taurine, and electrolytes. Maintain peak intensity from warm-up to the final rep.
                 </p>
               </div>
             </div>
@@ -167,9 +167,9 @@ export default function AboutPage() {
                 <Image src="/about-outdoors.jpg" alt="Outdoors & Trips" fill className="object-cover" />
               </div>
               <div className="p-6 space-y-2">
-                <h3 className="text-xl font-bold font-display text-slate-900">Outdoors & Trips</h3>
+                <h3 className="text-xl font-bold font-display text-slate-900">Gamers & Creators</h3>
                 <p className="text-slate-600 text-sm leading-relaxed">
-                  Crisp, fruit-forward refreshment perfect for road trips, hikes, beach days, and social hangouts.
+                  Long sessions demand sharp reactions and deep focus. ELV8's nootropics and slow-release formula keep you locked in, without the jitters.
                 </p>
               </div>
             </div>
@@ -180,9 +180,9 @@ export default function AboutPage() {
                 <Image src="/about-daily.jpg" alt="Everyday Hustle" fill className="object-cover" />
               </div>
               <div className="p-6 space-y-2">
-                <h3 className="text-xl font-bold font-display text-slate-900">Everyday Hustle</h3>
+                <h3 className="text-xl font-bold font-display text-slate-900">The Everyday Hustler</h3>
                 <p className="text-slate-600 text-sm leading-relaxed">
-                  Keep your momentum high from morning to night with zero sugar crash and essential B-vitamins.
+                  For people with big ambitions and busy lives. Slow-release energy means you stay productive and driven from morning to night.
                 </p>
               </div>
             </div>
@@ -235,7 +235,7 @@ export default function AboutPage() {
                 What Goes Into Every Can
               </h2>
               <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
-                We believe in total transparency and high-quality ingredients. No artificial jittery compounds, just clean energy that feels good.
+                We believe in radical transparency and high-quality ingredients. Our formula delivers clean, slow-release energy with no jitters, no crash, no compromises. Just the best version of you, sustained.
               </p>
 
               <div className="space-y-4 pt-2">
@@ -258,8 +258,8 @@ export default function AboutPage() {
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-6 h-6 text-[#FF1D8E] shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-bold text-slate-900 text-base">Taurine & Niacin</h4>
-                    <p className="text-slate-600 text-sm">Supports metabolic function, muscular stamina, and focus.</p>
+                    <h4 className="font-bold text-slate-900 text-base">Nootropics / Focus</h4>
+                    <p className="text-slate-600 text-sm">Fuel a slow, steady release of energy with zero crash. Taurine supports muscular endurance and mental sharpness, while Niacin keeps your energy stable and your concentration locked in, perfect for ambitious people with busy schedules.</p>
                   </div>
                 </div>
               </div>
@@ -279,7 +279,7 @@ export default function AboutPage() {
             Created in Greece for the Modern Lifestyle
           </h2>
           <p className="text-slate-300 text-base sm:text-xl leading-relaxed max-w-3xl mx-auto font-light">
-            "ELV8 was founded with a simple goal: create a drink that fits seamlessly into your daily routine, whether you're building a business, studying for exams, working out, or exploring the world. Energy should be clean, delicious, and accessible to everyone."
+            "ELV8 was founded with a clear mission: create a drink for the modern high-achiever. Whether you're building a business, studying for exams, training hard, or grinding through a late-night session, you deserve energy that's clean, sustained, and built around your ambitions. No crash. No compromise. Just ELV8."
           </p>
           <div className="pt-4">
             <span className="text-white font-bold text-base block font-display">The ELV8 Team</span>
@@ -288,7 +288,58 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ================= 5.5. WHOLESALE & B2B INQUIRIES SECTION ================= */}
+      {/* ================= 5.5. MEET THE CREATORS ================= */}
+      <section className="py-20 sm:py-28 bg-white relative">
+        <div className="container max-w-6xl mx-auto px-6">
+          <div className="text-center space-y-4 mb-16">
+            <h2 className="text-3xl sm:text-5xl font-black font-display tracking-tight text-slate-900">
+              Meet the Creators
+            </h2>
+            <p className="text-slate-600 text-base sm:text-lg max-w-2xl mx-auto">
+              The visionaries behind ELV8 who wanted to build a clean energy brand for the modern hustler.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-start justify-center max-w-5xl mx-auto">
+            {/* Creator 1 */}
+            <div className="flex flex-col items-center text-center space-y-6 group">
+              <div className="relative w-48 h-48 sm:w-64 sm:h-64 rounded-full overflow-hidden border-4 border-slate-100 group-hover:border-[#FF1D8E] transition-colors duration-500 shadow-xl bg-slate-100 flex items-center justify-center">
+                <svg viewBox="0 0 100 100" className="w-full h-full text-slate-300" fill="currentColor">
+                  <circle cx="50" cy="38" r="22" />
+                  <ellipse cx="50" cy="90" rx="35" ry="28" />
+                </svg>
+              </div>
+              <div className="space-y-3">
+                <h3 className="text-2xl font-black font-display text-slate-900">Co-Founder</h3>
+                <p className="text-[#FF1D8E] font-bold text-sm uppercase tracking-widest">Visionary & Strategy</p>
+                <p className="text-slate-600 text-sm max-w-sm mx-auto leading-relaxed">
+                  Passionate about clean energy and building brands that connect with the modern generation.
+                </p>
+              </div>
+            </div>
+
+            {/* Creator 2 */}
+            <div className="flex flex-col items-center text-center space-y-6 group">
+              <div className="relative w-48 h-48 sm:w-64 sm:h-64 rounded-full overflow-hidden border-4 border-slate-100 group-hover:border-[#FDE047] transition-colors duration-500 shadow-xl bg-slate-100 flex items-center justify-center">
+                <svg viewBox="0 0 100 100" className="w-full h-full text-slate-300" fill="currentColor">
+                  <circle cx="50" cy="38" r="22" />
+                  <ellipse cx="50" cy="90" rx="35" ry="28" />
+                </svg>
+              </div>
+              <div className="space-y-3">
+                <h3 className="text-2xl font-black font-display text-slate-900">Co-Founder</h3>
+                <p className="text-slate-900 font-bold text-sm uppercase tracking-widest">Operations & Growth</p>
+                <p className="text-slate-600 text-sm max-w-sm mx-auto leading-relaxed">
+                  Focused on bringing ELV8 to athletes, professionals and creators who demand more from their energy drink.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ================= 6. WHOLESALE & B2B INQUIRIES SECTION ================= */}
       <section id="wholesale" className="py-20 sm:py-24 bg-slate-50 relative border-t border-slate-200">
         <div className="container max-w-4xl mx-auto px-6">
           <div className="text-center space-y-3 mb-12">
@@ -311,7 +362,7 @@ export default function AboutPage() {
             Ready to ELV8 Your Day?
           </h2>
           <p className="text-lg sm:text-xl font-bold max-w-2xl mx-auto text-slate-900/90">
-            Try our refreshing flavors today with fast delivery nationwide.
+            Join the athletes, professionals, creators and hustlers who have already elevated their performance with ELV8.
           </p>
           <div>
             <Link

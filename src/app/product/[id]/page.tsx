@@ -6,7 +6,7 @@ import JsonLd from "@/components/JsonLd";
 
 export const revalidate = 14400; // Επαναδημιουργία της σελίδας κάθε 4 ώρες (ISR)
 
-const BASE_URL = "https://www.vaiacharms.gr";
+const BASE_URL = "https://elv8now.com";
 
 // ── Static params (required for output: export) ───────────────────────────────
 export async function generateStaticParams() {
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
         const stripHtml = (s: string) => s.replace(/<[^>]*>/g, "").trim();
         const productName = stripHtml(product.name || "Προϊόν");
         const plainDescription = stripHtml(product.short_description || product.description || "")
-            .slice(0, 160) || `Αγοράστε ${productName} από το Vaia Charms. Δωρεάν αποστολή άνω των 65€.`;
+            .slice(0, 160) || `Buy ${productName} from ELV8 Energy. Free shipping over €65.`;
 
         const image = product.images?.[0]?.src || `${BASE_URL}/opengraph-image.png`;
         const canonicalUrl = `${BASE_URL}/product/${id}/`;
@@ -46,17 +46,17 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
             title: `${productName}`,
             description: plainDescription,
             openGraph: {
-                title: `${productName} | Vaia Charms`,
+                title: `${productName} | ELV8 Energy`,
                 description: plainDescription,
                 type: "website",
                 locale: "el_GR",
                 url: canonicalUrl,
-                siteName: "Vaia Charms",
+                siteName: "ELV8 Energy",
                 images: [{ url: image, width: 800, height: 800, alt: productName }],
             },
             twitter: {
                 card: "summary_large_image",
-                title: `${productName} | Vaia Charms`,
+                title: `${productName} | ELV8 Energy`,
                 description: plainDescription,
                 images: [image],
             },

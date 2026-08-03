@@ -7,6 +7,14 @@ import { ShoppingBag, User, Heart, Menu, X, ArrowRight } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useFavorites } from "@/context/FavoritesContext";
 
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/products", label: "Our Flavors" },
+  { href: "/about", label: "About Us" },
+  { href: "/store-locator", label: "Store Locator" },
+  { href: "/b2b-wholesale", label: "B2B Wholesale" },
+];
+
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);

@@ -38,8 +38,8 @@ interface JsonLdProps {
     faqs?: FaqItem[];
 }
 
-const SITE_NAME = "Vaia Charms";
-const SITE_URL = "https://www.vaiacharms.gr";
+const SITE_NAME = "ELV8 Energy";
+const SITE_URL = "https://elv8now.com";
 
 function buildWebsite() {
     return [
@@ -49,7 +49,7 @@ function buildWebsite() {
             name: SITE_NAME,
             url: SITE_URL,
             description:
-                "Η κορυφαία επιλογή σας για ποιοτικά κοσμήματα, cosmetics και αξεσουάρ στην Ελλάδα.",
+                "ELV8 Energy Drink - Clean energy, Zero Sugar, 200mg Natural Caffeine & Electrolytes.",
             potentialAction: {
                 "@type": "SearchAction",
                 target: {
@@ -75,7 +75,7 @@ function buildWebsite() {
                 "@type": "ContactPoint",
                 telephone: "+30-694-310-5742",
                 contactType: "customer service",
-                email: "info@vaiacharms.gr",
+                email: "info@elv8now.com",
                 availableLanguage: "Greek",
                 hoursAvailable: {
                     "@type": "OpeningHoursSpecification",

@@ -15,6 +15,36 @@ interface AttributeFilter {
     options: string[];
 }
 
+function translateAttributeName(name: string): string {
+    const map: Record<string, string> = {
+        "Πακέτο": "Pack Size",
+        "πακετο": "Pack Size",
+        "Συσκευασία": "Pack Size",
+        "συσκευασια": "Pack Size",
+        "Γεύση": "Flavor",
+        "γευση": "Flavor",
+        "Μέγεθος": "Size",
+        "μεγεθος": "Size",
+    };
+    return map[name] || name;
+}
+
+function translateOptionName(option: string): string {
+    const map: Record<string, string> = {
+        "12αδα": "12-Pack",
+        "12άδα": "12-Pack",
+        "4αδα": "4-Pack",
+        "4άδα": "4-Pack",
+        "6αδα": "6-Pack",
+        "6άδα": "6-Pack",
+        "24αδα": "24-Pack",
+        "24άδα": "24-Pack",
+        "1αδα": "Single Can",
+        "1άδα": "Single Can",
+    };
+    return map[option] || option;
+}
+
 function ProductsContent({ 
     initialProducts, 
     initialCategories, 
@@ -236,7 +266,7 @@ function ProductsContent({
                         <>
                             <ChevronRight className="w-4 h-4" />
                             <span className="text-primary font-medium">
-                                {onSale ? "Εποχιακές Εκπτώσεις" : activeTag ? activeTag.name : activeCategory ? activeCategory.name : searchQuery ? `Αναζήτηση: ${searchQuery}` : ""}
+                                {onSale ? "Seasonal Offers" : activeTag ? activeTag.name : activeCategory ? activeCategory.name : searchQuery ? `Search: ${searchQuery}` : ""}
                             </span>
                         </>
                     )}
@@ -260,7 +290,7 @@ function ProductsContent({
                         className="flex items-center gap-2 px-4 py-2 rounded-full border border-border hover:border-primary transition-all bg-background"
                     >
                         <SlidersHorizontal className="w-4 h-4" />
-                        <span className="font-body text-xs font-semibold">Φίλτρα</span>
+                        <span className="font-body text-xs font-semibold">Filters</span>
                         {activeFiltersCount > 0 && (
                             <span className="bg-primary text-primary-foreground text-[10px] font-bold px-2 py-0.5 rounded-full">
                                 {activeFiltersCount}
@@ -272,12 +302,12 @@ function ProductsContent({
                             onClick={resetFilters}
                             className="text-xs text-muted-foreground hover:text-primary transition-colors font-medium"
                         >
-                            Καθαρισμός φίλτρων
+                            Clear filters
                         </button>
                     )}
                 </div>
                 <p className="text-sm text-muted-foreground font-medium">
-                    {products.length} {products.length === 1 ? "προϊόν" : "προϊόντα"}
+                    {products.length} {products.length === 1 ? "product" : "products"}
                 </p>
             </div>
 
@@ -299,7 +329,7 @@ function ProductsContent({
                     <div className="flex flex-col h-full">
                         {/* Mobile Header */}
                         <div className="flex items-center justify-between mb-8 md:hidden">
-                            <h2 className="font-display text-xl font-bold">Φίλτρα</h2>
+                            <h2 className="font-display text-xl font-bold">Filters</h2>
                             <button onClick={() => setShowFilters(false)} className="p-2 hover:bg-slate-100 rounded-full">
                                 <X className="w-5 h-5" />
                             </button>
@@ -309,7 +339,7 @@ function ProductsContent({
                             <div className="bg-secondary/30 md:bg-transparent rounded-2xl p-6 md:p-0 space-y-6 md:border-none border border-border/50">
                                 {/* Sort */}
                                 <div className="space-y-3">
-                                    <h3 className="font-display text-sm font-bold tracking-wide">Ταξινόμηση</h3>
+                                    <h3 className="font-display text-sm font-bold tracking-wide">Sort By</h3>
                                     <select
                                         value={sortBy}
                                         onChange={(e) => {
@@ -318,17 +348,17 @@ function ProductsContent({
                                         }}
                                         className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                                     >
-                                        <option value="newest">Νεότερα Πρώτα</option>
-                                        <option value="price-asc">Τιμή: Χαμηλή → Υψηλή</option>
-                                        <option value="price-desc">Τιμή: Υψηλή → Χαμηλή</option>
-                                        <option value="popular">Δημοφιλή</option>
+                                        <option value="newest">Newest First</option>
+                                        <option value="price-asc">Price: Low → High</option>
+                                        <option value="price-desc">Price: High → Low</option>
+                                        <option value="popular">Most Popular</option>
                                     </select>
                                 </div>
 
 
                                 {/* Price Range */}
                                 <div className="space-y-3 border-t border-border/30 pt-4">
-                                    <h3 className="font-display text-sm font-bold tracking-wide">Εύρος Τιμής</h3>
+                                    <h3 className="font-display text-sm font-bold tracking-wide">Price Range</h3>
                                     <div className="space-y-4">
                                         <div className="flex items-center gap-3">
                                             <input
@@ -336,7 +366,7 @@ function ProductsContent({
                                                 value={priceRange[0]}
                                                 onChange={(e) => setPriceRange([Number(e.target.value), priceRange[1]])}
                                                 className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/20"
-                                                placeholder="Από"
+                                                placeholder="Min"
                                             />
                                             <span className="text-muted-foreground">-</span>
                                             <input
@@ -344,7 +374,7 @@ function ProductsContent({
                                                 value={priceRange[1]}
                                                 onChange={(e) => setPriceRange([priceRange[0], Number(e.target.value)])}
                                                 className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/20"
-                                                placeholder="Έως"
+                                                placeholder="Max"
                                             />
                                         </div>
                                         <input
@@ -371,7 +401,7 @@ function ProductsContent({
                                             className="w-full flex items-center justify-between group"
                                         >
                                             <h3 className="font-display text-sm font-bold tracking-wide group-hover:text-primary transition-colors">
-                                                {attr.name}
+                                                {translateAttributeName(attr.name)}
                                             </h3>
                                             {expandedAttributes[attr.name] ? (
                                                 <ChevronUp className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
@@ -397,7 +427,7 @@ function ProductsContent({
                                                             className="w-4 h-4 rounded border-border text-primary focus:ring-2 focus:ring-primary/20 transition-all"
                                                         />
                                                         <span className="font-body text-sm group-hover/option:text-primary transition-colors">
-                                                            {option}
+                                                            {translateOptionName(option)}
                                                         </span>
                                                     </label>
                                                 ))}
@@ -419,7 +449,7 @@ function ProductsContent({
                                             className="w-5 h-5 rounded border-border text-primary focus:ring-2 focus:ring-primary/20 transition-all"
                                         />
                                         <span className="font-body text-sm font-semibold group-hover:text-primary transition-colors">
-                                            Μόνο Προσφορές
+                                            On Sale Only
                                         </span>
                                     </label>
                                     <label className="flex items-center gap-3 cursor-pointer group mt-3">
@@ -433,7 +463,7 @@ function ProductsContent({
                                             className="w-5 h-5 rounded border-border text-primary focus:ring-2 focus:ring-primary/20 transition-all"
                                         />
                                         <span className="font-body text-sm font-semibold group-hover:text-primary transition-colors">
-                                            Μόνο Διαθέσιμα
+                                            In Stock Only
                                         </span>
                                     </label>
                                 </div>
@@ -446,19 +476,19 @@ function ProductsContent({
                 <div className="flex-1">
                     {products.length === 0 && !isLoading ? (
                         <div className="text-center py-32 space-y-4 bg-secondary/20 rounded-[2rem] border border-dashed border-border">
-                            <p className="text-muted-foreground font-display text-2xl font-medium">Δεν βρέθηκαν προϊόντα</p>
+                            <p className="text-muted-foreground font-display text-2xl font-medium">No products found</p>
                             <button
                                 onClick={resetFilters}
                                 className="text-primary font-body text-sm font-semibold border-b border-primary"
                             >
-                                Καθαρισμός φίλτρων
+                                Clear filters
                             </button>
                         </div>
                     ) : (
                         <ProductGridWithLoadMore 
                             products={products} 
                             isLoading={isLoading} 
-                            columnsClass="grid-cols-2 lg:grid-cols-3"
+                            columnsClass="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
                         />
                     )}
                 </div>
