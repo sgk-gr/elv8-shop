@@ -44,9 +44,9 @@ export default function Footer() {
                             <Image
                                 src="/elv8_logo.svg"
                                 alt="ELV8 Logo"
-                                width={100}
-                                height={45}
-                                className="object-contain brightness-0 invert"
+                                width={120}
+                                height={55}
+                                className="object-contain"
                             />
                         </Link>
                         <p className="text-sm text-white/60 leading-relaxed">
