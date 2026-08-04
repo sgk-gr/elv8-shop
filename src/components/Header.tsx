@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { ShoppingBag, User, Heart, Menu, X, ArrowRight } from "lucide-react";
 import { useCart } from "@/context/CartContext";
@@ -76,11 +77,15 @@ export default function Header() {
             </button>
 
             {/* Brand Logo */}
-            <Link href="/" className="flex items-center gap-2 group select-none">
-              <span className="font-display font-black text-2xl md:text-3xl tracking-tighter text-black uppercase italic">
-                elv8
-              </span>
-              <span className="w-2 h-2 rounded-full bg-black mb-2.5 animate-pulse" />
+            <Link href="/" className="flex items-center group select-none">
+              <Image
+                src="/elv8_logo.svg"
+                alt="ELV8 Logo"
+                width={90}
+                height={40}
+                className="object-contain"
+                priority
+              />
             </Link>
 
             {/* Desktop Navigation Links */}

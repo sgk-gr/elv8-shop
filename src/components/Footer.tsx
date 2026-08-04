@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Instagram, Mail, Phone, MapPin, CreditCard, Shield, Truck, Send } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -40,9 +41,13 @@ export default function Footer() {
                     {/* Company Info */}
                     <div className="space-y-6 flex flex-col items-center text-center">
                         <Link href="/" className="inline-block transition-transform hover:scale-105">
-                            <span className="text-3xl font-black tracking-tight text-white font-display">
-                                ELV<span className="text-[#FF1D8E]">8</span>
-                            </span>
+                            <Image
+                                src="/elv8_logo.svg"
+                                alt="ELV8 Logo"
+                                width={100}
+                                height={45}
+                                className="object-contain brightness-0 invert"
+                            />
                         </Link>
                         <p className="text-sm text-white/60 leading-relaxed">
                             Real fruit energy. Zero sugar. 200mg Natural Caffeine & Electrolytes. Made for those who push limits.
