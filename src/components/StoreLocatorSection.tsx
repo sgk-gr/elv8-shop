@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { Search, MapPin, Phone, Navigation } from "lucide-react";
 
 export interface StoreLocation {
@@ -100,19 +101,26 @@ export default function StoreLocatorSection() {
     fetchStores();
   }, []);
 
+  const isZipSearch = /^\d{3,5}$/.test(searchQuery.trim());
+
   const filteredStores = stores.filter((store) => {
     const q = searchQuery.toLowerCase().trim();
     if (!q) return true;
     return (
       store.name.toLowerCase().includes(q) ||
       store.city.toLowerCase().includes(q) ||
-      store.address.toLowerCase().includes(q)
+      store.address.toLowerCase().includes(q) ||
+      store.zip.toLowerCase().includes(q)
     );
   });
 
   const getMapEmbedUrl = () => {
     if (isOverviewMode) {
       return `https://maps.google.com/maps?q=${encodeURIComponent("Ελλάδα")}&t=&z=6&ie=UTF8&iwloc=&output=embed`;
+    }
+    // If user searched a zip and no stores found, show the zip area on the map
+    if (isZipSearch && filteredStores.length === 0 && searchQuery.trim()) {
+      return `https://maps.google.com/maps?q=${encodeURIComponent(searchQuery.trim() + ", Ελλάδα")}&t=&z=14&ie=UTF8&iwloc=&output=embed`;
     }
     const locationQuery = encodeURIComponent(selectedStore.query || `${selectedStore.name}, ${selectedStore.city}, Ελλάδα`);
     return `https://maps.google.com/maps?q=${locationQuery}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
@@ -142,7 +150,7 @@ export default function StoreLocatorSection() {
               <div className="flex-1 flex items-center px-3 gap-2">
                 <input
                   type="text"
-                  placeholder="Search ELV8 stockist by city or store..."
+                  placeholder="Αναζήτηση με ΤΚ, πόλη ή κατάστημα..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full bg-transparent text-slate-800 placeholder:text-slate-400 text-sm focus:outline-none font-medium"
@@ -162,7 +170,13 @@ export default function StoreLocatorSection() {
         {/* Counter */}
         <div className="mb-4 flex items-center justify-between gap-2">
           <p className="text-[#1E4D7B] font-bold text-sm tracking-wide">
-            {isLoading ? "Loading..." : `${filteredStores.length} Stockists Found`}
+            {isLoading
+              ? "Φόρτωση..."
+              : filteredStores.length > 0
+              ? `${filteredStores.length} Σημεία Πώλησης`
+              : isZipSearch
+              ? `Δεν βρέθηκαν σημεία πώλησης στον ΤΚ ${searchQuery.trim()}. Εμφανίζεται η περιοχή στον χάρτη.`
+              : "Δεν βρέθηκαν αποτελέσματα"}
           </p>
         </div>
 
@@ -187,12 +201,16 @@ export default function StoreLocatorSection() {
                 className="absolute top-[36%] left-1/2 -translate-x-1/2 -translate-y-full cursor-pointer z-30 flex flex-col items-center animate-bounce group"
                 title="Click for Google Maps Navigation"
               >
-                <div className="bg-[#1E4D7B] group-hover:bg-[#FF1D8E] text-white px-4 py-2.5 rounded-2xl text-xs font-black shadow-2xl border-2 border-white flex items-center gap-2 transition-all duration-300">
-                  <span className="bg-[#FF1D8E] group-hover:bg-white group-hover:text-[#FF1D8E] text-white px-2 py-0.5 rounded-lg text-[11px] font-black italic tracking-widest transition-colors duration-200">
-                    ELV8
-                  </span>
-                  <span className="font-bold text-sm">{selectedStore.name}</span>
-                  <Navigation className="w-3.5 h-3.5 ml-1 shrink-0" />
+                <div className="bg-white group-hover:bg-[#FF1D8E] text-white px-4 py-2.5 rounded-2xl shadow-2xl border-2 border-white flex items-center gap-2 transition-all duration-300">
+                  <Image
+                    src="/elv8_logo.svg"
+                    alt="ELV8"
+                    width={52}
+                    height={24}
+                    className="object-contain shrink-0"
+                  />
+                  <span className="font-bold text-sm text-slate-800 group-hover:text-white">{selectedStore.name}</span>
+                  <Navigation className="w-3.5 h-3.5 ml-1 shrink-0 text-slate-600 group-hover:text-white" />
                 </div>
                 <div className="w-3.5 h-3.5 bg-[#1E4D7B] group-hover:bg-[#FF1D8E] rotate-45 -mt-2 border-r-2 border-b-2 border-white transition-colors duration-200" />
               </div>
@@ -218,15 +236,13 @@ export default function StoreLocatorSection() {
                     >
                       {/* Top Header Row */}
                       <div className="flex items-center justify-between mb-2">
-                        <span
-                          className={`text-[9px] font-black italic px-2 py-0.5 rounded-md tracking-wider ${
-                            isSelected
-                              ? "bg-[#FF1D8E] text-white"
-                              : "bg-pink-100 text-[#FF1D8E]"
-                          }`}
-                        >
-                          ELV8
-                        </span>
+                        <Image
+                          src="/elv8_logo.svg"
+                          alt="ELV8"
+                          width={44}
+                          height={20}
+                          className="object-contain"
+                        />
                         <button
                           onClick={(e) => openNavigation(store, e)}
                           className={`flex items-center gap-1 text-[11px] font-bold px-2 py-1 rounded-lg transition-colors ${
