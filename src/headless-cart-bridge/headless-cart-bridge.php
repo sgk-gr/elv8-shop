@@ -37,7 +37,7 @@ add_action('template_redirect', function() {
         }
 
         // 3. Ανακατεύθυνση στη σελίδα του Checkout
-        $checkout_url = wc_get_checkout_url();
+        $checkout_url = home_url('/checkout/');
         wp_redirect($checkout_url);
         exit;
     }

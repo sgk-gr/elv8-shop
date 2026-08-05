@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "ELV8 Energy Drink Collection | Our Flavors & Packs",
   description: "Explore the full collection of ELV8 Energy Drinks. Zero Sugar, 200mg Natural Caffeine, Electrolytes & Real Fruit Flavors.",
   alternates: {
-    canonical: "https://www.elv8.gr/products",
+    canonical: "https://elv8now.com/products",
   }
 };
 

@@ -24,10 +24,10 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 <div class="sgk-checkout-wrapper">
     <!-- Premium Header -->
     <div class="sgk-checkout-header">
-        <a href="https://www.vaiacharms.gr" class="sgk-checkout-logo">
-            vaiacharms
+        <a href="https://elv8now.com" class="sgk-checkout-logo">
+            elv8
         </a>
-        <a href="https://www.vaiacharms.gr" class="sgk-checkout-cart-icon-link" aria-label="Καλάθι">
+        <a href="https://elv8now.com" class="sgk-checkout-cart-icon-link" aria-label="Καλάθι">
             <svg class="sgk-cart-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="9" cy="21" r="1"></circle>
                 <circle cx="20" cy="21" r="1"></circle>
@@ -38,7 +38,7 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 
     <!-- Navigation / Back Link -->
     <div class="sgk-checkout-navigation">
-        <a href="https://www.vaiacharms.gr" class="sgk-checkout-back-link">
+        <a href="https://elv8now.com" class="sgk-checkout-back-link">
             ← Επιστροφή στο κατάστημα
         </a>
     </div>
