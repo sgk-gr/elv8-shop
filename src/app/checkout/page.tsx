@@ -60,7 +60,7 @@ export default function CheckoutPage() {
 
     if (showEmbeddedCheckout) {
         return (
-            <main className="container mx-auto px-2 sm:px-4 pt-24 md:pt-28 pb-16 min-h-[85vh] flex flex-col">
+            <main className="container mx-auto px-2 sm:px-4 pt-32 md:pt-36 pb-16 min-h-[85vh] flex flex-col">
                 <div className="flex items-center justify-between mb-4 px-2">
                     <button
                         onClick={() => { setShowEmbeddedCheckout(false); setIframeLoading(true); }}
@@ -111,7 +111,7 @@ export default function CheckoutPage() {
     }
 
     return (
-        <main className="container mx-auto px-3 sm:px-4 md:px-8 pt-24 md:pt-28 pb-16">
+        <main className="container mx-auto px-3 sm:px-4 md:px-8 pt-32 md:pt-36 pb-16">
             <Link
                 href="/products"
                 className="inline-flex items-center gap-1.5 font-body text-xs sm:text-sm font-bold text-slate-600 hover:text-[#FF1D8E] transition-colors mb-6 md:mb-8 bg-slate-100/80 px-4 py-2 rounded-full w-fit shadow-2xs"
