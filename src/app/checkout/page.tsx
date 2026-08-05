@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
@@ -27,6 +28,7 @@ export default function CheckoutPage() {
     });
 
     const [showEmbeddedCheckout, setShowEmbeddedCheckout] = useState(false);
+    const [iframeLoading, setIframeLoading] = useState(true);
 
     const itemsParam = items.map((i) => `${i.variationId || i.product.id}:${i.quantity}`).join(',');
     let checkoutUrl = `${WC_STORE_URL}/checkout/?fill-cart=${itemsParam}`;
@@ -61,7 +63,7 @@ export default function CheckoutPage() {
             <main className="container mx-auto px-2 sm:px-4 pt-24 md:pt-28 pb-16 min-h-[85vh] flex flex-col">
                 <div className="flex items-center justify-between mb-4 px-2">
                     <button
-                        onClick={() => setShowEmbeddedCheckout(false)}
+                        onClick={() => { setShowEmbeddedCheckout(false); setIframeLoading(true); }}
                         className="inline-flex items-center gap-1.5 font-body text-xs sm:text-sm font-bold text-slate-600 hover:text-[#FF1D8E] transition-colors bg-slate-100/80 px-4 py-2 rounded-full shadow-sm"
                     >
                         <ChevronLeft className="w-4 h-4" />
@@ -71,13 +73,37 @@ export default function CheckoutPage() {
                         🔒 Ασφαλής Ολοκλήρωση Αγοράς
                     </span>
                 </div>
-                <div className="w-full flex-1 bg-white rounded-3xl border border-slate-200 shadow-lg overflow-hidden min-h-[750px]">
+                <div className="w-full flex-1 bg-white rounded-3xl border border-slate-200 shadow-lg overflow-hidden min-h-[750px] relative">
+                    {iframeLoading && (
+                        <div className="absolute inset-0 bg-[#F7F5EC] flex flex-col items-center justify-center z-50 transition-opacity duration-300">
+                            <div className="flex flex-col items-center gap-6">
+                                <div className="relative w-40 h-16 animate-pulse">
+                                    <Image
+                                        src="/elv8_logo.svg"
+                                        alt="ELV8 Logo"
+                                        fill
+                                        className="object-contain"
+                                        priority
+                                    />
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <div className="w-2.5 h-2.5 bg-[#FF1D8E] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                                    <div className="w-2.5 h-2.5 bg-[#FF1D8E] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                                    <div className="w-2.5 h-2.5 bg-[#FF1D8E] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                                </div>
+                                <span className="text-sm font-black text-slate-900 font-body tracking-wider uppercase">
+                                    Προετοιμασία ασφαλούς ολοκλήρωσης...
+                                </span>
+                            </div>
+                        </div>
+                    )}
                     <iframe
                         src={checkoutUrl}
                         title="Secure Checkout"
                         className="w-full h-full min-h-[750px] border-none"
                         allow="payment"
                         style={{ minHeight: "750px" }}
+                        onLoad={() => setIframeLoading(false)}
                     />
                 </div>
             </main>
