@@ -13,11 +13,22 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-/**
- * Remove X-Frame-Options header and set Content-Security-Policy
- * to allow iFrame embedding only from elv8now.com domains.
- */
-add_action( 'send_headers', function () {
-    header_remove( 'X-Frame-Options' );
-    header( 'Content-Security-Policy: frame-ancestors https://elv8now.com https://*.elv8now.com' );
-} );
+function elv8_allow_iframe_headers() {
+    // Remove headers if set by PHP
+    if ( ! headers_sent() ) {
+        header_remove( 'X-Frame-Options' );
+        header_remove( 'Content-Security-Policy' );
+        
+        // Set new permissive headers
+        header( "Content-Security-Policy: frame-ancestors 'self' https://elv8now.com https://*.elv8now.com https://store.elv8now.com", true );
+    }
+}
+
+// Hook into multiple WordPress execution points to ensure it runs
+add_action( 'send_headers', 'elv8_allow_iframe_headers', 999 );
+add_action( 'template_redirect', 'elv8_allow_iframe_headers', 999 );
+add_filter( 'wp_headers', function( $headers ) {
+    unset( $headers['X-Frame-Options'] );
+    $headers['Content-Security-Policy'] = "frame-ancestors 'self' https://elv8now.com https://*.elv8now.com https://store.elv8now.com";
+    return $headers;
+}, 999 );
