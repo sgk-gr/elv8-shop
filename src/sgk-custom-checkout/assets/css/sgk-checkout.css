@@ -331,6 +331,13 @@ body.woocommerce-checkout {
     font-size: 13.5px !important;
     color: var(--sgk-dark) !important;
     line-height: 1.35 !important;
+    text-decoration: none !important;
+    transition: color 0.2s ease !important;
+}
+
+a.sgk-checkout-product-title:hover {
+    color: var(--sgk-primary) !important;
+    text-decoration: underline !important;
 }
 
 /* Review Order Table */

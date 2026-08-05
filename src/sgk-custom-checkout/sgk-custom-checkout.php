@@ -82,15 +82,17 @@ class SGK_Custom_Checkout {
             
             if ( $_product && $_product->exists() ) {
                 $thumbnail = $_product->get_image( array( 60, 60 ) ); // Fetch product image 60x60
+                $product_id = $_product->is_type( 'variation' ) ? $_product->get_parent_id() : $_product->get_id();
+                $frontend_url = 'https://elv8now.com/product/' . $product_id . '/';
                 
                 if ( $thumbnail ) {
                     $product_name = '
                     <div class="sgk-checkout-product-row">
                         <div class="sgk-checkout-product-image">
-                            ' . $thumbnail . '
+                            <a href="' . esc_url( $frontend_url ) . '" target="_parent">' . $thumbnail . '</a>
                         </div>
                         <div class="sgk-checkout-product-info">
-                            <span class="sgk-checkout-product-title">' . $product_name . '</span>
+                            <a href="' . esc_url( $frontend_url ) . '" target="_parent" class="sgk-checkout-product-title">' . $product_name . '</a>
                         </div>
                     </div>';
                 }
