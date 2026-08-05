@@ -4,7 +4,7 @@ import StoreLocatorSection from "@/components/StoreLocatorSection";
 
 export default function StoreLocatorPage() {
   return (
-    <main className="min-h-screen pt-20 bg-[#F7F5EC]">
+    <main className="min-h-screen pt-28 md:pt-36 bg-[#F7F5EC]">
       <StoreLocatorSection />
     </main>
   );

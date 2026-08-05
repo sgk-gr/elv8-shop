@@ -9,7 +9,7 @@ export default function FavoritesPage() {
     const { favorites } = useFavorites();
 
     return (
-        <main className="min-h-screen pt-20 pb-20 bg-white relative overflow-hidden flex flex-col items-center justify-center">
+        <main className="min-h-screen pt-28 pb-20 md:pt-36 bg-white relative overflow-hidden flex flex-col items-center justify-center">
             {/* Background Blobs */}
             <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
                 <div className="absolute -left-[10vw] top-[5%] w-[40vw] h-[40vw] bg-[#FF1D8E]/10 rounded-full blur-3xl" />

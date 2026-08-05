@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function B2BWholesalePage() {
   return (
-    <main className="min-h-screen pt-24 pb-20 bg-white overflow-x-hidden">
+    <main className="min-h-screen pt-28 md:pt-36 pb-20 bg-white overflow-x-hidden">
       
       {/* ================= 1. B2B HERO LANDING SECTION ================= */}
       <section className="relative py-16 lg:py-24 bg-gradient-to-br from-pink-50/70 via-white to-yellow-50/50 text-slate-900 border-b border-slate-200/80 overflow-hidden">

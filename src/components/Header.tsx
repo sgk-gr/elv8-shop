@@ -83,7 +83,7 @@ export default function Header() {
                 alt="ELV8 Logo"
                 width={90}
                 height={40}
-                className="object-contain"
+                className="w-[72px] md:w-[90px] h-auto object-contain"
                 priority
               />
             </Link>
@@ -209,9 +209,16 @@ export default function Header() {
                 <Link 
                   href="/" 
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="font-display font-black text-3xl tracking-tighter text-black uppercase italic"
+                  className="flex items-center select-none"
                 >
-                  elv8
+                  <Image
+                    src="/elv8_logo.svg"
+                    alt="ELV8 Logo"
+                    width={72}
+                    height={32}
+                    className="w-[64px] h-auto object-contain"
+                    priority
+                  />
                 </Link>
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}

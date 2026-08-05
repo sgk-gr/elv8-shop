@@ -219,7 +219,7 @@ export default function ProductDetailClient({ id }: { id: string }) {
     const backUrl = backUrlParam ? decodeURIComponent(backUrlParam) : getBackUrl();
 
     return (
-        <main className="container mx-auto px-4 md:px-8 py-8 md:py-12">
+        <main className="container mx-auto px-4 md:px-8 pt-28 pb-8 md:pt-36 md:pb-12">
             <Link
                 href={backUrl}
                 className="inline-flex items-center gap-2 font-body text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors mb-12 group"

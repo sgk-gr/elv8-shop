@@ -69,7 +69,7 @@ export default function AccountPage() {
     };
 
     return (
-        <main className="container mx-auto px-4 py-8 md:py-20 overflow-hidden">
+        <main className="container mx-auto px-4 pt-28 pb-8 md:pt-36 md:pb-20 overflow-hidden">
             <div className="grid lg:grid-cols-[280px_1fr] gap-8 items-start">
 
                 {/* Sidebar Navigation */}

@@ -245,7 +245,7 @@ function ProductsContent({
     };
 
     return (
-        <div className="container mx-auto px-4 md:px-8 py-12 md:py-20">
+        <div className="container mx-auto px-4 md:px-8 pt-28 pb-12 md:pt-36 md:pb-20">
             <div className="space-y-8 animate-in slide-in-from-top-4 duration-700">
                 {/* Breadcrumbs */}
                 <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
