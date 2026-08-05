@@ -530,3 +530,251 @@ a.sgk-checkout-product-title:hover {
         transform: translateY(0);
     }
 }
+
+/* ==========================================================================
+   THANK YOU / ORDER RECEIVED PAGE STYLES
+   ========================================================================== */
+.sgk-thankyou-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px 10px;
+}
+
+.sgk-thankyou-content {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.sgk-thankyou-card {
+    text-align: center;
+    background: var(--sgk-white);
+    border-radius: 20px;
+    padding: 35px 20px;
+    box-shadow: var(--sgk-shadow);
+    border: 1px solid rgba(0,0,0,0.03);
+}
+
+.sgk-status-icon {
+    width: 64px;
+    height: 64px;
+    background-color: #22c55e;
+    color: var(--sgk-white);
+    font-size: 32px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin: 0 auto 20px auto;
+}
+
+.sgk-status-failed .sgk-status-icon {
+    background-color: #ef4444;
+}
+
+.sgk-thankyou-card h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+    color: var(--sgk-dark);
+    font-family: 'Outfit', sans-serif;
+}
+
+.sgk-status-subtitle {
+    color: var(--sgk-text-muted);
+    font-size: 15px;
+    margin: 0;
+}
+
+.sgk-thankyou-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+@media (min-width: 640px) {
+    .sgk-thankyou-meta-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.sgk-meta-card {
+    background: var(--sgk-white);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: var(--sgk-shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border: 1px solid rgba(0,0,0,0.02);
+}
+
+.sgk-meta-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--sgk-text-muted);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.sgk-meta-value {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--sgk-dark);
+}
+
+.sgk-meta-value.font-highlight {
+    color: var(--sgk-primary);
+}
+
+.sgk-thankyou-bacs-card,
+.sgk-thankyou-details-card {
+    background: var(--sgk-white);
+    border-radius: 20px;
+    padding: 30px 20px;
+    box-shadow: var(--sgk-shadow);
+    border: 1px solid rgba(0,0,0,0.03);
+}
+
+@media (min-width: 640px) {
+    .sgk-thankyou-bacs-card,
+    .sgk-thankyou-details-card {
+        padding: 35px 30px;
+    }
+}
+
+.sgk-section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    font-family: 'Outfit', sans-serif;
+    color: var(--sgk-dark);
+}
+
+.sgk-section-subtitle {
+    color: var(--sgk-text-muted);
+    font-size: 13.5px;
+    margin: 0 0 20px 0;
+}
+
+/* Bank Details Styling */
+.wc-bacs-bank-details {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.wc-bacs-bank-details li {
+    background: #F8FAFC !important;
+    border: 1px solid #F1F5F9 !important;
+    border-radius: 12px !important;
+    padding: 15px !important;
+    margin: 0 !important;
+}
+
+.wc-bacs-bank-details .bank_name {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: var(--sgk-primary) !important;
+    margin-bottom: 10px !important;
+    display: block;
+}
+
+.wc-bacs-bank-details li ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: grid !important;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+@media (min-width: 480px) {
+    .wc-bacs-bank-details li ul {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.wc-bacs-bank-details li ul li {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.wc-bacs-bank-details li ul li strong {
+    font-size: 13px !important;
+    color: var(--sgk-dark) !important;
+}
+
+/* Thankyou Details Card overrides */
+.sgk-thankyou-details-card .woocommerce-order-details__title,
+.sgk-thankyou-details-card .woocommerce-column__title {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    margin: 0 0 15px 0 !important;
+    font-family: 'Outfit', sans-serif !important;
+    color: var(--sgk-dark) !important;
+}
+
+.sgk-thankyou-details-card .woocommerce-table--order-details {
+    width: 100% !important;
+    margin-bottom: 25px !important;
+    border-collapse: collapse !important;
+}
+
+.sgk-thankyou-details-card .woocommerce-table--order-details th,
+.sgk-thankyou-details-card .woocommerce-table--order-details td {
+    padding: 12px 0 !important;
+    border-bottom: 1px solid var(--sgk-border) !important;
+    font-size: 13.5px !important;
+}
+
+.sgk-thankyou-details-card .woocommerce-table--order-details th {
+    font-weight: 600 !important;
+    color: var(--sgk-text-muted) !important;
+}
+
+.sgk-thankyou-details-card .woocommerce-customer-details address {
+    border: 1px solid var(--sgk-border) !important;
+    border-radius: 12px !important;
+    padding: 15px !important;
+    font-style: normal !important;
+    font-size: 13.5px !important;
+    color: var(--sgk-text-muted) !important;
+    line-height: 1.5 !important;
+}
+
+/* Return Button */
+.sgk-thankyou-footer-actions {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.sgk-btn-primary {
+    background-color: var(--sgk-primary);
+    color: var(--sgk-white);
+    padding: 15px 35px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(255, 29, 142, 0.25);
+    transition: all 0.2s ease;
+}
+
+.sgk-btn-primary:hover {
+    background-color: var(--sgk-primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 29, 142, 0.35);
+}

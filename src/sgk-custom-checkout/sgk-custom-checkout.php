@@ -45,7 +45,7 @@ class SGK_Custom_Checkout {
      * Enqueue CSS & JS only on WooCommerce Checkout page
      */
     public function enqueue_assets() {
-        if ( is_checkout() && ! is_order_received_page() ) {
+        if ( is_checkout() || is_order_received_page() ) {
             // CSS
             wp_enqueue_style(
                 'sgk-checkout-style',
@@ -107,8 +107,8 @@ class SGK_Custom_Checkout {
     public function locate_templates( $template, $template_name, $template_path ) {
         $plugin_path = plugin_dir_path( __FILE__ ) . 'templates/';
 
-        // We override form-checkout.php
-        if ( $template_name === 'checkout/form-checkout.php' ) {
+        // We override form-checkout.php and thankyou.php
+        if ( $template_name === 'checkout/form-checkout.php' || $template_name === 'checkout/thankyou.php' ) {
             if ( file_exists( $plugin_path . $template_name ) ) {
                 $template = $plugin_path . $template_name;
             }
