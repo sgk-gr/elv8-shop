@@ -25,7 +25,7 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
     <!-- Premium Header -->
     <div class="sgk-checkout-header">
         <a href="https://elv8now.com" class="sgk-checkout-logo">
-            elv8
+            <img src="https://elv8now.com/elv8_logo.svg" alt="ELV8 Logo" style="height: 36px; width: auto; display: block;" />
         </a>
         <a href="https://elv8now.com" class="sgk-checkout-cart-icon-link" aria-label="Καλάθι">
             <svg class="sgk-cart-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
