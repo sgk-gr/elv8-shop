@@ -26,6 +26,19 @@ class SGK_Custom_Checkout {
 
         // Move WooCommerce Coupon form from the top to inside our custom grid (below header, before payments)
         remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
+
+        // Hide Admin Bar on Checkout Page for distraction-free layout
+        add_filter( 'show_admin_bar', array( $this, 'hide_admin_bar' ) );
+    }
+
+    /**
+     * Hide WordPress Admin Bar on checkout page
+     */
+    public function hide_admin_bar( $show ) {
+        if ( is_checkout() ) {
+            return false;
+        }
+        return $show;
     }
 
     /**
