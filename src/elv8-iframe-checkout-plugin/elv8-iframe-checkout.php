@@ -3,7 +3,7 @@
  * Plugin Name: ELV8 iFrame Checkout
  * Plugin URI: https://elv8now.com
  * Description: Allows the WooCommerce checkout to be embedded in an iFrame on elv8now.com by removing X-Frame-Options restrictions.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: ELV8 Energy
  * Author URI: https://elv8now.com
  * License: GPL2

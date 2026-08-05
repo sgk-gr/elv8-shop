@@ -2,7 +2,7 @@
 /**
  * Plugin Name: SGK Custom Checkout by SGK Digital
  * Description: Ένα premium, minimal και πλήρως mobile-responsive checkout για το WooCommerce στα χρώματα του ELV8 Energy Drink.
- * Version: 1.0.0
+ * Version: 1.2.0
  * Author: SGK Digital
  * Author URI: https://sgk.gr
  * License: GPL2
@@ -51,7 +51,7 @@ class SGK_Custom_Checkout {
                 'sgk-checkout-style',
                 plugins_url( 'assets/css/sgk-checkout.css', __FILE__ ),
                 array(),
-                '1.0.1'
+                '1.2.0'
             );
 
             // Google Fonts (Outfit & Inter) to match the main store
@@ -67,7 +67,7 @@ class SGK_Custom_Checkout {
                 'sgk-checkout-script',
                 plugins_url( 'assets/js/sgk-checkout.js', __FILE__ ),
                 array( 'jquery' ),
-                '1.0.1',
+                '1.2.0',
                 true
             );
         }

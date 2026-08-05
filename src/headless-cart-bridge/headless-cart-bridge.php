@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Headless Cart Bridge for WooCommerce
  * Description: Επιτρέπει την προσθήκη πολλών προϊόντων στο καλάθι μέσω URL (format: ?fill-cart=ID1:QTY1,ID2:QTY2) και ανακατεύθυνση στο Checkout.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Spiros Tsavos
  */
 
