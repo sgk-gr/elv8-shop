@@ -209,6 +209,5 @@
 @media (max-width: 767px) {
   .responsive-stroke {
     -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.7) !important;
-    font-family: Georgia, serif !important;
   }
 }

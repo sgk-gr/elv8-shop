@@ -153,10 +153,11 @@ export default function HomeClient({
           }}
         >
           <span 
-            className="text-[34vw] sm:text-[28vw] md:text-[22vw] lg:text-[18vw] font-display font-black tracking-widest text-transparent uppercase whitespace-nowrap select-none responsive-stroke"
+            className="text-[34vw] sm:text-[28vw] md:text-[22vw] lg:text-[18vw] font-black tracking-widest text-transparent uppercase whitespace-nowrap select-none responsive-stroke"
             style={{ WebkitTextStroke: "3px #FFFFFF" }}
           >
-            ELV8
+            <span style={{ fontFamily: "var(--font-oswald), sans-serif" }}>ELV</span>
+            <span style={{ fontFamily: '"Myriad Pro", Myriad, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>8</span>
           </span>
         </div>
 

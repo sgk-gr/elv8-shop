@@ -1,4 +1,4 @@
-import { Inter, Outfit, Caveat } from "next/font/google";
+import { Inter, Outfit, Caveat, Oswald } from "next/font/google";
 import "@/index.css";
 import Providers from "@/components/Providers";
 import Header from "@/components/Header";
@@ -24,6 +24,12 @@ const outfit = Outfit({
 const caveat = Caveat({
     subsets: ["latin"],
     variable: "--font-handwriting",
+    display: "swap",
+});
+
+const oswald = Oswald({
+    subsets: ["latin"],
+    variable: "--font-oswald",
     display: "swap",
 });
 
@@ -99,7 +105,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="el" className={`${inter.variable} ${outfit.variable} ${caveat.variable}`} suppressHydrationWarning>
+        <html lang="el" className={`${inter.variable} ${outfit.variable} ${caveat.variable} ${oswald.variable}`} suppressHydrationWarning>
             <body className="font-body antialiased min-h-screen flex flex-col justify-between bg-white" suppressHydrationWarning>
                 <Providers>
                     <JsonLd type="website" />
