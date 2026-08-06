@@ -150,6 +150,15 @@ class SGK_Custom_Checkout {
             $phpmailer->SMTPSecure = SGK_SMTP_SECURE;
             $phpmailer->From       = SGK_SMTP_USER;
             $phpmailer->FromName   = defined( 'SGK_FROM_NAME' ) ? SGK_FROM_NAME : get_bloginfo( 'name' );
+            
+            // Bypass SSL certificate verification for self-signed or Plesk-issued certs
+            $phpmailer->SMTPOptions = array(
+                'ssl' => array(
+                    'verify_peer'       => false,
+                    'verify_peer_name'  => false,
+                    'allow_self_signed' => true
+                )
+            );
         }
     }
 }
