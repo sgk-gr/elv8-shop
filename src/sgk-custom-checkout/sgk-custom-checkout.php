@@ -201,10 +201,12 @@ class SGK_Custom_Checkout {
             echo '<p>Running automated SMTP tests to find a working configuration on your server...</p>';
             
             $tests = array(
-                array( 'host' => 'sgk.gr', 'port' => 465, 'secure' => 'ssl', 'desc' => 'Test #1: Port 465 (SSL)' ),
-                array( 'host' => 'sgk.gr', 'port' => 587, 'secure' => 'tls', 'desc' => 'Test #2: Port 587 (TLS)' ),
-                array( 'host' => 'localhost', 'port' => 25, 'secure' => '', 'desc' => 'Test #3: Localhost Port 25 (No SSL)' ),
-                array( 'host' => '127.0.0.1', 'port' => 25, 'secure' => '', 'desc' => 'Test #4: 127.0.0.1 Port 25 (No SSL)' ),
+                array( 'host' => 'linux60.name-servers.gr', 'port' => 465, 'secure' => 'ssl', 'desc' => 'Test #1: Plesk Host linux60.name-servers.gr Port 465 (SSL + Auth)' ),
+                array( 'host' => 'linux60.name-servers.gr', 'port' => 587, 'secure' => 'tls', 'desc' => 'Test #2: Plesk Host linux60.name-servers.gr Port 587 (TLS + Auth)' ),
+                array( 'host' => 'sgk.gr', 'port' => 465, 'secure' => 'ssl', 'desc' => 'Test #3: sgk.gr Port 465 (SSL + Auth)' ),
+                array( 'host' => 'sgk.gr', 'port' => 587, 'secure' => 'tls', 'desc' => 'Test #4: sgk.gr Port 587 (TLS + Auth)' ),
+                array( 'host' => 'localhost', 'port' => 25, 'secure' => '', 'desc' => 'Test #5: Localhost Port 25 (No SSL + Auth)' ),
+                array( 'host' => '127.0.0.1', 'port' => 25, 'secure' => '', 'desc' => 'Test #6: 127.0.0.1 Port 25 (No SSL + Auth)' ),
             );
             
             foreach ( $tests as $idx => $test ) {
@@ -226,7 +228,7 @@ class SGK_Custom_Checkout {
                 try {
                     $mail->isSMTP();
                     $mail->Host       = $test['host'];
-                    $mail->SMTPAuth   = ( $test['host'] !== 'localhost' && $test['host'] !== '127.0.0.1' );
+                    $mail->SMTPAuth   = true;
                     $mail->Port       = $test['port'];
                     $mail->Username   = SGK_SMTP_USER;
                     $mail->Password   = SGK_SMTP_PASS;
