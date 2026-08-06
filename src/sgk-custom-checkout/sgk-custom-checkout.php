@@ -152,6 +152,7 @@ class SGK_Custom_Checkout {
             $phpmailer->isSMTP();
             $phpmailer->Host       = $host;
             $phpmailer->SMTPAuth   = ( $host !== 'localhost' && $host !== '127.0.0.1' );
+            $phpmailer->AuthType   = 'LOGIN'; // Force LOGIN to avoid CRAM-MD5 failures on Plesk
             $phpmailer->Port       = $port;
             $phpmailer->Username   = SGK_SMTP_USER;
             $phpmailer->Password   = SGK_SMTP_PASS;
@@ -229,6 +230,7 @@ class SGK_Custom_Checkout {
                     $mail->isSMTP();
                     $mail->Host       = $test['host'];
                     $mail->SMTPAuth   = true;
+                    $mail->AuthType   = 'LOGIN'; // Force LOGIN to avoid CRAM-MD5 failures on Plesk
                     $mail->Port       = $test['port'];
                     $mail->Username   = SGK_SMTP_USER;
                     $mail->Password   = SGK_SMTP_PASS;
