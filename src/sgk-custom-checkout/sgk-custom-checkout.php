@@ -2,7 +2,7 @@
 /**
  * Plugin Name: SGK Custom Checkout by SGK Digital
  * Description: Ένα premium, minimal και πλήρως mobile-responsive checkout για το WooCommerce στα χρώματα του ELV8 Energy Drink.
- * Version: 1.3.7
+ * Version: 1.3.8
  * Author: SGK Digital
  * Author URI: https://sgk.gr
  * License: GPL2
@@ -330,9 +330,33 @@ class SGK_Custom_Checkout {
             echo '<form method="GET" action="">';
             echo '<input type="hidden" name="test_elv8_mail" value="1" />';
             echo '<input type="email" name="send_to" placeholder="e.g. yourname@gmail.com" required style="padding: 8px; width: 300px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;" value="' . ( isset($_GET['send_to']) ? esc_attr($_GET['send_to']) : '' ) . '" /> ';
-            echo '<button type="submit" style="background: #28a745; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 14px;">Send Test Email</button>';
+            echo '<button type="submit" style="background: #28a745; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 14px;">Send Test Email via Resend</button>';
             echo '</form>';
             echo '</div>';
+
+            // If send_to is set AND Resend is configured → send via wp_mail (goes through Resend API)
+            if ( isset( $_GET['send_to'] ) && is_email( $_GET['send_to'] ) && SGK_RESEND_API_KEY !== '' ) {
+                $to = sanitize_email( $_GET['send_to'] );
+                echo '<hr/>';
+                echo '<h2>🚀 Sending via Resend API to: <strong>' . esc_html( $to ) . '</strong></h2>';
+                $sent = wp_mail(
+                    $to,
+                    'ELV8 Shop - Resend API Test Email',
+                    '<h1 style="color:#111;">ELV8 Shop Email Works!</h1><p>This email was sent via the <strong>Resend API</strong>. WooCommerce order emails will arrive the same way!</p>',
+                    array( 'Content-Type: text/html; charset=UTF-8' )
+                );
+                if ( $sent ) {
+                    echo '<h2 style="color:green;">✅ SUCCESS! Email sent via Resend API!</h2>';
+                    echo '<p>Check your inbox at <strong>' . esc_html( $to ) . '</strong>. It should arrive within seconds!</p>';
+                } else {
+                    $err = get_transient( 'sgk_mail_error_log' );
+                    echo '<h2 style="color:red;">❌ Failed to send via Resend API!</h2>';
+                    echo '<pre style="background:#300;color:#ff8;padding:12px;">' . esc_html( $err ?: 'Unknown error' ) . '</pre>';
+                }
+                echo '<p style="margin-top:30px;"><a href="?test_elv8_mail=1">← Back to Debugger</a></p>';
+                echo '</body></html>';
+                exit;
+            }
 
             echo '<p>Running automated SMTP tests to find a working configuration on your server...</p>';
             
