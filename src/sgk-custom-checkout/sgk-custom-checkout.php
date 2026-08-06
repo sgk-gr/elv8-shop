@@ -2,15 +2,21 @@
 /**
  * Plugin Name: SGK Custom Checkout by SGK Digital
  * Description: Ένα premium, minimal και πλήρως mobile-responsive checkout για το WooCommerce στα χρώματα του ELV8 Energy Drink.
- * Version: 1.2.1
+ * Version: 1.3.1
  * Author: SGK Digital
  * Author URI: https://sgk.gr
  * License: GPL2
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-    exit; // Exit if accessed directly
-}
+// ==========================================================================
+// SMTP CONFIGURATION (Change these to your own mail server details)
+// ==========================================================================
+define( 'SGK_SMTP_HOST', 'mail.sgk.gr' );         // SMTP Host
+define( 'SGK_SMTP_PORT', 465 );                   // Port: 465 (SSL) or 587 (TLS)
+define( 'SGK_SMTP_USER', 'info@sgk.gr' );         // SMTP Username / Sender Email
+define( 'SGK_SMTP_PASS', 'PASSWORD_HERE' );       // SMTP Password
+define( 'SGK_SMTP_SECURE', 'ssl' );               // 'ssl' or 'tls'
+define( 'SGK_FROM_NAME', 'ELV8 Energy Drink' );  // Sender Name
 
 class SGK_Custom_Checkout {
 
@@ -32,6 +38,9 @@ class SGK_Custom_Checkout {
 
         // Remove links from product names on the thank you page & order details
         add_filter( 'woocommerce_order_item_name', array( $this, 'remove_order_item_links' ), 99, 2 );
+
+        // SMTP Mail Integration
+        add_action( 'phpmailer_init', array( $this, 'configure_smtp_mail' ) );
     }
 
     /**
@@ -125,6 +134,23 @@ class SGK_Custom_Checkout {
         }
 
         return $template;
+    }
+
+    /**
+     * Configure PHPMailer to use custom SMTP settings
+     */
+    public function configure_smtp_mail( $phpmailer ) {
+        if ( defined( 'SGK_SMTP_HOST' ) && SGK_SMTP_HOST !== '' && SGK_SMTP_PASS !== 'PASSWORD_HERE' ) {
+            $phpmailer->isSMTP();
+            $phpmailer->Host       = SGK_SMTP_HOST;
+            $phpmailer->SMTPAuth   = true;
+            $phpmailer->Port       = SGK_SMTP_PORT;
+            $phpmailer->Username   = SGK_SMTP_USER;
+            $phpmailer->Password   = SGK_SMTP_PASS;
+            $phpmailer->SMTPSecure = SGK_SMTP_SECURE;
+            $phpmailer->From       = SGK_SMTP_USER;
+            $phpmailer->FromName   = defined( 'SGK_FROM_NAME' ) ? SGK_FROM_NAME : get_bloginfo( 'name' );
+        }
     }
 }
 
