@@ -6,7 +6,7 @@ import JsonLd from "@/components/JsonLd";
 
 export const revalidate = 14400; // Επαναδημιουργία της σελίδας κάθε 4 ώρες (ISR)
 
-const BASE_URL = "https://store.elv8now.com";
+const BASE_URL = "https://elv8now.com";
 
 // ── Static params (required for output: export) ───────────────────────────────
 export async function generateStaticParams() {

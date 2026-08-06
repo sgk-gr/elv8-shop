@@ -35,7 +35,7 @@ const oswald = Oswald({
 });
 
 export const metadata: Metadata = {
-    metadataBase: new URL("https://store.elv8now.com"),
+    metadataBase: new URL("https://elv8now.com"),
     title: {
         default: "ELV8 Energy Drink Greece | Premium Ενεργειακό Ποτό Χωρίς Ζάχαρη",
         template: "%s | ELV8 Energy",
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
         "focus drink",
         "αγορα ενεργειακων ποτων"
     ],
-    authors: [{ name: "ELV8 Energy", url: "https://store.elv8now.com" }],
+    authors: [{ name: "ELV8 Energy", url: "https://elv8now.com" }],
     creator: "SGK Software Development",
     publisher: "ELV8 Energy",
     robots: {
@@ -75,7 +75,7 @@ export const metadata: Metadata = {
     openGraph: {
         type: "website",
         locale: "el_GR",
-        url: "https://store.elv8now.com",
+        url: "https://elv8now.com",
         siteName: "ELV8 Energy Drink",
         title: "ELV8 Energy Drink Greece | Premium Ενεργειακό Ποτό Χωρίς Ζάχαρη",
         description:
@@ -99,10 +99,10 @@ export const metadata: Metadata = {
         images: ["/opengraph-image.png"],
     },
     alternates: {
-        canonical: "https://store.elv8now.com",
+        canonical: "https://elv8now.com",
         languages: {
-            "el-GR": "https://store.elv8now.com",
-            "en-US": "https://store.elv8now.com/?lang=en",
+            "el-GR": "https://elv8now.com",
+            "en-US": "https://elv8now.com/?lang=en",
         },
     },
     icons: {

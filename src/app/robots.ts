@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/cart/', '/checkout/', '/account/', '/auth/', '/api/'],
     },
-    sitemap: 'https://store.elv8now.com/sitemap.xml',
+    sitemap: 'https://elv8now.com/sitemap.xml',
   }
 }

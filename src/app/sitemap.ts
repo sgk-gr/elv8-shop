@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import { getProducts, getCategories } from '@/lib/woocommerce'
 
-const BASE_URL = 'https://store.elv8now.com'
+const BASE_URL = 'https://elv8now.com'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static routes

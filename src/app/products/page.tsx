@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Ενεργειακά Ποτά ELV8 | Αγορά Όλων των Γεύσεων & Πακέτων",
   description: "Ανακαλύψτε όλες τις γεύσεις των ενεργειακών ποτών ELV8. Zero Sugar, 200mg φυσική καφεΐνη, ηλεκτρολύτες & βιταμίνες. Δείτε τα διαθέσιμα πακέτα & προσφορές!",
   alternates: {
-    canonical: "https://store.elv8now.com/products",
+    canonical: "https://elv8now.com/products",
   }
 };
 

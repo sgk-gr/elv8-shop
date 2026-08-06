@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     "Βρείτε όλα τα σημεία πώλησης, καταστήματα, περίπτερα και γυμναστήρια που διαθέτουν το ELV8 Energy Drink στην Αθήνα και σε όλη την Ελλάδα. Αναζητήστε με τον ΤΚ ή την πόλη σας.",
   alternates: {
-    canonical: "https://store.elv8now.com/store-locator",
+    canonical: "https://elv8now.com/store-locator",
   }
 };
 
