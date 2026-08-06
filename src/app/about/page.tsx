@@ -1,20 +1,19 @@
-import { Metadata } from "next";
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { Zap, ShieldCheck, Sparkles, Heart, ArrowRight, Laptop, Dumbbell, Sun, Brain, Smile, CheckCircle2 } from "lucide-react";
+import { Zap, ShieldCheck, Sparkles, Heart, ArrowRight, Laptop, Dumbbell, Sun, Brain, Smile, CheckCircle2, ChevronLeft } from "lucide-react";
 import WholesaleForm from "@/components/WholesaleForm";
-
-export const metadata: Metadata = {
-  title: "About ELV8 | Energy For Everyone",
-  description:
-    "Discover ELV8. Clean, natural energy drink crafted for office work, studying, workouts, and everyday life.",
-};
+import { useTranslation } from "@/context/LanguageContext";
 
 export default function AboutPage() {
+  const { t, language } = useTranslation();
+  const isEl = language === "el";
+
   return (
     <div className="min-h-screen bg-white text-slate-900 font-body overflow-x-hidden">
 
-      {/* ================= 1. HERO SECTION (BRIGHT WHITE DESIGN) ================= */}
+      {/* ================= 1. HERO SECTION ================= */}
       <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 bg-white overflow-hidden">
         {/* Soft Organic Background Blobs */}
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
@@ -28,11 +27,19 @@ export default function AboutPage() {
             {/* Left Copy */}
             <div className="w-full lg:w-6/12 text-left space-y-6">
               <h1 className="text-4xl sm:text-6xl lg:text-7xl font-display font-black tracking-tight leading-[1.05] text-slate-900">
-                Energy Built For <span className="text-[#FF1D8E]">Everyone.</span>
+                {isEl ? (
+                  <>Ενέργεια Σχεδιασμένη για <span className="text-[#FF1D8E]">Όλους.</span></>
+                ) : (
+                  <>Energy Built For <span className="text-[#FF1D8E]">Everyone.</span></>
+                )}
               </h1>
 
               <p className="text-slate-600 text-base sm:text-lg leading-relaxed font-normal">
-                ELV8 was created for ambitious people who refuse to slow down. Whether you are an athlete pushing limits, a professional chasing deadlines, a student grinding through exams, or a gamer locked in for hours, ELV8 delivers clean, sustained energy with <strong>zero crash</strong>. No spikes. No jitters. Just steady, elevated performance.
+                {isEl ? (
+                  <>Το ELV8 δημιουργήθηκε για φιλόδοξους ανθρώπους που αρνούνται να επιβραδύνουν. Είτε είστε αθλητής που ξεπερνά τα όριά του, επαγγελματίας που κυνηγά προθεσμίες, φοιτητής που διαβάζει για εξετάσεις, είτε gamer σε πολύωρο session, το ELV8 προσφέρει καθαρή, διαρκή ενέργεια με <strong>μηδενικό crash</strong>. Χωρίς απότομες αυξομειώσεις. Χωρίς νευρικότητα. Μόνο σταθερή, υψηλή απόδοση.</>
+                ) : (
+                  <>ELV8 was created for ambitious people who refuse to slow down. Whether you are an athlete pushing limits, a professional chasing deadlines, a student grinding through exams, or a gamer locked in for hours, ELV8 delivers clean, sustained energy with <strong>zero crash</strong>. No spikes. No jitters. Just steady, elevated performance.</>
+                )}
               </p>
 
               <div className="pt-2 flex flex-wrap items-center gap-4">
@@ -40,45 +47,35 @@ export default function AboutPage() {
                   href="#use-cases"
                   className="bg-slate-100 hover:bg-slate-200 text-slate-900 font-bold text-xs sm:text-sm tracking-[0.15em] uppercase px-8 py-4 rounded-full transition-all duration-300 border border-slate-200"
                 >
-                  Who It's For
+                  {isEl ? "Για Ποιον Είναι" : "Who It's For"}
                 </a>
               </div>
             </div>
 
-            {/* Right: Large Can with Organic Blobs & Lightning Bolts (Riot-Style) */}
+            {/* Right: Large Can with Organic Blobs & Lightning Bolts */}
             <div className="w-full lg:w-6/12 flex justify-center items-center overflow-visible">
               <div className="relative w-full max-w-[500px] h-[380px] sm:h-[420px] md:h-[440px]">
                 
-                {/* Background Organic Blob 1 - Large Yellow */}
+                {/* Background Organic Blobs */}
                 <div className="absolute top-[5%] right-[0%] w-[280px] h-[280px] sm:w-[340px] sm:h-[340px] bg-[#FDE047] rounded-full opacity-80 z-0" />
-                
-                {/* Background Organic Blob 2 - Medium Pink */}
                 <div className="absolute bottom-[0%] left-[0%] w-[220px] h-[220px] sm:w-[260px] sm:h-[260px] bg-[#FF1D8E]/70 rounded-full opacity-60 z-0" />
-                
-                {/* Background Organic Blob 3 - Small Yellow accent */}
                 <div className="absolute top-[45%] left-[8%] w-[100px] h-[100px] sm:w-[130px] sm:h-[130px] bg-[#FDE047]/60 rounded-full z-0" />
 
-                {/* Lightning Bolt SVG - Top Left */}
+                {/* Lightning Bolt SVGs */}
                 <svg className="absolute top-[2%] left-[5%] w-9 h-9 sm:w-11 sm:h-11 text-black z-20" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" />
                 </svg>
-
-                {/* Lightning Bolt SVG - Top Right */}
                 <svg className="absolute top-[8%] right-[2%] w-8 h-8 sm:w-10 sm:h-10 text-black z-20" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" />
                 </svg>
-
-                {/* Lightning Bolt SVG - Bottom Left */}
                 <svg className="absolute bottom-[10%] left-[2%] w-7 h-7 sm:w-9 sm:h-9 text-black z-20" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" />
                 </svg>
-
-                {/* Lightning Bolt SVG - Bottom Right */}
                 <svg className="absolute bottom-[15%] right-[5%] w-8 h-8 sm:w-9 sm:h-9 text-black z-20" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" />
                 </svg>
 
-                {/* Main ELV8 Can - HUGE, overflows the container */}
+                {/* Main ELV8 Can */}
                 <div className="absolute inset-x-0 -top-[30%] -bottom-[20%] z-10 flex items-center justify-center pointer-events-none">
                   <div className="relative w-[260px] sm:w-[300px] md:w-[320px] h-[520px] sm:h-[580px] md:h-[620px]">
                     <Image
@@ -103,33 +100,45 @@ export default function AboutPage() {
         <div className="container max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           <div className="space-y-1">
             <p className="text-3xl sm:text-4xl font-black font-display">100%</p>
-            <p className="text-xs sm:text-sm font-bold uppercase tracking-wider">Natural Caffeine</p>
+            <p className="text-xs sm:text-sm font-bold uppercase tracking-wider">
+              {isEl ? "Φυσική Καφεΐνη" : "Natural Caffeine"}
+            </p>
           </div>
           <div className="space-y-1">
             <p className="text-3xl sm:text-4xl font-black font-display">0g</p>
-            <p className="text-xs sm:text-sm font-bold uppercase tracking-wider">Added Sugar</p>
+            <p className="text-xs sm:text-sm font-bold uppercase tracking-wider">
+              {isEl ? "Χωρίς Ζάχαρη" : "Added Sugar"}
+            </p>
           </div>
           <div className="space-y-1">
             <p className="text-3xl sm:text-4xl font-black font-display">4x</p>
-            <p className="text-xs sm:text-sm font-bold uppercase tracking-wider">Essential B Vitamins</p>
+            <p className="text-xs sm:text-sm font-bold uppercase tracking-wider">
+              {isEl ? "Απαραίτητες Βιταμίνες Β" : "Essential B Vitamins"}
+            </p>
           </div>
           <div className="space-y-1">
             <p className="text-3xl sm:text-4xl font-black font-display">⚡</p>
-            <p className="text-xs sm:text-sm font-bold uppercase tracking-wider">Slow Release Energy</p>
+            <p className="text-xs sm:text-sm font-bold uppercase tracking-wider">
+              {isEl ? "Σταδιακή Αποδέσμευση" : "Slow Release Energy"}
+            </p>
           </div>
         </div>
       </section>
 
-      {/* ================= 3. ENERGY FOR EVERY MOMENT (USE CASES) ================= */}
+      {/* ================= 3. USE CASES ================= */}
       <section id="use-cases" className="py-20 sm:py-28 bg-slate-50 relative">
         <div className="container max-w-7xl mx-auto px-6 md:px-12">
           
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
             <h2 className="text-3xl sm:text-5xl font-black text-slate-900 font-display tracking-tight">
-              Built For Every Kind of Achiever
+              {isEl ? "Σχεδιασμένο για Κάθε Δημιουργικό Άνθρωπο" : "Built For Every Kind of Achiever"}
             </h2>
             <p className="text-slate-600 text-base sm:text-lg">
-              From the gym to the studio, from the office to the classroom, ELV8's slow-release formula keeps you focused and energized without the crash.
+              {isEl ? (
+                "Από το γυμναστήριο στο γραφείο, και από το στούντιο στην τάξη, η φόρμουλα σταδιακής αποδέσμευσης του ELV8 σας κρατά συγκεντρωμένους χωρίς crash."
+              ) : (
+                "From the gym to the studio, from the office to the classroom, ELV8's slow-release formula keeps you focused and energized without the crash."
+              )}
             </p>
           </div>
 
@@ -140,10 +149,16 @@ export default function AboutPage() {
               <div className="relative w-full h-40">
                 <Image src="/about-office.jpg" alt="Office & Studying" fill className="object-cover" />
               </div>
-              <div className="p-6 space-y-2">
-                <h3 className="text-xl font-bold font-display text-slate-900">Professionals & Students</h3>
+              <div className="p-6 space-y-2 text-left">
+                <h3 className="text-xl font-bold font-display text-slate-900">
+                  {isEl ? "Επαγγελματίες & Φοιτητές" : "Professionals & Students"}
+                </h3>
                 <p className="text-slate-600 text-sm leading-relaxed">
-                  Stay razor-sharp during long work sessions, coding marathons, or exam prep. Sustained focus, zero afternoon slump.
+                  {isEl ? (
+                    "Μείνετε απόλυτα συγκεντρωμένοι κατά τη διάρκεια της δουλειάς, σε μαραθώνιους κώδικα ή στην προετοιμασία εξετάσεων. Χωρίς απογευματινή κούραση."
+                  ) : (
+                    "Stay razor-sharp during long work sessions, coding marathons, or exam prep. Sustained focus, zero afternoon slump."
+                  )}
                 </p>
               </div>
             </div>
@@ -153,23 +168,35 @@ export default function AboutPage() {
               <div className="relative w-full h-40">
                 <Image src="/about-gym.jpg" alt="Gym & Sports" fill className="object-cover" />
               </div>
-              <div className="p-6 space-y-2">
-                <h3 className="text-xl font-bold font-display text-slate-900">Athletes & Gym</h3>
+              <div className="p-6 space-y-2 text-left">
+                <h3 className="text-xl font-bold font-display text-slate-900">
+                  {isEl ? "Αθλητές & Γυμναστήριο" : "Athletes & Gym"}
+                </h3>
                 <p className="text-slate-600 text-sm leading-relaxed">
-                  Fuel your training with natural caffeine, Taurine, and electrolytes. Maintain peak intensity from warm-up to the final rep.
+                  {isEl ? (
+                    "Τροφοδοτήστε την προπόνησή σας με φυσική καφεΐνη, ταυρίνη και ηλεκτρολύτες. Διατηρήστε τη μέγιστη ένταση από το ζέσταμα έως την τελευταία επανάληψη."
+                  ) : (
+                    "Fuel your training with natural caffeine, Taurine, and electrolytes. Maintain peak intensity from warm-up to the final rep."
+                  )}
                 </p>
               </div>
             </div>
 
-            {/* Card 3: Outdoor & Travel */}
+            {/* Card 3: Outdoors & Gaming */}
             <div className="bg-white border border-slate-200/80 rounded-3xl shadow-sm hover:shadow-xl hover:border-[#FF1D8E] transition-all duration-300 overflow-hidden">
               <div className="relative w-full h-40">
                 <Image src="/about-outdoors.jpg" alt="Outdoors & Trips" fill className="object-cover" />
               </div>
-              <div className="p-6 space-y-2">
-                <h3 className="text-xl font-bold font-display text-slate-900">Gamers & Creators</h3>
+              <div className="p-6 space-y-2 text-left">
+                <h3 className="text-xl font-bold font-display text-slate-900">
+                  {isEl ? "Gamers & Δημιουργοί" : "Gamers & Creators"}
+                </h3>
                 <p className="text-slate-600 text-sm leading-relaxed">
-                  Long sessions demand sharp reactions and deep focus. ELV8's nootropics and slow-release formula keep you locked in, without the jitters.
+                  {isEl ? (
+                    "Τα πολύωρα sessions απαιτούν γρήγορα αντανακλαστικά και βαθιά εστίαση. Τα νοοτροπικά του ELV8 σας κρατούν συγκεντρωμένους χωρίς τρέμουλο."
+                  ) : (
+                    "Long sessions demand sharp reactions and deep focus. ELV8's nootropics and slow-release formula keep you locked in, without the jitters."
+                  )}
                 </p>
               </div>
             </div>
@@ -179,10 +206,16 @@ export default function AboutPage() {
               <div className="relative w-full h-40">
                 <Image src="/about-daily.jpg" alt="Everyday Hustle" fill className="object-cover" />
               </div>
-              <div className="p-6 space-y-2">
-                <h3 className="text-xl font-bold font-display text-slate-900">The Everyday Hustler</h3>
+              <div className="p-6 space-y-2 text-left">
+                <h3 className="text-xl font-bold font-display text-slate-900">
+                  {isEl ? "Ο Καθημερινός Hustler" : "The Everyday Hustler"}
+                </h3>
                 <p className="text-slate-600 text-sm leading-relaxed">
-                  For people with big ambitions and busy lives. Slow-release energy means you stay productive and driven from morning to night.
+                  {isEl ? (
+                    "Για ανθρώπους με μεγάλες φιλοδοξίες και απαιτητική καθημερινότητα. Σταθερή ενέργεια για να είστε παραγωγικοί από το πρωί έως το βράδυ."
+                  ) : (
+                    "For people with big ambitions and busy lives. Slow-release energy means you stay productive and driven from morning to night."
+                  )}
                 </p>
               </div>
             </div>
@@ -202,7 +235,7 @@ export default function AboutPage() {
             <div className="w-full lg:w-5/12 flex justify-center">
               <div className="relative w-full max-w-[400px] aspect-[3/4] rounded-[36px] border-4 border-black bg-[#FFA5C4] flex items-center justify-center shadow-xl overflow-hidden">
                 
-                {/* Can - Large, fills the card */}
+                {/* Can */}
                 <div className="relative w-full h-[110%] z-10">
                   <Image
                     src="/elv8-can-clean.png"
@@ -212,7 +245,7 @@ export default function AboutPage() {
                   />
                 </div>
 
-                {/* Fruits at bottom - many, overlapping the can */}
+                {/* Fruits */}
                 <div className="absolute -bottom-8 -left-8 w-[50%] h-[45%] z-20 pointer-events-none">
                   <Image src="/elv8-lemon-fruit.png" alt="Lemons" fill className="object-contain object-bottom" />
                 </div>
@@ -232,34 +265,54 @@ export default function AboutPage() {
             {/* Right Content */}
             <div className="w-full lg:w-7/12 space-y-6 text-left">
               <h2 className="text-3xl sm:text-5xl font-black font-display tracking-tight text-slate-900">
-                What Goes Into Every Can
+                {isEl ? "Τι Κρύβεται Μέσα σε Κάθε Κουτάκι" : "What Goes Into Every Can"}
               </h2>
               <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
-                We believe in radical transparency and high-quality ingredients. Our formula delivers clean, slow-release energy with no jitters, no crash, no compromises. Just the best version of you, sustained.
+                {isEl ? (
+                  "Πιστεύουμε στην απόλυτη διαφάνεια και στα υψηλής ποιότητας συστατικά. Η φόρμουλά μας προσφέρει καθαρή ενέργεια σταδιακής αποδέσμευσης χωρίς συμβιβασμούς."
+                ) : (
+                  "We believe in radical transparency and high-quality ingredients. Our formula delivers clean, slow-release energy with no jitters, no crash, no compromises. Just the best version of you, sustained."
+                )}
               </p>
 
               <div className="space-y-4 pt-2">
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-6 h-6 text-[#FF1D8E] shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-bold text-slate-900 text-base">Natural Coffee & Guarana Extract</h4>
-                    <p className="text-slate-600 text-sm">Provides sustained alertness without nervous jitters.</p>
+                    <h4 className="font-bold text-slate-900 text-base">
+                      {isEl ? "Φυσικός Καφές & Εκχύλισμα Γκουαρανά" : "Natural Coffee & Guarana Extract"}
+                    </h4>
+                    <p className="text-slate-600 text-sm">
+                      {isEl ? "Προσφέρει παρατεταμένη εγρήγορση χωρίς τη νευρικότητα του απλού καφέ." : "Provides sustained alertness without nervous jitters."}
+                    </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-6 h-6 text-[#FF1D8E] shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-bold text-slate-900 text-base">Essential B-Vitamins (B2, B6, B12)</h4>
-                    <p className="text-slate-600 text-sm">Helps body convert fat into natural energy & reduces tiredness.</p>
+                    <h4 className="font-bold text-slate-900 text-base">
+                      {isEl ? "Απαραίτητες Βιταμίνες Β (B2, B6, B12)" : "Essential B-Vitamins (B2, B6, B12)"}
+                    </h4>
+                    <p className="text-slate-600 text-sm">
+                      {isEl ? "Βοηθούν το σώμα να μετατρέψει τα συστατικά σε φυσική ενέργεια και μειώνουν την κούραση." : "Helps body convert fat into natural energy & reduces tiredness."}
+                    </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-6 h-6 text-[#FF1D8E] shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-bold text-slate-900 text-base">Nootropics / Focus</h4>
-                    <p className="text-slate-600 text-sm">Fuel a slow, steady release of energy with zero crash. Taurine supports muscular endurance and mental sharpness, while Niacin keeps your energy stable and your concentration locked in, perfect for ambitious people with busy schedules.</p>
+                    <h4 className="font-bold text-slate-900 text-base">
+                      {isEl ? "Νοοτροπικά / Εστίαση & Αντοχή" : "Nootropics / Focus & Endurance"}
+                    </h4>
+                    <p className="text-slate-600 text-sm">
+                      {isEl ? (
+                        "Η Ταυρίνη υποστηρίζει τη μυϊκή αντοχή και την πνευματική διαύγεια, ενώ η Νιασίνη διατηρεί σταθερά τα επίπεδα ενέργειας και τη συγκέντρωσή σας."
+                      ) : (
+                        "Taurine supports muscular endurance and mental sharpness, while Niacin keeps your energy stable and your concentration locked in."
+                      )}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -271,19 +324,29 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ================= 5. FOUNDERS & BRAND PHILOSOPHY ================= */}
+      {/* ================= 5. PHILOSOPHY ================= */}
       <section className="py-20 sm:py-28 bg-slate-900 text-white relative">
         <div className="container max-w-5xl mx-auto px-6 text-center space-y-8">
-          <span className="text-[#FDE047] text-xs font-black tracking-[0.25em] uppercase">Our Philosophy</span>
+          <span className="text-[#FDE047] text-xs font-black tracking-[0.25em] uppercase">
+            {isEl ? "Η Φιλοσοφία Μας" : "Our Philosophy"}
+          </span>
           <h2 className="text-3xl sm:text-5xl font-black font-display tracking-tight text-white">
-            Created in Greece for the Modern Lifestyle
+            {isEl ? "Δημιουργήθηκε στην Ελλάδα για τον Σύγχρονο Τρόπο Ζωής" : "Created in Greece for the Modern Lifestyle"}
           </h2>
           <p className="text-slate-300 text-base sm:text-xl leading-relaxed max-w-3xl mx-auto font-light">
-            "ELV8 was founded with a clear mission: create a drink for the modern high-achiever. Whether you're building a business, studying for exams, training hard, or grinding through a late-night session, you deserve energy that's clean, sustained, and built around your ambitions. No crash. No compromise. Just ELV8."
+            {isEl ? (
+              '"Το ELV8 ιδρύθηκε με μια ξεκάθαρη αποστολή: να δημιουργήσει ένα ρόφημα για τον σύγχρονο άνθρωπο που στοχεύει ψηλά. Είτε χτίζετε μια επιχείρηση, είτε διαβάζετε για εξετάσεις, είτε προπονείστε σκληρά, αξίζετε καθαρή ενέργεια σχεδιασμένη γύρω από τις φιλοδοξίες σας. Χωρίς crash. Χωρίς συμβιβασμούς. Μόνο ELV8."'
+            ) : (
+              '"ELV8 was founded with a clear mission: create a drink for the modern high-achiever. Whether you\'re building a business, studying for exams, training hard, or grinding through a late-night session, you deserve energy that\'s clean, sustained, and built around your ambitions. No crash. No compromise. Just ELV8."'
+            )}
           </p>
           <div className="pt-4">
-            <span className="text-white font-bold text-base block font-display">The ELV8 Team</span>
-            <span className="text-slate-400 text-xs uppercase tracking-widest font-semibold">Athens, Greece</span>
+            <span className="text-white font-bold text-base block font-display">
+              {isEl ? "Η Ομάδα του ELV8" : "The ELV8 Team"}
+            </span>
+            <span className="text-slate-400 text-xs uppercase tracking-widest font-semibold">
+              {isEl ? "Αθήνα, Ελλάδα" : "Athens, Greece"}
+            </span>
           </div>
         </div>
       </section>
@@ -293,10 +356,14 @@ export default function AboutPage() {
         <div className="container max-w-6xl mx-auto px-6">
           <div className="text-center space-y-4 mb-16">
             <h2 className="text-3xl sm:text-5xl font-black font-display tracking-tight text-slate-900">
-              Meet the Creators
+              {isEl ? "Γνωρίστε τους Δημιουργούς" : "Meet the Creators"}
             </h2>
             <p className="text-slate-600 text-base sm:text-lg max-w-2xl mx-auto">
-              The visionaries behind ELV8 who wanted to build a clean energy brand for the modern hustler.
+              {isEl ? (
+                "Οι άνθρωποι πίσω από το ELV8 που θέλησαν να δημιουργήσουν ένα καθαρό ενεργειακό brand για τις σύγχρονες ανάγκες."
+              ) : (
+                "The visionaries behind ELV8 who wanted to build a clean energy brand for the modern hustler."
+              )}
             </p>
           </div>
 
@@ -310,10 +377,18 @@ export default function AboutPage() {
                 </svg>
               </div>
               <div className="space-y-3">
-                <h3 className="text-2xl font-black font-display text-slate-900">Co-Founder</h3>
-                <p className="text-[#FF1D8E] font-bold text-sm uppercase tracking-widest">Visionary & Strategy</p>
+                <h3 className="text-2xl font-black font-display text-slate-900">
+                  {isEl ? "Συνιδρυτής" : "Co-Founder"}
+                </h3>
+                <p className="text-[#FF1D8E] font-bold text-sm uppercase tracking-widest">
+                  {isEl ? "Όραμα & Στρατηγική" : "Visionary & Strategy"}
+                </p>
                 <p className="text-slate-600 text-sm max-w-sm mx-auto leading-relaxed">
-                  Passionate about clean energy and building brands that connect with the modern generation.
+                  {isEl ? (
+                    "Παθιασμένος με την καθαρή ενέργεια και τη δημιουργία προϊόντων που συνδέονται με τη σύγχρονη γενιά."
+                  ) : (
+                    "Passionate about clean energy and building brands that connect with the modern generation."
+                  )}
                 </p>
               </div>
             </div>
@@ -327,10 +402,18 @@ export default function AboutPage() {
                 </svg>
               </div>
               <div className="space-y-3">
-                <h3 className="text-2xl font-black font-display text-slate-900">Co-Founder</h3>
-                <p className="text-slate-900 font-bold text-sm uppercase tracking-widest">Operations & Growth</p>
+                <h3 className="text-2xl font-black font-display text-slate-900">
+                  {isEl ? "Συνιδρυτής" : "Co-Founder"}
+                </h3>
+                <p className="text-slate-900 font-bold text-sm uppercase tracking-widest">
+                  {isEl ? "Λειτουργία & Ανάπτυξη" : "Operations & Growth"}
+                </p>
                 <p className="text-slate-600 text-sm max-w-sm mx-auto leading-relaxed">
-                  Focused on bringing ELV8 to athletes, professionals and creators who demand more from their energy drink.
+                  {isEl ? (
+                    "Εστιασμένος στο να φέρει το ELV8 σε αθλητές, επαγγελματίες και δημιουργούς που απαιτούν το καλύτερο από το ενεργειακό τους ποτό."
+                  ) : (
+                    "Focused on bringing ELV8 to athletes, professionals and creators who demand more from their energy drink."
+                  )}
                 </p>
               </div>
             </div>
@@ -344,10 +427,14 @@ export default function AboutPage() {
         <div className="container max-w-4xl mx-auto px-6">
           <div className="text-center space-y-3 mb-12">
             <h2 className="text-3xl sm:text-5xl font-black font-display tracking-tight text-slate-900">
-              Interested in Wholesale?
+              {isEl ? "Ενδιαφέρεστε για Χονδρική;" : "Interested in Wholesale?"}
             </h2>
             <p className="text-slate-600 text-base sm:text-lg max-w-xl mx-auto">
-              Are you a gym, supermarket, kiosk, or distributor? Fill out the form below and our team will get in touch with you.
+              {isEl ? (
+                "Είστε γυμναστήριο, σούπερ μάρκετ, μίνι μάρκετ ή διανομέας; Συμπληρώστε τη φόρμα και η ομάδα μας θα επικοινωνήσει μαζί σας."
+              ) : (
+                "Are you a gym, supermarket, kiosk, or distributor? Fill out the form below and our team will get in touch with you."
+              )}
             </p>
           </div>
 
@@ -359,17 +446,21 @@ export default function AboutPage() {
       <section className="py-20 bg-gradient-to-r from-[#FF1D8E] to-[#FDE047] text-white text-center relative overflow-hidden">
         <div className="container max-w-4xl mx-auto px-6 relative z-10 space-y-8">
           <h2 className="text-4xl sm:text-6xl font-black font-display tracking-tight drop-shadow-md text-slate-900">
-            Ready to ELV8 Your Day?
+            {isEl ? "Έτοιμοι να Ανεβάσετε τη Μέρα σας;" : "Ready to ELV8 Your Day?"}
           </h2>
           <p className="text-lg sm:text-xl font-bold max-w-2xl mx-auto text-slate-900/90">
-            Join the athletes, professionals, creators and hustlers who have already elevated their performance with ELV8.
+            {isEl ? (
+              "Γίνετε μέλος της κοινότητας των αθλητών, επαγγελματιών και δημιουργών που έχουν ήδη ανεβάσει τις επιδόσεις τους με το ELV8."
+            ) : (
+              "Join the athletes, professionals, creators and hustlers who have already elevated their performance with ELV8."
+            )}
           </p>
           <div>
             <Link
               href="/products"
               className="bg-black text-white hover:bg-white hover:text-black font-black text-xs sm:text-sm tracking-[0.25em] uppercase px-12 py-5 rounded-full shadow-2xl transition-all duration-300 inline-block"
             >
-              Shop All Flavors
+              {isEl ? "Αγορά Όλων των Γεύσεων" : "Shop All Flavors"}
             </Link>
           </div>
         </div>

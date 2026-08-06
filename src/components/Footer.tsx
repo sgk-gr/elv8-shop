@@ -13,11 +13,13 @@ export default function Footer() {
     const [email, setEmail] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    const isEl = language === "el";
+
     const handleNewsletterSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!email || !email.includes("@")) {
-            toast.error("Please enter a valid email address");
+            toast.error(isEl ? "Παρακαλώ εισάγετε ένα έγκυρο email" : "Please enter a valid email address");
             return;
         }
 
@@ -25,7 +27,7 @@ export default function Footer() {
 
         // Simulate API call
         setTimeout(() => {
-            toast.success("Thank you! You have successfully subscribed to our newsletter! 🎉");
+            toast.success(isEl ? "Ευχαριστούμε! Εγγραφήκατε επιτυχώς στο ενημερωτικό μας δελτίο! 🎉" : "Thank you! You have successfully subscribed to our newsletter! 🎉");
             setEmail("");
             setIsSubmitting(false);
         }, 1000);
@@ -39,9 +41,9 @@ export default function Footer() {
 
             {/* Main Footer Content */}
             <div className="container mx-auto px-4 md:px-8 py-16">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-center md:text-left">
                     {/* Company Info */}
-                    <div className="space-y-6 flex flex-col items-center text-center">
+                    <div className="space-y-6 flex flex-col items-center md:items-start">
                         <Link href="/" className="inline-block transition-transform hover:scale-105">
                             <Image
                                 src="/elv8_logo.svg"
@@ -51,10 +53,10 @@ export default function Footer() {
                                 className="object-contain"
                             />
                         </Link>
-                        <p className="text-sm text-white/60 leading-relaxed">
+                        <p className="text-sm text-white/60 leading-relaxed max-w-sm">
                             {t("footer.desc")}
                         </p>
-                        <div className="flex gap-3 justify-center">
+                        <div className="flex gap-3 justify-center md:justify-start">
                             <a
                                 href="https://instagram.com"
                                 target="_blank"
@@ -72,27 +74,27 @@ export default function Footer() {
                         <ul className="space-y-3">
                             <li>
                                 <Link href="/products" className="text-sm text-white/60 transition-colors hover:text-[#FF1D8E]">
-                                    Products
+                                    {isEl ? "Γεύσεις" : "Flavors"}
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/products?on_sale=true" className="text-sm text-white/60 transition-colors hover:text-[#FF1D8E]">
-                                    Special Offers
+                                    {isEl ? "Ειδικές Προσφορές" : "Special Offers"}
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/account" className="text-sm text-white/60 transition-colors hover:text-[#FF1D8E]">
-                                    My Account
+                                    {isEl ? "Ο Λογαριασμός μου" : "My Account"}
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/checkout" className="text-sm text-white/60 transition-colors hover:text-[#FF1D8E]">
-                                    Cart
+                                    {isEl ? "Καλάθι" : "Cart"}
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/b2b-wholesale" className="text-sm text-[#FF1D8E] font-bold transition-colors hover:underline">
-                                    B2B Wholesale
+                                    {isEl ? "Χονδρική B2B" : "B2B Wholesale"}
                                 </Link>
                             </li>
                         </ul>
@@ -100,31 +102,31 @@ export default function Footer() {
 
                     {/* Customer Service */}
                     <div className="space-y-6">
-                        <h4 className="font-display font-bold text-lg">{t("footer.categories")}</h4>
+                        <h4 className="font-display font-bold text-lg">{isEl ? "Υποστήριξη" : "Support"}</h4>
                         <ul className="space-y-3">
                             <li>
                                 <Link href="/terms" className="text-sm text-white/60 transition-colors hover:text-[#FF1D8E]">
-                                    Terms of Use
+                                    {isEl ? "Όροι Χρήσης" : "Terms of Use"}
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/privacy" className="text-sm text-white/60 transition-colors hover:text-[#FF1D8E]">
-                                    Privacy Policy
+                                    {isEl ? "Πολιτική Απορρήτου" : "Privacy Policy"}
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/returns" className="text-sm text-white/60 transition-colors hover:text-[#FF1D8E]">
-                                    Return Policy
+                                    {isEl ? "Πολιτική Επιστροφών" : "Return Policy"}
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/payment-methods" className="text-sm text-white/60 transition-colors hover:text-[#FF1D8E]">
-                                    Payment Methods
+                                    {isEl ? "Τρόποι Πληρωμής" : "Payment Methods"}
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/faq" className="text-sm text-white/60 transition-colors hover:text-[#FF1D8E]">
-                                    FAQ
+                                    {isEl ? "Συχνές Ερωτήσεις (FAQ)" : "FAQ"}
                                 </Link>
                             </li>
                         </ul>
@@ -134,13 +136,13 @@ export default function Footer() {
                     <div className="space-y-6">
                         <h4 className="font-display font-bold text-lg">{t("footer.contact")}</h4>
                         <ul className="space-y-4">
-                            <li className="flex items-start gap-3">
+                            <li className="flex items-start gap-3 justify-center md:justify-start">
                                 <MapPin className="w-5 h-5 flex-shrink-0 mt-0.5 text-[#FF1D8E]" />
                                 <span className="text-sm text-white/60">
-                                    Greece
+                                    {isEl ? "Ελλάδα" : "Greece"}
                                 </span>
                             </li>
-                            <li className="flex items-center gap-3">
+                            <li className="flex items-center gap-3 justify-center md:justify-start">
                                 <Mail className="w-5 h-5 flex-shrink-0 text-[#FF1D8E]" />
                                 <a href="mailto:info@elv8now.com" className="text-sm text-white/60 transition-colors hover:text-[#FF1D8E]">
                                     info@elv8now.com
@@ -179,7 +181,9 @@ export default function Footer() {
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center gap-2 text-lg font-bold text-white hover:scale-105 transition-transform duration-300"
                             >
-                                <span className="text-white/70 font-medium text-base">Developed by:</span>
+                                <span className="text-white/70 font-medium text-base">
+                                    {isEl ? "Σχεδίαση & Ανάπτυξη:" : "Developed by:"}
+                                </span>
                                 <span className="text-white font-black tracking-wider text-xl uppercase font-display">sgk.gr</span>
                             </a>
                         </div>
