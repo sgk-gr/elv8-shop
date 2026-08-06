@@ -142,18 +142,20 @@ class SGK_Custom_Checkout {
         return $template;
     }
 
-    /**
-     * Configure PHPMailer to use custom SMTP settings
-     */
     public function configure_smtp_mail( $phpmailer ) {
         if ( defined( 'SGK_SMTP_HOST' ) && SGK_SMTP_HOST !== '' && SGK_SMTP_PASS !== 'PASSWORD_HERE' ) {
+            $working_config = get_option( 'sgk_smtp_working_config' );
+            $host   = ( $working_config && isset($working_config['host']) ) ? $working_config['host'] : SGK_SMTP_HOST;
+            $port   = ( $working_config && isset($working_config['port']) ) ? $working_config['port'] : SGK_SMTP_PORT;
+            $secure = ( $working_config && isset($working_config['secure']) ) ? $working_config['secure'] : SGK_SMTP_SECURE;
+
             $phpmailer->isSMTP();
-            $phpmailer->Host       = SGK_SMTP_HOST;
-            $phpmailer->SMTPAuth   = true;
-            $phpmailer->Port       = SGK_SMTP_PORT;
+            $phpmailer->Host       = $host;
+            $phpmailer->SMTPAuth   = ( $host !== 'localhost' && $host !== '127.0.0.1' );
+            $phpmailer->Port       = $port;
             $phpmailer->Username   = SGK_SMTP_USER;
             $phpmailer->Password   = SGK_SMTP_PASS;
-            $phpmailer->SMTPSecure = SGK_SMTP_SECURE;
+            $phpmailer->SMTPSecure = $secure;
             $phpmailer->From       = SGK_SMTP_USER;
             $phpmailer->FromName   = defined( 'SGK_FROM_NAME' ) ? SGK_FROM_NAME : get_bloginfo( 'name' );
             
@@ -182,7 +184,7 @@ class SGK_Custom_Checkout {
     }
 
     /**
-     * Trigger a test email with full SMTP debug output when visiting ?test_elv8_mail=1
+     * Trigger a test email with automated multi-configuration SMTP debugging
      */
     public function trigger_test_email() {
         if ( isset( $_GET['test_elv8_mail'] ) ) {
@@ -191,42 +193,94 @@ class SGK_Custom_Checkout {
                 wp_die( 'Access denied. You must be logged in as an administrator to run this test.' );
             }
             
-            echo '<html><head><title>ELV8 SMTP Mail Test Debugger</title><style>body { font-family: sans-serif; padding: 30px; background: #fafafa; color: #333; line-height: 1.6; } pre { background: #000; color: #0f0; padding: 20px; border-radius: 8px; overflow-x: auto; font-size: 13px; font-family: monospace; }</style></head><body>';
+            global $wp_version;
+            $use_new_phpmailer = version_compare( $wp_version, '5.5', '>=' );
+            
+            echo '<html><head><title>ELV8 SMTP Mail Test Debugger</title><style>body { font-family: sans-serif; padding: 30px; background: #fafafa; color: #333; line-height: 1.6; } pre { background: #000; color: #0f0; padding: 20px; border-radius: 8px; overflow-x: auto; font-size: 13px; font-family: monospace; } hr { border: none; border-top: 1px solid #ccc; margin: 40px 0; }</style></head><body>';
             echo '<h1>ELV8 SMTP Mail Test Debugger</h1>';
-            echo '<p>Attempting to send email to <strong>info@sgk.gr</strong> via SMTP (sgk.gr:465)...</p>';
+            echo '<p>Running automated SMTP tests to find a working configuration on your server...</p>';
             
-            // Enable raw SMTP debug output
-            add_action( 'phpmailer_init', function( $phpmailer ) {
-                $phpmailer->SMTPDebug = 3;
-                $phpmailer->Debugoutput = function( $str, $level ) {
-                    echo "<strong>[PHPMailer Debug]</strong> " . htmlspecialchars( $str ) . "<br/>";
-                };
-            }, 999 );
+            $tests = array(
+                array( 'host' => 'sgk.gr', 'port' => 465, 'secure' => 'ssl', 'desc' => 'Test #1: Port 465 (SSL)' ),
+                array( 'host' => 'sgk.gr', 'port' => 587, 'secure' => 'tls', 'desc' => 'Test #2: Port 587 (TLS)' ),
+                array( 'host' => 'localhost', 'port' => 25, 'secure' => '', 'desc' => 'Test #3: Localhost Port 25 (No SSL)' ),
+                array( 'host' => '127.0.0.1', 'port' => 25, 'secure' => '', 'desc' => 'Test #4: 127.0.0.1 Port 25 (No SSL)' ),
+            );
             
-            $to = 'info@sgk.gr';
-            $subject = 'ELV8 SMTP Test Mail';
-            $body = '<h1>ELV8 Shop SMTP Mail Works!</h1><p>This is a secure test email verifying that your Plesk SMTP configuration is working correctly.</p>';
-            $headers = array('Content-Type: text/html; charset=UTF-8');
-            
-            echo '<h3>SMTP Conversation Log:</h3><pre>';
-            $result = wp_mail( $to, $subject, $body, $headers );
-            echo '</pre>';
-            
-            if ( $result ) {
-                echo '<h2 style="color: green;">✔ SUCCESS! The test email was successfully sent!</h2>';
-                echo '<p>Check the inbox for <strong>info@sgk.gr</strong> (including spam/junk folder).</p>';
-            } else {
-                echo '<h2 style="color: red;">❌ FAILED! The email could not be sent.</h2>';
-                echo '<p>Please read the debug output above for details.</p>';
+            foreach ( $tests as $idx => $test ) {
+                echo '<hr/>';
+                echo '<h2>' . esc_html( $test['desc'] ) . '</h2>';
+                echo '<p>Attempting connection to <strong>' . esc_html( $test['host'] ) . ':' . $test['port'] . '</strong>...</p>';
                 
-                $error_log = get_transient( 'sgk_mail_error_log' );
-                if ( $error_log ) {
-                    echo '<div style="background: #fee; border-left: 4px solid #f88; padding: 15px; margin-top: 15px;">';
-                    echo '<strong>WordPress Internal Error Log:</strong><br/>' . esc_html( $error_log );
-                    echo '</div>';
+                if ( $use_new_phpmailer ) {
+                    require_once ABSPATH . WPINC . '/PHPMailer/PHPMailer.php';
+                    require_once ABSPATH . WPINC . '/PHPMailer/SMTP.php';
+                    require_once ABSPATH . WPINC . '/PHPMailer/Exception.php';
+                    $mail = new \PHPMailer\PHPMailer\PHPMailer( true );
+                } else {
+                    require_once ABSPATH . WPINC . '/class-phpmailer.php';
+                    require_once ABSPATH . WPINC . '/class-smtp.php';
+                    $mail = new \PHPMailer();
+                }
+                
+                try {
+                    $mail->isSMTP();
+                    $mail->Host       = $test['host'];
+                    $mail->SMTPAuth   = ( $test['host'] !== 'localhost' && $test['host'] !== '127.0.0.1' );
+                    $mail->Port       = $test['port'];
+                    $mail->Username   = SGK_SMTP_USER;
+                    $mail->Password   = SGK_SMTP_PASS;
+                    $mail->SMTPSecure = $test['secure'];
+                    $mail->From       = SGK_SMTP_USER;
+                    $mail->FromName   = SGK_FROM_NAME;
+                    
+                    $mail->SMTPOptions = array(
+                        'ssl' => array(
+                            'verify_peer'       => false,
+                            'verify_peer_name'  => false,
+                            'allow_self_signed' => true
+                        )
+                    );
+                    
+                    $mail->SMTPDebug = 3;
+                    $mail->Debugoutput = function( $str, $level ) {
+                        echo "<strong>[SMTP LOG]</strong> " . htmlspecialchars( $str ) . "<br/>";
+                    };
+                    
+                    $mail->addAddress( 'info@sgk.gr' );
+                    $mail->Subject = 'ELV8 Shop SMTP Auto-Test - ' . $test['desc'];
+                    $mail->Body    = '<h1>ELV8 Shop SMTP Mail Works!</h1><p>This is an automated test verifying that port ' . $test['port'] . ' works.</p>';
+                    $mail->isHTML( true );
+                    
+                    echo '<h3>SMTP Handshake & Conversation:</h3><pre>';
+                    $sent = $mail->send();
+                    echo '</pre>';
+                    
+                    if ( $sent ) {
+                        // Save the successful config to option database so it is used globally
+                        update_option( 'sgk_smtp_working_config', array(
+                            'host'   => $test['host'],
+                            'port'   => $test['port'],
+                            'secure' => $test['secure']
+                        ) );
+
+                        echo '<h2 style="color: green;">✔ SUCCESS! Configuration works!</h2>';
+                        echo '<p>The plugin has <strong>automatically saved</strong> these settings to the database and will use them for all WooCommerce order emails. You do not need to edit any files!</p>';
+                        echo '<p>Please check the inbox for <strong>info@sgk.gr</strong> to confirm receipt.</p>';
+                        echo '<p style="margin-top: 30px;"><a href="/">Return to Home</a></p>';
+                        echo '</body></html>';
+                        exit;
+                    }
+                } catch ( \Exception $e ) {
+                    echo '</pre>';
+                    echo '<p style="color: red; font-weight: bold;">❌ Failed: ' . htmlspecialchars( $e->getMessage() ) . '</p>';
                 }
             }
             
+            echo '<hr/>';
+            echo '<h2 style="color: red;">❌ ALL TESTS FAILED!</h2>';
+            echo '<p>All ports (465, 587, 25) were refused or blocked by the server firewall.</p>';
+            echo '<p>Please contact your web hosting administrator and ask them to <strong>enable outgoing connections on port 465 (SSL) or 587 (TLS)</strong> in the firewall.</p>';
             echo '<p style="margin-top: 30px;"><a href="/">Return to Home</a></p>';
             echo '</body></html>';
             exit;
