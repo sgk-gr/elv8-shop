@@ -107,11 +107,12 @@ export const metadata: Metadata = {
     },
     icons: {
         icon: [
+            { url: "/elv8_logo.svg", type: "image/svg+xml" },
             { url: "/favicon.png", type: "image/png" },
             { url: "/favicon.ico", type: "image/x-icon" }
         ],
         shortcut: "/favicon.ico",
-        apple: "/favicon.png",
+        apple: "/elv8_logo.svg",
     },
     category: "shopping",
 };

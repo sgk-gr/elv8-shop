@@ -65,7 +65,7 @@ export default function WholesaleForm() {
           <input
             required
             type="text"
-            placeholder="e.g. John Doe"
+            placeholder={language === "el" ? "π.χ. Γιώργος Παπαδόπουλος" : "e.g. John Doe"}
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-[#FF1D8E] text-slate-900 text-sm font-medium"
@@ -117,7 +117,7 @@ export default function WholesaleForm() {
         <textarea
           required
           rows={4}
-          placeholder="Tell us a few words about your business and your estimated case order..."
+          placeholder={language === "el" ? "Πείτε μας λίγα λόγια για την επιχείρησή σας και την εκτιμώμενη ποσότητα παραγγελίας..." : "Tell us a few words about your business and your estimated case order..."}
           value={formData.message}
           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
           className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-[#FF1D8E] text-slate-900 text-sm font-medium"

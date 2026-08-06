@@ -29,7 +29,8 @@ import {
 export default function ProductDetailClient({ id }: { id: string }) {
     const { addItem, setIsCartOpen } = useCart();
     const { user, isAuthenticated } = useAuth();
-    const { t } = useTranslation();
+    const { t, language } = useTranslation();
+    const isEl = language === "el";
     const queryClient = useQueryClient();
     const searchParams = useSearchParams();
     const backUrlParam = searchParams.get("backUrl");
@@ -346,9 +347,9 @@ export default function ProductDetailClient({ id }: { id: string }) {
                             <div className="flex items-center gap-2">
                                 <div className={`w-2 h-2 rounded-full ${stockStatus === 'instock' ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-rose-500'}`} />
                                 <span className={`font-body text-xs font-bold ${stockStatus === 'instock' ? 'text-emerald-600' : 'text-rose-600'}`}>
-                                    {stockStatus === 'instock' ? 'In Stock' : 'Out of Stock'}
+                                    {stockStatus === 'instock' ? (isEl ? 'Σε Απόθεμα' : 'In Stock') : (isEl ? 'Εξαντλήθηκε' : 'Out of Stock')}
                                     {stockStatus === 'instock' && stockQuantity !== null && stockQuantity > 0 && (
-                                        <span className="ml-1.5 opacity-70">({stockQuantity} available)</span>
+                                        <span className="ml-1.5 opacity-70">({stockQuantity} {isEl ? 'διαθέσιμα' : 'available'})</span>
                                     )}
                                 </span>
                             </div>
@@ -365,7 +366,7 @@ export default function ProductDetailClient({ id }: { id: string }) {
                                         attr.variation && (
                                             <div key={attr.id} className="space-y-2.5 col-span-full">
                                                 <label className="font-body text-[10px] font-bold tracking-[0.15em] uppercase text-muted-foreground ml-1">
-                                                    {attr.name === "Χρώμα" ? "Choose option" : attr.name}
+                                                    {attr.name === "Χρώμα" ? (isEl ? "Επιλέξτε επιλογή" : "Choose option") : attr.name}
                                                 </label>
                                                 {attr.name === "Χρώμα" ? (
                                                     <div className="flex flex-wrap gap-3 mt-1">
@@ -393,7 +394,7 @@ export default function ProductDetailClient({ id }: { id: string }) {
                                                         onValueChange={(val) => setSelectedAttributes(prev => ({ ...prev, [attr.name]: val }))}
                                                     >
                                                         <SelectTrigger className="w-full h-12 rounded-2xl bg-white border-slate-200 focus:ring-primary/20 font-body text-sm font-semibold">
-                                                            <SelectValue placeholder={`Select ${attr.name}`} />
+                                                            <SelectValue placeholder={isEl ? `Επιλέξτε ${attr.name}` : `Select ${attr.name}`} />
                                                         </SelectTrigger>
                                                         <SelectContent className="rounded-2xl shadow-xl border-slate-100">
                                                             {attr.options.map((option) => (
@@ -447,7 +448,7 @@ export default function ProductDetailClient({ id }: { id: string }) {
                       <div className="my-5 bg-gradient-to-r from-pink-50/70 via-white to-yellow-50/50 border border-pink-200/70 rounded-2xl p-4 sm:p-5 shadow-xs space-y-3.5">
                         <div className="flex items-center justify-between gap-2">
                           <h3 className="text-base sm:text-lg font-black font-display text-slate-900">
-                            {product.bundle_data.title || "Frequently Bought Together"}
+                            {product.bundle_data.title || (isEl ? "Συχνά Αγοράζονται Μαζί" : "Frequently Bought Together")}
                           </h3>
                           <span className="text-[9px] font-black uppercase tracking-wider text-[#FF1D8E] bg-pink-100/90 px-2.5 py-0.5 rounded-full shrink-0">
                             BUNDLE -{product.bundle_data.discount}%
@@ -511,7 +512,7 @@ export default function ProductDetailClient({ id }: { id: string }) {
                           return (
                             <div className="pt-2.5 border-t border-pink-100 flex items-center justify-between gap-3">
                               <div className="text-left leading-none">
-                                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-0.5">Bundle Price:</span>
+                                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-0.5">{isEl ? "Τιμή Πακέτου:" : "Bundle Price:"}</span>
                                 <div className="flex items-baseline gap-1.5">
                                   <span className="text-lg font-black text-slate-900 font-display">€{finalBundlePrice.toFixed(2)}</span>
                                   <span className="text-xs font-medium text-slate-400 line-through">€{totalPrice.toFixed(2)}</span>
@@ -549,7 +550,7 @@ export default function ProductDetailClient({ id }: { id: string }) {
                                 }}
                                 className="px-4 py-2.5 bg-[#FF1D8E] hover:bg-[#d80f74] text-white rounded-full font-black text-[11px] uppercase tracking-wider transition-all shadow-xs hover:shadow-md flex items-center justify-center gap-1.5 cursor-pointer shrink-0"
                               >
-                                <span>Add Bundle</span>
+                                <span>{isEl ? "Προσθήκη Πακέτου" : "Add Bundle"}</span>
                                 <Plus className="w-3.5 h-3.5" />
                               </button>
                             </div>
@@ -569,7 +570,7 @@ export default function ProductDetailClient({ id }: { id: string }) {
                                     {t("product.nutritional")}
                                 </TabsTrigger>
                                 <TabsTrigger value="reviews" className="rounded-xl font-body text-xs font-bold uppercase px-6 py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm">
-                                    Reviews ({reviews?.length || 0})
+                                    {isEl ? "Αξιολογήσεις" : "Reviews"} ({reviews?.length || 0})
                                 </TabsTrigger>
                             </TabsList>
 
@@ -616,13 +617,19 @@ export default function ProductDetailClient({ id }: { id: string }) {
                                             >
                                                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/60 pb-4">
                                                     <div>
-                                                        <h4 className="font-display font-black text-slate-900 text-lg">Write a Review</h4>
-                                                        <p className="text-xs text-slate-500 font-body">Posting as <span className="font-bold text-[#FF1D8E]">{user.firstName || user.nicename} ({user.email})</span></p>
+                                                        <h4 className="font-display font-black text-slate-900 text-lg">
+                                                            {isEl ? "Γράψτε μια Αξιολόγηση" : "Write a Review"}
+                                                        </h4>
+                                                        <p className="text-xs text-slate-500 font-body">
+                                                            {isEl ? "Δημοσίευση ως" : "Posting as"} <span className="font-bold text-[#FF1D8E]">{user.firstName || user.nicename} ({user.email})</span>
+                                                        </p>
                                                     </div>
                                                     
                                                     {/* Rating Stars Selection */}
                                                     <div className="flex items-center gap-1 bg-white px-3 py-1.5 rounded-full border border-slate-200 w-fit">
-                                                        <span className="text-xs font-bold text-slate-500 mr-1.5">Rating:</span>
+                                                        <span className="text-xs font-bold text-slate-500 mr-1.5">
+                                                            {isEl ? "Βαθμολογία:" : "Rating:"}
+                                                        </span>
                                                         {[1, 2, 3, 4, 5].map((star) => (
                                                             <button
                                                                 key={star}
@@ -642,7 +649,7 @@ export default function ProductDetailClient({ id }: { id: string }) {
                                                     rows={3}
                                                     value={reviewText}
                                                     onChange={(e) => setReviewText(e.target.value)}
-                                                    placeholder="Share your thoughts about this product..."
+                                                    placeholder={isEl ? "Μοιραστείτε τις εντυπώσεις σας για αυτό το προϊόν..." : "Share your thoughts about this product..."}
                                                     className="w-full p-4 rounded-2xl bg-white border border-slate-200 text-slate-900 placeholder:text-slate-400 font-body text-sm focus:outline-none focus:ring-2 focus:ring-[#FF1D8E]/30 transition-all resize-none"
                                                     required
                                                 />
@@ -650,7 +657,7 @@ export default function ProductDetailClient({ id }: { id: string }) {
                                                 {reviewSubmittedSuccess && (
                                                     <div className="p-3 bg-emerald-100/80 border border-emerald-300 text-emerald-800 rounded-xl text-xs font-bold flex items-center gap-2">
                                                         <Check className="w-4 h-4 text-emerald-600" />
-                                                        Thank you! Your review has been submitted successfully.
+                                                        {isEl ? "Ευχαριστούμε! Η αξιολόγησή σας υποβλήθηκε επιτυχώς." : "Thank you! Your review has been submitted successfully."}
                                                     </div>
                                                 )}
 
@@ -660,7 +667,7 @@ export default function ProductDetailClient({ id }: { id: string }) {
                                                         disabled={submitReviewMutation.isPending || !reviewText.trim()}
                                                         className="px-6 py-3 bg-[#FF1D8E] hover:bg-[#d80f74] text-white rounded-full font-black text-xs uppercase tracking-wider transition-all shadow-md hover:shadow-lg disabled:opacity-50 flex items-center gap-2 cursor-pointer"
                                                     >
-                                                        <span>{submitReviewMutation.isPending ? "Submitting..." : "Submit Review"}</span>
+                                                        <span>{submitReviewMutation.isPending ? (isEl ? "Υποβολή..." : "Submitting...") : (isEl ? "Υποβολή Αξιολόγησης" : "Submit Review")}</span>
                                                         <Send className="w-3.5 h-3.5" />
                                                     </button>
                                                 </div>
@@ -668,14 +675,18 @@ export default function ProductDetailClient({ id }: { id: string }) {
                                         ) : (
                                             <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-2">
                                                 <div className="space-y-1 text-center sm:text-left">
-                                                    <h4 className="font-display font-bold text-slate-900 text-base">Want to leave a review?</h4>
-                                                    <p className="text-xs text-slate-500 font-body">Only logged-in customers can submit product reviews.</p>
+                                                    <h4 className="font-display font-bold text-slate-900 text-base">
+                                                        {isEl ? "Θέλετε να γράψετε μια αξιολόγηση;" : "Want to leave a review?"}
+                                                    </h4>
+                                                    <p className="text-xs text-slate-500 font-body">
+                                                        {isEl ? "Μόνο οι συνδεδεμένοι πελάτες μπορούν να υποβάλουν αξιολογήσεις προϊόντων." : "Only logged-in customers can submit product reviews."}
+                                                    </p>
                                                 </div>
                                                 <Link
                                                     href={`/auth?redirect=/product/${id}`}
                                                     className="px-6 py-2.5 bg-black hover:bg-[#FF1D8E] text-white rounded-full font-bold text-xs uppercase tracking-wider transition-all shadow-sm shrink-0"
                                                 >
-                                                    Log In to Review
+                                                    {isEl ? "Συνδεθείτε για να Αξιολογήσετε" : "Log In to Review"}
                                                 </Link>
                                             </div>
                                         )}
@@ -716,7 +727,11 @@ export default function ProductDetailClient({ id }: { id: string }) {
                                     ) : (
                                         <div className="text-center py-12 bg-slate-50 rounded-[2rem] border border-slate-100 border-dashed">
                                             <MessageSquare className="w-12 h-12 text-slate-200 mx-auto mb-4" />
-                                            <p className="text-muted-foreground font-body text-sm italic">No reviews yet for this product. Be the first to leave a review!</p>
+                                            <p className="text-muted-foreground font-body text-sm italic">
+                                                {isEl 
+                                                    ? "Δεν υπάρχουν ακόμη αξιολογήσεις για αυτό το προϊόν. Γράψτε την πρώτη αξιολόγηση!" 
+                                                    : "No reviews yet for this product. Be the first to leave a review!"}
+                                            </p>
                                         </div>
                                     )}
                                 </div>

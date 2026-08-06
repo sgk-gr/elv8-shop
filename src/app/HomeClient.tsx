@@ -17,7 +17,7 @@ export default function HomeClient({
   initialCategories?: WooCategory[];
   initialTags?: WooTag[];
 }) {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   const { setIsCartOpen } = useCart();
   const [scrollProgress, setScrollProgress] = useState(0);
   const [scrollY, setScrollY] = useState(0);
@@ -25,6 +25,7 @@ export default function HomeClient({
   const containerRef = useState<HTMLDivElement | null>(null)[0];
 
   const [isMobile, setIsMobile] = useState(false);
+  const isEl = language === "el";
 
   // Restore scroll position on refresh and handle smart auto-scroll between Hero & Section 2
   useEffect(() => {
@@ -235,8 +236,13 @@ export default function HomeClient({
                     <path d="M13 2L3 14h7v8l10-12h-7l3-8z" />
                   </svg>
                 </div>
-                <p className="text-black text-base sm:text-lg md:text-[18px] lg:text-[19px] font-normal leading-relaxed m-0">
-                  <span className="font-bold">Natural Caffeine</span> gives you an instant boost of energy, increases brain function & gets your Hustle Mode On!
+                <p className="text-black text-base sm:text-lg md:text-[18px] lg:text-[19px] font-normal leading-relaxed m-0 text-left">
+                  <span className="font-bold">
+                    {isEl ? "Φυσική Καφεΐνη" : "Natural Caffeine"}
+                  </span>{" "}
+                  {isEl 
+                    ? "σας δίνει μια άμεση ώθηση ενέργειας, ενισχύει τη γνωστική λειτουργία και ενεργοποιεί το Hustle Mode σας!"
+                    : "gives you an instant boost of energy, increases brain function & gets your Hustle Mode On!"}
                 </p>
               </div>
 
@@ -247,13 +253,17 @@ export default function HomeClient({
                   <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full text-black">
                     <path id="curve" d="M 20 65 A 30 30 0 0 0 80 65" fill="transparent" />
                     <text width="100" textAnchor="middle" className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest fill-black font-sans">
-                      <textPath href="#curve" startOffset="50%">VITAMINS</textPath>
+                      <textPath href="#curve" startOffset="50%">{isEl ? "ΒΙΤΑΜΙΝΕΣ" : "VITAMINS"}</textPath>
                     </text>
                   </svg>
                 </div>
-                <p className="text-black text-base sm:text-lg md:text-[18px] lg:text-[19px] font-normal leading-relaxed m-0">
-                  <span className="font-bold">Electrolytes & Vitamins</span> like B2 enable your body to create natural energy by converting body fat into Glucose.<br className="hidden sm:block" />
-                  B6 Improves brain & immune function. B12 helps combat fatigue.
+                <p className="text-black text-base sm:text-lg md:text-[18px] lg:text-[19px] font-normal leading-relaxed m-0 text-left">
+                  <span className="font-bold">
+                    {isEl ? "Ηλεκτρολύτες & Βιταμίνες" : "Electrolytes & Vitamins"}
+                  </span>{" "}
+                  {isEl 
+                    ? "όπως η B2 βοηθούν το σώμα σας να παράγει φυσική ενέργεια μετατρέποντας το λίπος. Η B6 βελτιώνει τη λειτουργία του εγκεφάλου και η B12 καταπολεμά την κόπωση."
+                    : "like B2 enable your body to create natural energy by converting body fat into Glucose. B6 Improves brain & immune function. B12 helps combat fatigue."}
                 </p>
               </div>
 
@@ -269,8 +279,13 @@ export default function HomeClient({
                     <path d="M12 12L19 6M12 12L5 6M12 12L19 18M12 12L5 18" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
                   </svg>
                 </div>
-                <p className="text-black text-base sm:text-lg md:text-[18px] lg:text-[19px] font-normal leading-relaxed m-0">
-                  <span className="font-bold">Nootropics / Focus</span> sharpen cognitive performance, keeping you focused, alert and productive during the most demanding hours of your day.
+                <p className="text-black text-base sm:text-lg md:text-[18px] lg:text-[19px] font-normal leading-relaxed m-0 text-left">
+                  <span className="font-bold">
+                    {isEl ? "Νοοτροπικά & Εστίαση" : "Nootropics & Focus"}
+                  </span>{" "}
+                  {isEl 
+                    ? "οξύνουν τη γνωστική απόδοση, κρατώντας σας συγκεντρωμένους, σε εγρήγορση και παραγωγικούς κατά τις πιο απαιτητικές ώρες της ημέρας σας."
+                    : "sharpen cognitive performance, keeping you focused, alert and productive during the most demanding hours of your day."}
                 </p>
               </div>
 
@@ -281,18 +296,23 @@ export default function HomeClient({
                     <path d="M12 3l-8 9h5v9h6v-9h5l-8-9z" />
                   </svg>
                 </div>
-                <p className="text-black text-base sm:text-lg md:text-[18px] lg:text-[19px] font-normal leading-relaxed m-0">
-                  <span className="font-bold">Zero Sugar</span> enables a slow release of energy, no spikes, no crash. Just steady, clean fuel that keeps you at peak performance all day long.
+                <p className="text-black text-base sm:text-lg md:text-[18px] lg:text-[19px] font-normal leading-relaxed m-0 text-left">
+                  <span className="font-bold">
+                    {isEl ? "Μηδενική Ζάχαρη" : "Zero Sugar"}
+                  </span>{" "}
+                  {isEl 
+                    ? "επιτρέπει τη σταδιακή αποδέσμευση ενέργειας χωρίς απότομες αυξομειώσεις (spikes) και crash. Σταθερό, καθαρό καύσιμο για μέγιστη απόδοση όλη μέρα."
+                    : "enables a slow release of energy, no spikes, no crash. Just steady, clean fuel that keeps you at peak performance all day long."}
                 </p>
               </div>
 
               {/* READ MORE Button */}
-              <div className="pt-2 pl-0 sm:pl-[100px]">
+              <div className="pt-2 pl-0 sm:pl-[100px] text-left">
                 <Link
                   href="/about"
                   className="bg-black text-white px-10 py-3.5 text-xs font-black tracking-[0.2em] uppercase hover:bg-[#FF1D8E] transition-colors duration-300 inline-block rounded-full shadow-md"
                 >
-                  READ MORE
+                  {isEl ? "ΜΑΘΕΤΕ ΠΕΡΙΣΣΟΤΕΡΑ" : "READ MORE"}
                 </Link>
               </div>
 
@@ -304,7 +324,7 @@ export default function HomeClient({
 
       <div className="w-full snap-align-none bg-white text-slate-900 py-6 border-t border-slate-100">
         <ProductCarousel
-          title="ELV8 Suited to Your Expectations"
+          title={isEl ? "Το ELV8 Ανταποκρίνεται στις Προσδοκίες σας" : "ELV8 Suited to Your Expectations"}
           products={[...initialFeaturedProducts].reverse()}
           isLoading={false}
           backUrl="/"

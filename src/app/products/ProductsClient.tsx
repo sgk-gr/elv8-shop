@@ -16,34 +16,70 @@ interface AttributeFilter {
     options: string[];
 }
 
-function translateAttributeName(name: string): string {
-    const map: Record<string, string> = {
-        "Πακέτο": "Pack Size",
-        "πακετο": "Pack Size",
-        "Συσκευασία": "Pack Size",
-        "συσκευασια": "Pack Size",
-        "Γεύση": "Flavor",
-        "γευση": "Flavor",
-        "Μέγεθος": "Size",
-        "μεγεθος": "Size",
-    };
-    return map[name] || name;
+function translateAttributeName(name: string, language: string): string {
+    if (language === "el") {
+        const map: Record<string, string> = {
+            "Pack Size": "Μέγεθος Πακέτου",
+            "Flavor": "Γεύση",
+            "Size": "Μέγεθος",
+            "πακετο": "Μέγεθος Πακέτου",
+            "Πακέτο": "Μέγεθος Πακέτου",
+            "συσκευασια": "Συσκευασία",
+            "Συσκευασία": "Συσκευασία",
+            "γευση": "Γεύση",
+            "Γεύση": "Γεύση",
+        };
+        return map[name] || name;
+    } else {
+        const map: Record<string, string> = {
+            "Πακέτο": "Pack Size",
+            "πακετο": "Pack Size",
+            "Συσκευασία": "Pack Size",
+            "συσκευασια": "Pack Size",
+            "Γεύση": "Flavor",
+            "γευση": "Flavor",
+            "Μέγεθος": "Size",
+            "μεγεθος": "Size",
+        };
+        return map[name] || name;
+    }
 }
 
-function translateOptionName(option: string): string {
-    const map: Record<string, string> = {
-        "12αδα": "12-Pack",
-        "12άδα": "12-Pack",
-        "4αδα": "4-Pack",
-        "4άδα": "4-Pack",
-        "6αδα": "6-Pack",
-        "6άδα": "6-Pack",
-        "24αδα": "24-Pack",
-        "24άδα": "24-Pack",
-        "1αδα": "Single Can",
-        "1άδα": "Single Can",
-    };
-    return map[option] || option;
+function translateOptionName(option: string, language: string): string {
+    if (language === "el") {
+        const map: Record<string, string> = {
+            "12-Pack": "12άδα",
+            "4-Pack": "4άδα",
+            "6-Pack": "6άδα",
+            "24-Pack": "24άδα",
+            "Single Can": "Μονό Κουτάκι",
+            "12αδα": "12άδα",
+            "12άδα": "12άδα",
+            "4αδα": "4άδα",
+            "4άδα": "4άδα",
+            "6αδα": "6άδα",
+            "6άδα": "6άδα",
+            "24αδα": "24άδα",
+            "24άδα": "24άδα",
+            "1αδα": "Μονό Κουτάκι",
+            "1άδα": "Μονό Κουτάκι",
+        };
+        return map[option] || option;
+    } else {
+        const map: Record<string, string> = {
+            "12αδα": "12-Pack",
+            "12άδα": "12-Pack",
+            "4αδα": "4-Pack",
+            "4άδα": "4-Pack",
+            "6αδα": "6-Pack",
+            "6άδα": "6-Pack",
+            "24αδα": "24-Pack",
+            "24άδα": "24-Pack",
+            "1αδα": "Single Can",
+            "1άδα": "Single Can",
+        };
+        return map[option] || option;
+    }
 }
 
 function ProductsContent({ 
@@ -55,7 +91,7 @@ function ProductsContent({
     initialCategories: WooCategory[], 
     initialTags: WooTag[] 
 }) {
-    const { t } = useTranslation();
+    const { t, language } = useTranslation();
     const searchParams = useSearchParams();
     const router = useRouter();
     const categoryId = searchParams.get("category");
@@ -250,9 +286,13 @@ function ProductsContent({
             <div className="space-y-8 animate-in slide-in-from-top-4 duration-700">
                 {/* Breadcrumbs */}
                 <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-                    <button onClick={() => router.push("/")} className="hover:text-primary transition-colors">Αρχική</button>
+                    <button onClick={() => router.push("/")} className="hover:text-primary transition-colors">
+                        {language === "el" ? "Αρχική" : "Home"}
+                    </button>
                     <ChevronRight className="w-4 h-4" />
-                    <button onClick={() => router.push("/products")} className="hover:text-primary transition-colors">Συλλογές</button>
+                    <button onClick={() => router.push("/products")} className="hover:text-primary transition-colors">
+                        {language === "el" ? "Συλλογές" : "Collections"}
+                    </button>
                     {activeCategory?.parent !== 0 && categories.find(c => c.id === activeCategory?.parent) && (
                         <>
                             <ChevronRight className="w-4 h-4" />
@@ -267,7 +307,12 @@ function ProductsContent({
                         <>
                             <ChevronRight className="w-4 h-4" />
                             <span className="text-primary font-medium">
-                                {onSale ? "Seasonal Offers" : activeTag ? activeTag.name : activeCategory ? activeCategory.name : searchQuery ? `Search: ${searchQuery}` : ""}
+                                {onSale 
+                                    ? (language === "el" ? "Ειδικές Προσφορές" : "Special Offers") 
+                                    : activeTag ? activeTag.name 
+                                    : activeCategory ? activeCategory.name 
+                                    : searchQuery ? (language === "el" ? `Αναζήτηση: ${searchQuery}` : `Search: ${searchQuery}`) 
+                                    : ""}
                             </span>
                         </>
                     )}
@@ -352,7 +397,7 @@ function ProductsContent({
                                         <option value="newest">{t("catalog.sort.newest")}</option>
                                         <option value="price-asc">{t("catalog.sort.price_asc")}</option>
                                         <option value="price-desc">{t("catalog.sort.price_desc")}</option>
-                                        <option value="popular">Most Popular</option>
+                                        <option value="popular">{language === "el" ? "Δημοφιλή" : "Most Popular"}</option>
                                     </select>
                                 </div>
 
@@ -367,7 +412,7 @@ function ProductsContent({
                                                 value={priceRange[0]}
                                                 onChange={(e) => setPriceRange([Number(e.target.value), priceRange[1]])}
                                                 className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/20"
-                                                placeholder="Min"
+                                                placeholder={language === "el" ? "Ελάχ." : "Min"}
                                             />
                                             <span className="text-muted-foreground">-</span>
                                             <input
@@ -375,7 +420,7 @@ function ProductsContent({
                                                 value={priceRange[1]}
                                                 onChange={(e) => setPriceRange([priceRange[0], Number(e.target.value)])}
                                                 className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/20"
-                                                placeholder="Max"
+                                                placeholder={language === "el" ? "Μέγ." : "Max"}
                                             />
                                         </div>
                                         <input
@@ -402,7 +447,7 @@ function ProductsContent({
                                             className="w-full flex items-center justify-between group"
                                         >
                                             <h3 className="font-display text-sm font-bold tracking-wide group-hover:text-primary transition-colors">
-                                                {translateAttributeName(attr.name)}
+                                                {translateAttributeName(attr.name, language)}
                                             </h3>
                                             {expandedAttributes[attr.name] ? (
                                                 <ChevronUp className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
@@ -428,7 +473,7 @@ function ProductsContent({
                                                             className="w-4 h-4 rounded border-border text-primary focus:ring-2 focus:ring-primary/20 transition-all"
                                                         />
                                                         <span className="font-body text-sm group-hover/option:text-primary transition-colors">
-                                                            {translateOptionName(option)}
+                                                            {translateOptionName(option, language)}
                                                         </span>
                                                     </label>
                                                 ))}

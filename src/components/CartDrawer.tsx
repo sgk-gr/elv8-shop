@@ -11,7 +11,7 @@ export default function CartDrawer() {
   const { items, isCartOpen, setIsCartOpen, removeItem, updateQuantity, totalPrice } = useCart();
   const router = useRouter();
   const pathname = usePathname();
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   const goToProduct = (productId: number) => {
     setIsCartOpen(false);
@@ -118,7 +118,11 @@ export default function CartDrawer() {
             <div className="flex justify-between items-end">
               <div className="space-y-1">
                 <span className="text-muted-foreground text-xs font-bold uppercase tracking-widest">{t("cart.subtotal")}</span>
-                <p className="text-muted-foreground text-[10px]">Taxes and shipping calculated at checkout</p>
+                <p className="text-muted-foreground text-[10px]">
+                  {language === "el" 
+                    ? "Φόροι και μεταφορικά υπολογίζονται στο checkout" 
+                    : "Taxes and shipping calculated at checkout"}
+                </p>
               </div>
               <span className="font-display text-3xl font-bold">€{totalPrice.toFixed(2)}</span>
             </div>
