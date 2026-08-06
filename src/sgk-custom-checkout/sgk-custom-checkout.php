@@ -2,7 +2,7 @@
 /**
  * Plugin Name: SGK Custom Checkout by SGK Digital
  * Description: Ένα premium, minimal και πλήρως mobile-responsive checkout για το WooCommerce στα χρώματα του ELV8 Energy Drink.
- * Version: 1.3.5
+ * Version: 1.3.6
  * Author: SGK Digital
  * Author URI: https://sgk.gr
  * License: GPL2
@@ -234,6 +234,16 @@ class SGK_Custom_Checkout {
             }
             echo '</div>';
 
+            // Show custom recipient form
+            echo '<div style="background: #efe; border-left: 4px solid #4a4; padding: 20px; margin-bottom: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">';
+            echo '<h3 style="color: #272; margin-top: 0;">Test sending to a custom email address (like your Gmail):</h3>';
+            echo '<form method="GET" action="">';
+            echo '<input type="hidden" name="test_elv8_mail" value="1" />';
+            echo '<input type="email" name="send_to" placeholder="e.g. yourname@gmail.com" required style="padding: 8px; width: 300px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;" value="' . ( isset($_GET['send_to']) ? esc_attr($_GET['send_to']) : '' ) . '" /> ';
+            echo '<button type="submit" style="background: #28a745; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 14px;">Send Test Email</button>';
+            echo '</form>';
+            echo '</div>';
+
             echo '<p>Running automated SMTP tests to find a working configuration on your server...</p>';
             
             $tests = array(
@@ -288,7 +298,8 @@ class SGK_Custom_Checkout {
                         echo "<strong>[SMTP LOG]</strong> " . htmlspecialchars( $str ) . "<br/>";
                     };
                     
-                    $mail->addAddress( 'sales@store.elv8now.com' );
+                    $recipient = ( isset( $_GET['send_to'] ) && is_email( $_GET['send_to'] ) ) ? sanitize_email( $_GET['send_to'] ) : 'sales@store.elv8now.com';
+                    $mail->addAddress( $recipient );
                     $mail->Subject = 'ELV8 Shop SMTP Auto-Test - ' . $test['desc'];
                     $mail->Body    = '<h1>ELV8 Shop SMTP Mail Works!</h1><p>This is an automated test verifying that port ' . $test['port'] . ' works.</p>';
                     $mail->isHTML( true );
@@ -307,7 +318,7 @@ class SGK_Custom_Checkout {
 
                         echo '<h2 style="color: green;">✔ SUCCESS! Configuration works!</h2>';
                         echo '<p>The plugin has <strong>automatically saved</strong> these settings to the database and will use them for all WooCommerce order emails. You do not need to edit any files!</p>';
-                        echo '<p>Please check the webmail inbox for <strong>sales@store.elv8now.com</strong> to confirm receipt.</p>';
+                        echo '<p>Please check the inbox for <strong>' . esc_html( $recipient ) . '</strong> to confirm receipt.</p>';
                         echo '<p style="margin-top: 30px;"><a href="/">Return to Home</a></p>';
                         echo '</body></html>';
                         exit;
