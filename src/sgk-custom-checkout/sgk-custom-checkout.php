@@ -11,7 +11,7 @@
 // ==========================================================================
 // SMTP CONFIGURATION (Change these to your own mail server details)
 // ==========================================================================
-define( 'SGK_SMTP_HOST', 'mail.sgk.gr' );         // SMTP Host
+define( 'SGK_SMTP_HOST', 'sgk.gr' );              // SMTP Host
 define( 'SGK_SMTP_PORT', 465 );                   // Port: 465 (SSL) or 587 (TLS)
 define( 'SGK_SMTP_USER', 'info@sgk.gr' );         // SMTP Username / Sender Email
 define( 'SGK_SMTP_PASS', 'PASSWORD_HERE' );       // SMTP Password
