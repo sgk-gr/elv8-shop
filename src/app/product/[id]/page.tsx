@@ -6,7 +6,7 @@ import JsonLd from "@/components/JsonLd";
 
 export const revalidate = 14400; // Επαναδημιουργία της σελίδας κάθε 4 ώρες (ISR)
 
-const BASE_URL = "https://elv8now.com";
+const BASE_URL = "https://store.elv8now.com";
 
 // ── Static params (required for output: export) ───────────────────────────────
 export async function generateStaticParams() {
@@ -37,16 +37,16 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
         const stripHtml = (s: string) => s.replace(/<[^>]*>/g, "").trim();
         const productName = stripHtml(product.name || "Προϊόν");
         const plainDescription = stripHtml(product.short_description || product.description || "")
-            .slice(0, 160) || `Buy ${productName} from ELV8 Energy. Free shipping over €65.`;
+            .slice(0, 160) || `Αγοράστε το ${productName} από το ELV8 Energy. Δωρεάν μεταφορικά άνω των 65€ σε όλη την Ελλάδα!`;
 
         const image = product.images?.[0]?.src || `${BASE_URL}/opengraph-image.png`;
         const canonicalUrl = `${BASE_URL}/product/${id}/`;
 
         return {
-            title: `${productName}`,
+            title: `${productName} | ELV8 Energy Drink Greece`,
             description: plainDescription,
             openGraph: {
-                title: `${productName} | ELV8 Energy`,
+                title: `${productName} | ELV8 Energy Drink Greece`,
                 description: plainDescription,
                 type: "website",
                 locale: "el_GR",
@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
             },
             twitter: {
                 card: "summary_large_image",
-                title: `${productName} | ELV8 Energy`,
+                title: `${productName} | ELV8 Energy Drink Greece`,
                 description: plainDescription,
                 images: [image],
             },

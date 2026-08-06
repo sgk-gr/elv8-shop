@@ -6,10 +6,10 @@ import { Metadata } from "next";
 export const revalidate = 14400; // Refresh every 4 hours (avoiding Vercel rate limits)
 
 export const metadata: Metadata = {
-  title: "ELV8 Energy Drink Collection | Our Flavors & Packs",
-  description: "Explore the full collection of ELV8 Energy Drinks. Zero Sugar, 200mg Natural Caffeine, Electrolytes & Real Fruit Flavors.",
+  title: "Ενεργειακά Ποτά ELV8 | Αγορά Όλων των Γεύσεων & Πακέτων",
+  description: "Ανακαλύψτε όλες τις γεύσεις των ενεργειακών ποτών ELV8. Zero Sugar, 200mg φυσική καφεΐνη, ηλεκτρολύτες & βιταμίνες. Δείτε τα διαθέσιμα πακέτα & προσφορές!",
   alternates: {
-    canonical: "https://elv8now.com/products",
+    canonical: "https://store.elv8now.com/products",
   }
 };
 

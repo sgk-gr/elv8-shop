@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Inter, Outfit, Caveat, Oswald } from "next/font/google";
 import "@/index.css";
 import Providers from "@/components/Providers";
@@ -34,17 +35,32 @@ const oswald = Oswald({
 });
 
 export const metadata: Metadata = {
-    metadataBase: new URL("https://elv8now.com"),
+    metadataBase: new URL("https://store.elv8now.com"),
     title: {
-        default: "elv8 Energy Drink | Ultimate Energy & Focus Drink",
-        template: "%s | elv8 Energy",
+        default: "ELV8 Energy Drink Greece | Premium Ενεργειακό Ποτό Χωρίς Ζάχαρη",
+        template: "%s | ELV8 Energy",
     },
     description:
-        "Ανακαλύψτε το elv8 Energy Drink. Zero Sugar, 200mg Φυσική Καφεΐνη, Ηλεκτρολύτες & Βιταμίνες B-Complex για μέγιστη απόδοση και εστίαση.",
-    authors: [{ name: "elv8 Energy", url: "https://elv8now.com" }],
-
+        "Ανακαλύψτε το κορυφαίο ελληνικό ενεργειακό ποτό ELV8 Energy. 0% ζάχαρη (Zero Sugar), με 200mg φυσική καφεΐνη, ηλεκτρολύτες, βιταμίνες & νοοτροπικά για μέγιστη απόδοση και εστίαση. Αγοράστε online στην Αθήνα & όλη την Ελλάδα!",
+    keywords: [
+        "ενεργειακο ποτο",
+        "ενεργειακα ποτα",
+        "καλυτερο ενεργειακο ποτο",
+        "ενεργειακα ποτα χωρις ζαχαρη",
+        "elv8 energy drink",
+        "φυσικη καφεϊνη",
+        "ηλεκτρολυτες",
+        "νοοτροπικα",
+        "ενεργειακα ποτα αθηνα",
+        "elv8 ελλαδα",
+        "energy drink greece",
+        "sugar free energy drink",
+        "focus drink",
+        "αγορα ενεργειακων ποτων"
+    ],
+    authors: [{ name: "ELV8 Energy", url: "https://store.elv8now.com" }],
     creator: "SGK Software Development",
-    publisher: "elv8 Energy",
+    publisher: "ELV8 Energy",
     robots: {
         index: true,
         follow: true,
@@ -59,17 +75,17 @@ export const metadata: Metadata = {
     openGraph: {
         type: "website",
         locale: "el_GR",
-        url: "https://elv8now.com",
+        url: "https://store.elv8now.com",
         siteName: "ELV8 Energy Drink",
-        title: "ELV8 Energy Drink | Ultimate Energy & Focus Drink",
+        title: "ELV8 Energy Drink Greece | Premium Ενεργειακό Ποτό Χωρίς Ζάχαρη",
         description:
-            "Ανακαλύψτε το elv8 Energy Drink. Zero Sugar, 200mg Φυσική Καφεΐνη, Ηλεκτρολύτες & Βιταμίνες B-Complex για μέγιστη απόδοση.",
+            "Ανακαλύψτε το κορυφαίο ελληνικό ενεργειακό ποτό ELV8 Energy. 0% ζάχαρη (Zero Sugar), με 200mg φυσική καφεΐνη, ηλεκτρολύτες, βιταμίνες & νοοτροπικά.",
         images: [
             {
                 url: "/opengraph-image.png",
                 width: 1200,
                 height: 630,
-                alt: "elv8 Energy Drink",
+                alt: "ELV8 Energy Drink",
             },
         ],
     },
@@ -77,15 +93,16 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         site: "@elv8energy",
         creator: "@elv8energy",
-        title: "ELV8 Energy Drink | Ultimate Energy & Focus Drink",
+        title: "ELV8 Energy Drink Greece | Premium Ενεργειακό Ποτό Χωρίς Ζάχαρη",
         description:
-            "Zero Sugar, 200mg Φυσική Καφεΐνη, Ηλεκτρολύτες & Βιταμίνες B-Complex για μέγιστη απόδοση.",
+            "0% ζάχαρη, με 200mg φυσική καφεΐνη, ηλεκτρολύτες, βιταμίνες & νοοτροπικά για μέγιστη απόδοση.",
         images: ["/opengraph-image.png"],
     },
     alternates: {
-        canonical: "https://elv8now.com",
+        canonical: "https://store.elv8now.com",
         languages: {
-            "el-GR": "https://elv8now.com",
+            "el-GR": "https://store.elv8now.com",
+            "en-US": "https://store.elv8now.com/?lang=en",
         },
     },
     icons: {

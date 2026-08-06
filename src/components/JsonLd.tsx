@@ -85,8 +85,8 @@ function buildWebsite() {
                 },
             },
             sameAs: [
-                "https://www.instagram.com/vaiacharms",
-                "https://www.facebook.com/vaiacharms",
+                "https://www.instagram.com/elv8energy",
+                "https://www.facebook.com/elv8energy",
             ],
         },
     ];
