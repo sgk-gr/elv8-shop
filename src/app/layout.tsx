@@ -125,7 +125,7 @@ export default function RootLayout({
             <head>
                 <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
             </head>
-            <body className="font-body antialiased min-h-screen flex flex-col justify-between bg-white" suppressHydrationWarning>
+            <body className="font-body antialiased min-h-screen bg-white" suppressHydrationWarning>
                 <Providers>
                     <JsonLd type="website" />
                     <ScrollRestoration />
