@@ -1,0 +1,16 @@
+# ELV8 Energy Shop
+
+ELV8 is a premium next-generation energy drink formulated with natural caffeine, electrolytes, and ingredients for mental clarity (like L-Theanine), with zero sugar.
+
+## Main Pages
+- [Home Page](https://elv8now.com/) - Main product features, benefits, testimonials.
+- [Products Catalog](https://elv8now.com/products) - Browse all flavors, packs, and sizes.
+- [About Us](https://elv8now.com/about) - Learn about our mission and clean energy formula.
+- [Store Locator](https://elv8now.com/store-locator) - Find local stores and stockists near you.
+- [B2B Wholesale Portal](https://elv8now.com/b2b-wholesale) - Form for business partners and distributors.
+- [Payment Methods](https://elv8now.com/payment-methods) - Information about accepted payment options (Credit/Debit Card).
+
+## API & Integrations
+- [WooCommerce API](https://store.elv8now.com/wp-json/wc/v3) - For product retrieval and order processing.
+- [Store Locator Endpoint](https://store.elv8now.com/wp-json/elv8/v1/stores) - Retrieves list of retail stores.
+- [Wholesale Submission](https://store.elv8now.com/wp-json/elv8/v1/wholesale-submit) - Endpoint for B2B applications.

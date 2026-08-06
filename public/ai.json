@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "0.1.0",
+  "name": "ELV8 Energy Shop",
+  "description": "Premium clean energy drinks with zero sugar, natural caffeine, and mental clarity enhancers.",
+  "url": "https://elv8now.com",
+  "contactEmail": "sales@store.elv8now.com",
+  "aiPreferences": {
+    "allowTraining": true,
+    "allowIndexing": true,
+    "allowCrawling": true
+  },
+  "capabilities": {
+    "canBrowseProducts": true,
+    "canLocateStores": true,
+    "canSubmitB2BApplications": true
+  }
+}
