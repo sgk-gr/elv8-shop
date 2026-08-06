@@ -2,7 +2,7 @@
 /**
  * Plugin Name: SGK Custom Checkout by SGK Digital
  * Description: Ένα premium, minimal και πλήρως mobile-responsive checkout για το WooCommerce στα χρώματα του ELV8 Energy Drink.
- * Version: 1.3.2
+ * Version: 1.3.3
  * Author: SGK Digital
  * Author URI: https://sgk.gr
  * License: GPL2
@@ -253,7 +253,7 @@ class SGK_Custom_Checkout {
                         echo "<strong>[SMTP LOG]</strong> " . htmlspecialchars( $str ) . "<br/>";
                     };
                     
-                    $mail->addAddress( 'info@sgk.gr' );
+                    $mail->addAddress( 'sales@store.elv8now.com' );
                     $mail->Subject = 'ELV8 Shop SMTP Auto-Test - ' . $test['desc'];
                     $mail->Body    = '<h1>ELV8 Shop SMTP Mail Works!</h1><p>This is an automated test verifying that port ' . $test['port'] . ' works.</p>';
                     $mail->isHTML( true );
@@ -272,7 +272,7 @@ class SGK_Custom_Checkout {
 
                         echo '<h2 style="color: green;">✔ SUCCESS! Configuration works!</h2>';
                         echo '<p>The plugin has <strong>automatically saved</strong> these settings to the database and will use them for all WooCommerce order emails. You do not need to edit any files!</p>';
-                        echo '<p>Please check the inbox for <strong>info@sgk.gr</strong> to confirm receipt.</p>';
+                        echo '<p>Please check the webmail inbox for <strong>sales@store.elv8now.com</strong> to confirm receipt.</p>';
                         echo '<p style="margin-top: 30px;"><a href="/">Return to Home</a></p>';
                         echo '</body></html>';
                         exit;
