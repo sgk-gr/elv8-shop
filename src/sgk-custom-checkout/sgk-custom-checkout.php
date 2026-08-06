@@ -2,21 +2,25 @@
 /**
  * Plugin Name: SGK Custom Checkout by SGK Digital
  * Description: Ένα premium, minimal και πλήρως mobile-responsive checkout για το WooCommerce στα χρώματα του ELV8 Energy Drink.
- * Version: 1.3.6
+ * Version: 1.3.7
  * Author: SGK Digital
  * Author URI: https://sgk.gr
  * License: GPL2
  */
 
 // ==========================================================================
-// SMTP CONFIGURATION (Change these to your own mail server details)
+// RESEND API CONFIGURATION
 // ==========================================================================
-define( 'SGK_SMTP_HOST', 'localhost' );           // SMTP Host
-define( 'SGK_SMTP_PORT', 25 );                    // Port: 465 (SSL) or 587 (TLS) or 25
-define( 'SGK_SMTP_USER', 'sales@store.elv8now.com' ); // SMTP Username / Sender Email
-define( 'SGK_SMTP_PASS', 'mr3504Mo#' );           // SMTP Password
-define( 'SGK_SMTP_SECURE', '' );                  // 'ssl' or 'tls' or ''
-define( 'SGK_FROM_NAME', 'ELV8 Energy Drink' );  // Sender Name
+define( 'SGK_RESEND_API_KEY', get_option( 'sgk_resend_api_key', '' ) ); // Resend API Key (saved via debugger page)
+define( 'SGK_FROM_EMAIL',     'noreply@sgk.gr' );          // From Email (must be on verified Resend domain)
+define( 'SGK_FROM_NAME',      'ELV8 Energy Drink' );       // Sender Name
+
+// Legacy SMTP fallback (used only if Resend fails)
+define( 'SGK_SMTP_HOST',   'linux60.name-servers.gr' );
+define( 'SGK_SMTP_PORT',   465 );
+define( 'SGK_SMTP_USER',   'sales@store.elv8now.com' );
+define( 'SGK_SMTP_PASS',   'mr3504Mo#' );
+define( 'SGK_SMTP_SECURE', 'ssl' );
 
 class SGK_Custom_Checkout {
 
@@ -39,18 +43,14 @@ class SGK_Custom_Checkout {
         // Remove links from product names on the thank you page & order details
         add_filter( 'woocommerce_order_item_name', array( $this, 'remove_order_item_links' ), 99, 2 );
 
-        // SMTP Mail Integration
-        add_action( 'phpmailer_init', array( $this, 'configure_smtp_mail' ) );
+        // Resend API Mail Integration (intercepts ALL wp_mail calls)
+        add_filter( 'pre_wp_mail', array( $this, 'send_via_resend' ), 10, 2 );
 
         // Log mail failures
         add_action( 'wp_mail_failed', array( $this, 'log_mail_failure' ) );
 
         // Test mail trigger URL parameter
         add_action( 'init', array( $this, 'trigger_test_email' ) );
-
-        // Force From email and From name to match SMTP settings
-        add_filter( 'wp_mail_from', array( $this, 'force_mail_from' ), 999 );
-        add_filter( 'wp_mail_from_name', array( $this, 'force_mail_from_name' ), 999 );
     }
 
     /**
@@ -146,6 +146,73 @@ class SGK_Custom_Checkout {
         return $template;
     }
 
+    /**
+     * Send all wp_mail emails via Resend API (bypasses local Postfix/SMTP entirely)
+     */
+    public function send_via_resend( $return, $atts ) {
+        if ( ! defined( 'SGK_RESEND_API_KEY' ) || SGK_RESEND_API_KEY === '' ) {
+            return $return; // No API key - fall through to default wp_mail
+        }
+
+        $to      = is_array( $atts['to'] ) ? $atts['to'] : array( $atts['to'] );
+        $subject = $atts['subject'];
+        $message = $atts['message'];
+        $headers = isset( $atts['headers'] ) ? $atts['headers'] : array();
+
+        // Parse Reply-To or CC from headers if present
+        $reply_to = array();
+        if ( ! empty( $headers ) ) {
+            $raw = is_array( $headers ) ? $headers : explode( "\n", str_replace( "\r\n", "\n", $headers ) );
+            foreach ( $raw as $header ) {
+                if ( stripos( $header, 'Reply-To:' ) !== false ) {
+                    $reply_to[] = trim( str_ireplace( 'Reply-To:', '', $header ) );
+                }
+            }
+        }
+
+        $from_email = defined( 'SGK_FROM_EMAIL' ) ? SGK_FROM_EMAIL : 'noreply@sgk.gr';
+        $from_name  = defined( 'SGK_FROM_NAME' )  ? SGK_FROM_NAME  : get_bloginfo( 'name' );
+
+        $body = array(
+            'from'    => $from_name . ' <' . $from_email . '>',
+            'to'      => $to,
+            'subject' => $subject,
+            'html'    => $message,
+        );
+
+        if ( ! empty( $reply_to ) ) {
+            $body['reply_to'] = $reply_to;
+        }
+
+        $response = wp_remote_post( 'https://api.resend.com/emails', array(
+            'headers' => array(
+                'Authorization' => 'Bearer ' . SGK_RESEND_API_KEY,
+                'Content-Type'  => 'application/json',
+            ),
+            'body'    => wp_json_encode( $body ),
+            'timeout' => 30,
+        ) );
+
+        if ( is_wp_error( $response ) ) {
+            error_log( 'ELV8 Resend Error: ' . $response->get_error_message() );
+            set_transient( 'sgk_mail_error_log', 'Resend WP_Error: ' . $response->get_error_message(), 3600 );
+            return false;
+        }
+
+        $code         = wp_remote_retrieve_response_code( $response );
+        $body_decoded = json_decode( wp_remote_retrieve_body( $response ), true );
+
+        if ( $code === 200 || $code === 201 ) {
+            error_log( 'ELV8 Resend: Email sent successfully to ' . implode( ', ', $to ) . ' | ID: ' . ( $body_decoded['id'] ?? 'n/a' ) );
+            return true; // Prevent default wp_mail sending
+        }
+
+        $error_msg = isset( $body_decoded['message'] ) ? $body_decoded['message'] : wp_remote_retrieve_body( $response );
+        error_log( 'ELV8 Resend Error (' . $code . '): ' . $error_msg );
+        set_transient( 'sgk_mail_error_log', 'Resend HTTP ' . $code . ': ' . $error_msg, 3600 );
+        return false;
+    }
+
     public function configure_smtp_mail( $phpmailer ) {
         if ( defined( 'SGK_SMTP_HOST' ) && SGK_SMTP_HOST !== '' && SGK_SMTP_PASS !== 'PASSWORD_HERE' ) {
             $working_config = get_option( 'sgk_smtp_working_config' );
@@ -204,6 +271,13 @@ class SGK_Custom_Checkout {
                 wp_redirect( '?test_elv8_mail=1' );
                 exit;
             }
+
+            // Save Resend API Key
+            if ( isset( $_POST['sgk_resend_key'] ) ) {
+                update_option( 'sgk_resend_api_key', sanitize_text_field( $_POST['sgk_resend_key'] ) );
+                wp_redirect( '?test_elv8_mail=1&resend_saved=1' );
+                exit;
+            }
             
             global $wp_version;
             $use_new_phpmailer = version_compare( $wp_version, '5.5', '>=' );
@@ -232,6 +306,22 @@ class SGK_Custom_Checkout {
             } else {
                 echo '<p style="color: #666; margin: 0;">None saved yet (using defaults).</p>';
             }
+            echo '</div>';
+
+            // Resend API Key configuration panel
+            $saved_key = get_option( 'sgk_resend_api_key', '' );
+            $key_status = $saved_key ? '✅ API Key is set (' . substr( $saved_key, 0, 10 ) . '...)' : '❌ No API Key saved yet';
+            echo '<div style="background: #fff3e0; border-left: 4px solid #ff9800; padding: 20px; margin-bottom: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">';
+            echo '<h3 style="color: #e65100; margin-top: 0;">🚀 Resend API Configuration (Active Email Provider):</h3>';
+            echo '<p>Status: <strong>' . $key_status . '</strong></p>';
+            if ( isset( $_GET['resend_saved'] ) ) {
+                echo '<p style="color: green; font-weight: bold;">✅ API Key saved successfully! All emails now go through Resend.</p>';
+            }
+            echo '<form method="POST" action="">';
+            echo '<input type="hidden" name="test_elv8_mail" value="1" />';
+            echo '<input type="text" name="sgk_resend_key" placeholder="re_xxxxxxxxxxxxxxxxxx" style="padding: 8px; width: 380px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; font-family: monospace;" value="' . esc_attr( $saved_key ) . '" /> ';
+            echo '<button type="submit" style="background: #e65100; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 14px;">Save API Key</button>';
+            echo '</form>';
             echo '</div>';
 
             // Show custom recipient form
