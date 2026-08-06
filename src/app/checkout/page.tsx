@@ -294,10 +294,6 @@ export default function CheckoutPage() {
                             {t("cart.checkout")}
                             <ArrowRight className="w-4 h-4 ml-2" />
                         </Button>
-
-                        <p className="font-body text-[10px] sm:text-[11px] text-slate-500 text-center mt-2.5 sm:mt-3">
-                            {isEl ? "Ασφαλής ολοκλήρωση στο store.elv8now.com" : "Secure checkout at store.elv8now.com"}
-                        </p>
                     </div>
                 </div>
             </div>
