@@ -233,32 +233,13 @@ export default function AboutClient() {
             
             {/* Left Image Showcase */}
             <div className="w-full lg:w-5/12 flex justify-center">
-              <div className="relative w-full max-w-[400px] aspect-[3/4] rounded-[36px] border-4 border-black bg-[#FFA5C4] flex items-center justify-center shadow-xl overflow-hidden">
-                
-                {/* Can */}
-                <div className="relative w-full h-[110%] z-10">
-                  <Image
-                    src="/elv8-can-clean.png"
-                    alt="ELV8 Clean Energy Can"
-                    fill
-                    className="object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.25)]"
-                  />
-                </div>
-
-                {/* Fruits */}
-                <div className="absolute -bottom-8 -left-8 w-[50%] h-[45%] z-20 pointer-events-none">
-                  <Image src="/elv8-lemon-fruit.png" alt="Lemons" fill className="object-contain object-bottom" />
-                </div>
-                <div className="absolute -bottom-6 left-[22%] w-[38%] h-[38%] z-20 pointer-events-none">
-                  <Image src="/elv8-strawberry-fruit.png" alt="Strawberry" fill className="object-contain object-bottom" />
-                </div>
-                <div className="absolute -bottom-7 left-[38%] w-[38%] h-[40%] z-20 pointer-events-none">
-                  <Image src="/elv8-lemon-fruit.png" alt="Lemon" fill className="object-contain object-bottom scale-x-[-1]" />
-                </div>
-                <div className="absolute -bottom-8 -right-8 w-[50%] h-[45%] z-20 pointer-events-none">
-                  <Image src="/elv8-strawberry-fruit.png" alt="Strawberries" fill className="object-contain object-bottom" />
-                </div>
-
+              <div className="relative w-full max-w-[480px] aspect-[4/3] rounded-[32px] overflow-hidden shadow-2xl border border-slate-100">
+                <Image
+                  src="/opengraph-image.png"
+                  alt="ELV8 Energy Drink Showcase"
+                  fill
+                  className="object-cover hover:scale-105 transition-transform duration-700"
+                />
               </div>
             </div>
 
