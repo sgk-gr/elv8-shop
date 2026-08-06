@@ -41,6 +41,12 @@ class SGK_Custom_Checkout {
 
         // SMTP Mail Integration
         add_action( 'phpmailer_init', array( $this, 'configure_smtp_mail' ) );
+
+        // Log mail failures
+        add_action( 'wp_mail_failed', array( $this, 'log_mail_failure' ) );
+
+        // Test mail trigger URL parameter
+        add_action( 'init', array( $this, 'trigger_test_email' ) );
     }
 
     /**
@@ -159,6 +165,71 @@ class SGK_Custom_Checkout {
                     'allow_self_signed' => true
                 )
             );
+        }
+     }
+
+    /**
+     * Log mail failures for debugging
+     */
+    public function log_mail_failure( $error ) {
+        if ( is_wp_error( $error ) ) {
+            $msg = $error->get_error_message();
+            $data = $error->get_error_data();
+            error_log( 'ELV8 Mail Failure: ' . print_r( $msg, true ) );
+            error_log( 'ELV8 Mail Data: ' . print_r( $data, true ) );
+            set_transient( 'sgk_mail_error_log', $msg . ' | Data: ' . json_encode( $data ), 3600 );
+        }
+    }
+
+    /**
+     * Trigger a test email with full SMTP debug output when visiting ?test_elv8_mail=1
+     */
+    public function trigger_test_email() {
+        if ( isset( $_GET['test_elv8_mail'] ) ) {
+            // Check if user is administrator
+            if ( ! current_user_can( 'manage_options' ) ) {
+                wp_die( 'Access denied. You must be logged in as an administrator to run this test.' );
+            }
+            
+            echo '<html><head><title>ELV8 SMTP Mail Test Debugger</title><style>body { font-family: sans-serif; padding: 30px; background: #fafafa; color: #333; line-height: 1.6; } pre { background: #000; color: #0f0; padding: 20px; border-radius: 8px; overflow-x: auto; font-size: 13px; font-family: monospace; }</style></head><body>';
+            echo '<h1>ELV8 SMTP Mail Test Debugger</h1>';
+            echo '<p>Attempting to send email to <strong>info@sgk.gr</strong> via SMTP (sgk.gr:465)...</p>';
+            
+            // Enable raw SMTP debug output
+            add_action( 'phpmailer_init', function( $phpmailer ) {
+                $phpmailer->SMTPDebug = 3;
+                $phpmailer->Debugoutput = function( $str, $level ) {
+                    echo "<strong>[PHPMailer Debug]</strong> " . htmlspecialchars( $str ) . "<br/>";
+                };
+            }, 999 );
+            
+            $to = 'info@sgk.gr';
+            $subject = 'ELV8 SMTP Test Mail';
+            $body = '<h1>ELV8 Shop SMTP Mail Works!</h1><p>This is a secure test email verifying that your Plesk SMTP configuration is working correctly.</p>';
+            $headers = array('Content-Type: text/html; charset=UTF-8');
+            
+            echo '<h3>SMTP Conversation Log:</h3><pre>';
+            $result = wp_mail( $to, $subject, $body, $headers );
+            echo '</pre>';
+            
+            if ( $result ) {
+                echo '<h2 style="color: green;">✔ SUCCESS! The test email was successfully sent!</h2>';
+                echo '<p>Check the inbox for <strong>info@sgk.gr</strong> (including spam/junk folder).</p>';
+            } else {
+                echo '<h2 style="color: red;">❌ FAILED! The email could not be sent.</h2>';
+                echo '<p>Please read the debug output above for details.</p>';
+                
+                $error_log = get_transient( 'sgk_mail_error_log' );
+                if ( $error_log ) {
+                    echo '<div style="background: #fee; border-left: 4px solid #f88; padding: 15px; margin-top: 15px;">';
+                    echo '<strong>WordPress Internal Error Log:</strong><br/>' . esc_html( $error_log );
+                    echo '</div>';
+                }
+            }
+            
+            echo '<p style="margin-top: 30px;"><a href="/">Return to Home</a></p>';
+            echo '</body></html>';
+            exit;
         }
     }
 }
