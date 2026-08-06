@@ -29,7 +29,7 @@ const translations: Record<Language, Record<string, string>> = {
         // Hero Section & Features
         "hero.caffeine": "Φυσική Καφεΐνη",
         "hero.sugar": "Χωρίς Ζάχαρη",
-        "hero.focus": "Νοοτροπικά & Εστίαση",
+        "hero.focus": "Πνευματική Διαύγεια",
         "hero.electrolytes": "Ηλεκτρολύτες",
         "hero.order_now": "Παράγγειλε Τώρα",
 
@@ -154,7 +154,7 @@ const translations: Record<Language, Record<string, string>> = {
         // FAQ
         "faq.title": "Συχνές Ερωτήσεις (FAQ)",
         "faq.q1": "Τι είναι το ELV8;",
-        "faq.a1": "Το ELV8 είναι ένα premium ενεργειακό ποτό επόμενης γενιάς με 200mg φυσική καφεΐνη, ηλεκτρολύτες και νοοτροπικά, χωρίς καθόλου ζάχαρη.",
+        "faq.a1": "Το ELV8 είναι ένα premium ενεργειακό ποτό επόμενης γενιάς με 200mg φυσική καφεΐνη, ηλεκτρολύτες και συστατικά για πνευματική διαύγεια, χωρίς καθόλου ζάχαρη.",
         "faq.q2": "Πόση καφεΐνη περιέχει;",
         "faq.a2": "Κάθε κουτάκι 250ml περιέχει 200mg φυσικής καφεΐνης, που ισοδυναμεί με περίπου 2 δόσεις espresso.",
         "faq.q3": "Έχει ζάχαρη ή crash μετά;",

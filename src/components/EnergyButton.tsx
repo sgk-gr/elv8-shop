@@ -2,11 +2,13 @@
 
 import { useRef, useLayoutEffect, useState, useId } from "react";
 import Link from "next/link";
+import { useTranslation } from "@/context/LanguageContext";
 
 export default function EnergyButton() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [dims, setDims] = useState({ width: 0, height: 0, path: "", perimeter: 0 });
   const uid = useId().replace(/:/g, "_");
+  const { t } = useTranslation();
 
   useLayoutEffect(() => {
     const calculate = () => {
@@ -36,7 +38,7 @@ export default function EnergyButton() {
         href="/products"
         className="relative z-10 bg-transparent text-white px-10 md:px-12 py-3.5 md:py-4 rounded-full font-black text-sm md:text-base tracking-wide hover:scale-105 hover:bg-white/10 transition-all duration-300 inline-block"
       >
-        Order Now
+        {t("hero.order_now")}
       </Link>
 
       {dims.width > 0 && (

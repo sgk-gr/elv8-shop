@@ -304,7 +304,7 @@ export default function AboutClient() {
                   <CheckCircle2 className="w-6 h-6 text-[#FF1D8E] shrink-0 mt-0.5" />
                   <div>
                     <h4 className="font-bold text-slate-900 text-base">
-                      {isEl ? "Νοοτροπικά / Εστίαση & Αντοχή" : "Nootropics / Focus & Endurance"}
+                      {isEl ? "Πνευματική Διαύγεια & Αντοχή" : "Nootropics / Focus & Endurance"}
                     </h4>
                     <p className="text-slate-600 text-sm">
                       {isEl ? (

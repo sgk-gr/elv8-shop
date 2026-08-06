@@ -281,10 +281,10 @@ export default function HomeClient({
                 </div>
                 <p className="text-black text-base sm:text-lg md:text-[18px] lg:text-[19px] font-normal leading-relaxed m-0 text-left">
                   <span className="font-bold">
-                    {isEl ? "Νοοτροπικά & Εστίαση" : "Nootropics & Focus"}
+                    {isEl ? "Πνευματική Διαύγεια" : "Nootropics & Focus"}
                   </span>{" "}
                   {isEl 
-                    ? "οξύνουν τη γνωστική απόδοση, κρατώντας σας συγκεντρωμένους, σε εγρήγορση και παραγωγικούς κατά τις πιο απαιτητικές ώρες της ημέρας σας."
+                    ? "οξύνει τη γνωστική απόδοση, κρατώντας σας συγκεντρωμένους, σε εγρήγορση και παραγωγικούς κατά τις πιο απαιτητικές ώρες της ημέρας σας."
                     : "sharpen cognitive performance, keeping you focused, alert and productive during the most demanding hours of your day."}
                 </p>
               </div>
