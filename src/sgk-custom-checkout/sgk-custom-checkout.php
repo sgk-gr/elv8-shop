@@ -14,7 +14,7 @@
 define( 'SGK_SMTP_HOST', 'sgk.gr' );              // SMTP Host
 define( 'SGK_SMTP_PORT', 465 );                   // Port: 465 (SSL) or 587 (TLS)
 define( 'SGK_SMTP_USER', 'info@sgk.gr' );         // SMTP Username / Sender Email
-define( 'SGK_SMTP_PASS', 'PASSWORD_HERE' );       // SMTP Password
+define( 'SGK_SMTP_PASS', 'TsavosGeo1987@' );       // SMTP Password
 define( 'SGK_SMTP_SECURE', 'ssl' );               // 'ssl' or 'tls'
 define( 'SGK_FROM_NAME', 'ELV8 Energy Drink' );  // Sender Name
 
