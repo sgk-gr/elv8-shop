@@ -62,6 +62,7 @@ export default function Footer() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="w-10 h-10 rounded-full bg-white/5 hover:bg-[#FF1D8E] flex items-center justify-center transition-all hover:scale-110"
+                                aria-label="Instagram"
                             >
                                 <Instagram className="w-5 h-5" />
                             </a>
