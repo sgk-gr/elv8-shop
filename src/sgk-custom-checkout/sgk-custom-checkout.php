@@ -2,7 +2,7 @@
 /**
  * Plugin Name: SGK Custom Checkout by SGK Digital
  * Description: Ένα premium, minimal και πλήρως mobile-responsive checkout για το WooCommerce στα χρώματα του ELV8 Energy Drink.
- * Version: 1.3.1
+ * Version: 1.3.2
  * Author: SGK Digital
  * Author URI: https://sgk.gr
  * License: GPL2
@@ -11,11 +11,11 @@
 // ==========================================================================
 // SMTP CONFIGURATION (Change these to your own mail server details)
 // ==========================================================================
-define( 'SGK_SMTP_HOST', 'mail.sgk.gr' );         // SMTP Host
-define( 'SGK_SMTP_PORT', 465 );                   // Port: 465 (SSL) or 587 (TLS)
-define( 'SGK_SMTP_USER', 'info@sgk.gr' );         // SMTP Username / Sender Email
-define( 'SGK_SMTP_PASS', 'TsavosGeo1987@' );       // SMTP Password
-define( 'SGK_SMTP_SECURE', 'ssl' );               // 'ssl' or 'tls'
+define( 'SGK_SMTP_HOST', 'localhost' );           // SMTP Host
+define( 'SGK_SMTP_PORT', 25 );                    // Port: 465 (SSL) or 587 (TLS) or 25
+define( 'SGK_SMTP_USER', 'sales@store.elv8now.com' ); // SMTP Username / Sender Email
+define( 'SGK_SMTP_PASS', 'mr3504Mo#' );           // SMTP Password
+define( 'SGK_SMTP_SECURE', '' );                  // 'ssl' or 'tls' or ''
 define( 'SGK_FROM_NAME', 'ELV8 Energy Drink' );  // Sender Name
 
 class SGK_Custom_Checkout {
