@@ -13,6 +13,7 @@ import { getProducts } from "@/lib/woocommerce";
 import { WooProduct } from "@/types/product";
 import ProductCard from "@/components/ProductCard";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import { useTranslation } from "@/context/LanguageContext";
 
 const WC_STORE_URL = "https://store.elv8now.com";
 
@@ -20,6 +21,8 @@ export default function CheckoutPage() {
     const { items, removeItem, updateQuantity, totalPrice } = useCart();
     const { user } = useAuth();
     const router = useRouter();
+    const { t, language } = useTranslation();
+    const isEl = language === "el";
 
     const { data: relatedProducts } = useQuery<WooProduct[]>({
         queryKey: ["related-products", "checkout"],
@@ -45,14 +48,14 @@ export default function CheckoutPage() {
     if (items.length === 0) {
         return (
             <main className="container mx-auto px-4 md:px-8 py-16 md:py-24 text-center flex-1 flex flex-col items-center justify-center min-h-[65vh]">
-                <h1 className="font-display text-3xl md:text-4xl font-light mb-4">Το καλάθι σας είναι άδειο</h1>
-                <p className="text-muted-foreground font-body text-sm mb-8">Προσθέστε προϊόντα για να συνεχίσετε.</p>
+                <h1 className="font-display text-3xl md:text-4xl font-light mb-4">{t("cart.empty")}</h1>
+                <p className="text-muted-foreground font-body text-sm mb-8">{isEl ? "Προσθέστε προϊόντα για να συνεχίσετε." : "Add products to continue."}</p>
                 <Link
                     href="/products"
                     className="inline-flex items-center gap-2 font-body text-sm uppercase tracking-widest hover:text-muted-foreground transition-colors"
                 >
                     <ChevronLeft className="w-4 h-4" />
-                    Συνέχεια Αγορών
+                    {isEl ? "Συνέχεια Αγορών" : "Continue Shopping"}
                 </Link>
             </main>
         );
@@ -67,10 +70,10 @@ export default function CheckoutPage() {
                         className="inline-flex items-center gap-1.5 font-body text-xs sm:text-sm font-bold text-slate-600 hover:text-[#FF1D8E] transition-colors bg-slate-100/80 px-4 py-2 rounded-full shadow-sm"
                     >
                         <ChevronLeft className="w-4 h-4" />
-                        Πίσω στο Καλάθι
+                        {t("checkout.back_to_cart")}
                     </button>
                     <span className="text-xs font-bold text-slate-400 font-body uppercase tracking-wider hidden sm:inline">
-                        🔒 Ασφαλής Ολοκλήρωση Αγοράς
+                        🔒 {t("checkout.secure")}
                     </span>
                 </div>
                 <div className="w-full flex-1 bg-white rounded-3xl border border-slate-200 shadow-lg overflow-hidden min-h-[750px] relative">
@@ -92,7 +95,7 @@ export default function CheckoutPage() {
                                     <div className="w-2.5 h-2.5 bg-[#FF1D8E] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                                 </div>
                                 <span className="text-sm font-black text-slate-900 font-body tracking-wider uppercase">
-                                    Προετοιμασία ασφαλούς ολοκλήρωσης...
+                                    {t("checkout.preparing")}
                                 </span>
                             </div>
                         </div>
@@ -117,19 +120,19 @@ export default function CheckoutPage() {
                 className="inline-flex items-center gap-1.5 font-body text-xs sm:text-sm font-bold text-slate-600 hover:text-[#FF1D8E] transition-colors mb-6 md:mb-8 bg-slate-100/80 px-4 py-2 rounded-full w-fit shadow-2xs"
             >
                 <ChevronLeft className="w-4 h-4" />
-                Συνέχεια Αγορών
+                {isEl ? "Συνέχεια Αγορών" : "Continue Shopping"}
             </Link>
 
-            <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-light mb-6 sm:mb-8 md:mb-10">Καλάθι Αγορών</h1>
+            <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-light mb-6 sm:mb-8 md:mb-10">{t("cart.title")}</h1>
 
             <div className="grid lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-16">
                 {/* Cart items */}
                 <div className="lg:col-span-2 space-y-0">
                     {/* Header */}
                     <div className="hidden md:grid grid-cols-[1fr_120px_120px_40px] gap-4 pb-4 border-b border-border">
-                        <span className="font-body text-xs tracking-widest uppercase text-muted-foreground">Προϊόν</span>
-                        <span className="font-body text-xs tracking-widest uppercase text-muted-foreground text-center">Ποσότητα</span>
-                        <span className="font-body text-xs tracking-widest uppercase text-muted-foreground text-right">Τιμή</span>
+                        <span className="font-body text-xs tracking-widest uppercase text-muted-foreground">{isEl ? "Προϊόν" : "Product"}</span>
+                        <span className="font-body text-xs tracking-widest uppercase text-muted-foreground text-center">{isEl ? "Ποσότητα" : "Quantity"}</span>
+                        <span className="font-body text-xs tracking-widest uppercase text-muted-foreground text-right">{isEl ? "Τιμή" : "Price"}</span>
                         <span />
                     </div>
 
@@ -179,7 +182,7 @@ export default function CheckoutPage() {
                                             <button
                                                 onClick={() => updateQuantity(item.product.id, item.quantity - 1, item.variationId)}
                                                 className="w-9 h-9 sm:w-10 sm:h-10 border border-border flex items-center justify-center hover:bg-secondary active:bg-secondary/80 transition-colors rounded-sm"
-                                                aria-label="Μείωση ποσότητας"
+                                                aria-label={isEl ? "Μείωση ποσότητας" : "Decrease quantity"}
                                             >
                                                 <Minus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                                             </button>
@@ -189,7 +192,7 @@ export default function CheckoutPage() {
                                             <button
                                                 onClick={() => updateQuantity(item.product.id, item.quantity + 1, item.variationId)}
                                                 className="w-9 h-9 sm:w-10 sm:h-10 border border-border flex items-center justify-center hover:bg-secondary active:bg-secondary/80 transition-colors rounded-sm"
-                                                aria-label="Αύξηση ποσότητας"
+                                                aria-label={isEl ? "Αύξηση ποσότητας" : "Increase quantity"}
                                             >
                                                 <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                                             </button>
@@ -199,7 +202,7 @@ export default function CheckoutPage() {
                                             <button
                                                 onClick={() => removeItem(item.product.id, item.variationId)}
                                                 className="text-muted-foreground hover:text-destructive active:text-destructive/80 transition-colors p-1.5"
-                                                aria-label="Αφαίρεση προϊόντος"
+                                                aria-label={isEl ? "Αφαίρεση προϊόντος" : "Remove product"}
                                             >
                                                 <X className="w-4 h-4 sm:w-5 sm:h-5" />
                                             </button>
@@ -212,7 +215,7 @@ export default function CheckoutPage() {
                                     <button
                                         onClick={() => updateQuantity(item.product.id, item.quantity - 1, item.variationId)}
                                         className="w-8 h-8 border border-border flex items-center justify-center hover:bg-secondary transition-colors"
-                                        aria-label="Μείωση ποσότητας"
+                                        aria-label={isEl ? "Μείωση ποσότητας" : "Decrease quantity"}
                                     >
                                         <Minus className="w-3 h-3" />
                                     </button>
@@ -222,7 +225,7 @@ export default function CheckoutPage() {
                                     <button
                                         onClick={() => updateQuantity(item.product.id, item.quantity + 1, item.variationId)}
                                         className="w-8 h-8 border border-border flex items-center justify-center hover:bg-secondary transition-colors"
-                                        aria-label="Αύξηση ποσότητας"
+                                        aria-label={isEl ? "Αύξηση ποσότητας" : "Increase quantity"}
                                     >
                                         <Plus className="w-3 h-3" />
                                     </button>
@@ -238,7 +241,7 @@ export default function CheckoutPage() {
                                     <button
                                         onClick={() => removeItem(item.product.id, item.variationId)}
                                         className="text-muted-foreground hover:text-foreground p-1"
-                                        aria-label="Αφαίρεση προϊόντος"
+                                        aria-label={isEl ? "Αφαίρεση προϊόντος" : "Remove product"}
                                     >
                                         <X className="w-4 h-4" />
                                     </button>
@@ -251,7 +254,7 @@ export default function CheckoutPage() {
                 {/* Order summary */}
                 <div className="lg:col-span-1">
                     <div className="bg-secondary/50 p-4 sm:p-5 md:p-6 lg:p-8 lg:sticky lg:top-24 rounded-sm">
-                        <h2 className="font-display text-lg sm:text-xl mb-4 sm:mb-5 md:mb-6">Σύνοψη Παραγγελίας</h2>
+                        <h2 className="font-display text-lg sm:text-xl mb-4 sm:mb-5 md:mb-6">{isEl ? "Σύνοψη Παραγγελίας" : "Order Summary"}</h2>
 
                         <div className="space-y-2.5 sm:space-y-3 mb-5 sm:mb-6">
                             {items.map((item) => {
@@ -276,22 +279,24 @@ export default function CheckoutPage() {
 
                         <div className="border-t border-border pt-3 sm:pt-4 mb-5 sm:mb-6">
                             <div className="flex justify-between items-center">
-                                <span className="font-body text-xs sm:text-sm uppercase tracking-widest">Σύνολο</span>
+                                <span className="font-body text-xs sm:text-sm uppercase tracking-widest">{t("cart.subtotal")}</span>
                                 <span className="font-display text-xl sm:text-2xl">€{totalPrice.toFixed(2)}</span>
                             </div>
-                            <p className="font-body text-[10px] sm:text-xs text-muted-foreground mt-1 sm:mt-1.5">Τα μεταφορικά υπολογίζονται στο ταμείο</p>
+                            <p className="font-body text-[10px] sm:text-xs text-muted-foreground mt-1 sm:mt-1.5">
+                                {isEl ? "Τα μεταφορικά υπολογίζονται στο ταμείο" : "Shipping calculated at checkout"}
+                            </p>
                         </div>
 
                         <Button
                             onClick={handleCheckout}
                             className="w-full h-12 font-body text-xs sm:text-sm uppercase tracking-widest rounded-full transition-all shadow-md bg-black hover:bg-[#FF1D8E] text-white"
                         >
-                            Ολοκλήρωση Παραγγελίας
+                            {t("cart.checkout")}
                             <ArrowRight className="w-4 h-4 ml-2" />
                         </Button>
 
                         <p className="font-body text-[10px] sm:text-[11px] text-slate-500 text-center mt-2.5 sm:mt-3">
-                            Ασφαλής ολοκλήρωση στο store.elv8now.com
+                            {isEl ? "Ασφαλής ολοκλήρωση στο store.elv8now.com" : "Secure checkout at store.elv8now.com"}
                         </p>
                     </div>
                 </div>
@@ -299,7 +304,9 @@ export default function CheckoutPage() {
 
             {relatedProducts && relatedProducts.length > 0 && (
                 <div className="mt-16 sm:mt-24 pt-8 sm:pt-12 border-t border-border pb-6">
-                    <h2 className="font-display text-2xl sm:text-3xl font-bold mb-8 text-center">Μπορεί να σας αρέσει επίσης</h2>
+                    <h2 className="font-display text-2xl sm:text-3xl font-bold mb-8 text-center">
+                        {isEl ? "Μπορεί να σας αρέσει επίσης" : "You may also like"}
+                    </h2>
                     <Carousel
                         opts={{
                             align: "start",
