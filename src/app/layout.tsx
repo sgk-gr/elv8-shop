@@ -122,13 +122,16 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="el" className={`${inter.variable} ${outfit.variable} ${caveat.variable} ${oswald.variable}`} suppressHydrationWarning>
+            <head>
+                <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+            </head>
             <body className="font-body antialiased min-h-screen flex flex-col justify-between bg-white" suppressHydrationWarning>
                 <Providers>
                     <JsonLd type="website" />
                     <ScrollRestoration />
+                    <Header />
+                    <CartDrawer />
                     <div className="flex flex-col min-h-screen justify-between">
-                        <Header />
-                        <CartDrawer />
                         <main className="flex-1">{children}</main>
                         <Footer />
                     </div>

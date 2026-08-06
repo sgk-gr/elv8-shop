@@ -48,7 +48,8 @@ export default function Header() {
     };
   }, [pathname]);
 
-  const cleanPath = (pathname || "").replace(/\/$/, "") || "/";
+  const rawPath = typeof window !== "undefined" ? (pathname || window.location.pathname) : (pathname || "/");
+  const cleanPath = (rawPath || "").split("?")[0].replace(/\/$/, "") || "/";
   const isHomePage = cleanPath === "/";
 
   const isB2BActive = mounted && (cleanPath.startsWith("/b2b-wholesale") || cleanPath === "/b2b-wholesale");
