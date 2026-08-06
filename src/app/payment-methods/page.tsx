@@ -1,11 +1,11 @@
 "use client";
 
-import { ChevronRight, CreditCard, Landmark, Info, Zap, Truck } from "lucide-react";
+import { ChevronRight, CreditCard } from "lucide-react";
 import Link from "next/link";
 import { useTranslation } from "@/context/LanguageContext";
 
 export default function PaymentMethodsPage() {
-    const { t, language } = useTranslation();
+    const { language } = useTranslation();
     const isEl = language === "el";
 
     return (
@@ -47,83 +47,7 @@ export default function PaymentMethodsPage() {
                                     </p>
                                 </div>
                             </section>
-
-                            <section className="flex gap-5 items-start text-left">
-                                <div className="w-12 h-12 bg-blue-500/10 rounded-2xl flex items-center justify-center shrink-0">
-                                    <Zap className="w-6 h-6 text-blue-500" />
-                                </div>
-                                <div className="space-y-2">
-                                    <h2 className="font-display text-xl font-bold text-slate-800">
-                                        {isEl ? "IRIS Payments" : "IRIS Payments"}
-                                    </h2>
-                                    <p className="font-body text-slate-600 text-sm leading-relaxed">
-                                        {isEl ? (
-                                            "Άμεση πληρωμή μέσω του e-banking σας χρησιμοποιώντας μόνο τον ΑΦΜ ή τον αριθμό κινητού τηλεφώνου."
-                                        ) : (
-                                            "Direct payment from your e-banking using only your VAT number or mobile phone number."
-                                        )}
-                                    </p>
-                                </div>
-                            </section>
-
-                            <section className="flex gap-5 items-start text-left">
-                                <div className="w-12 h-12 bg-emerald-500/10 rounded-2xl flex items-center justify-center shrink-0">
-                                    <Truck className="w-6 h-6 text-emerald-500" />
-                                </div>
-                                <div className="space-y-2">
-                                    <h2 className="font-display text-xl font-bold text-slate-800">
-                                        {isEl ? "Αντικαταβολή" : "Cash on Delivery"}
-                                    </h2>
-                                    <p className="font-body text-slate-600 text-sm leading-relaxed">
-                                        {isEl ? (
-                                            "Πληρώστε το αντίτιμο της παραγγελίας σας κατά την παράδοση στον κούριερ. Επιπλέον χρέωση αντικαταβολής: 2€."
-                                        ) : (
-                                            "Pay for your order upon delivery to the courier agent. Cash on delivery fee: €2."
-                                        )}
-                                    </p>
-                                </div>
-                            </section>
-
-                            <section className="flex gap-5 items-start text-left">
-                                <div className="w-12 h-12 bg-slate-500/10 rounded-2xl flex items-center justify-center shrink-0">
-                                    <Landmark className="w-6 h-6 text-slate-600" />
-                                </div>
-                                <div className="space-y-2">
-                                    <h2 className="font-display text-xl font-bold text-slate-800">
-                                        {isEl ? "Τραπεζική Κατάθεση" : "Bank Transfer"}
-                                    </h2>
-                                    <p className="font-body text-slate-600 text-sm leading-relaxed">
-                                        {isEl ? (
-                                            "Μπορείτε να καταθέσετε το ποσό της παραγγελίας σας στον τραπεζικό λογαριασμό ELV8 Energy."
-                                        ) : (
-                                            "You can deposit the order amount directly to the ELV8 Energy bank account."
-                                        )}
-                                    </p>
-                                </div>
-                            </section>
                         </div>
-
-                        <section className="space-y-6 pt-4 border-t border-slate-100 text-left">
-                            <div className="flex gap-4 p-6 bg-blue-50/50 rounded-2xl border border-blue-100/50">
-                                <Info className="w-6 h-6 text-blue-500 shrink-0" />
-                                <div className="space-y-4">
-                                    <p className="font-body text-sm text-slate-700 leading-relaxed italic">
-                                        {isEl ? (
-                                            "Κατά την κατάθεση, αναγράφετε ως αιτιολογία το ονοματεπώνυμό σας και τον αριθμό παραγγελίας σας για ταχύτερη εξυπηρέτηση."
-                                        ) : (
-                                            "During deposit, please include your full name and order number as the transaction reference for faster processing."
-                                        )}
-                                    </p>
-                                    <p className="font-body text-sm font-bold text-[#FF1D8E]">
-                                        {isEl ? (
-                                            "Η επεξεργασία της παραγγελίας ξεκινά μετά την επιβεβαίωση της πληρωμής. Μη επιβεβαιωμένες πληρωμές εντός 2-3 ημερών οδηγούν σε ακύρωση."
-                                        ) : (
-                                            "Order processing starts after payment confirmation. Unconfirmed payments within 2-3 days will be cancelled."
-                                        )}
-                                    </p>
-                                </div>
-                            </div>
-                        </section>
                     </div>
 
                     <div className="mt-12 text-center">
