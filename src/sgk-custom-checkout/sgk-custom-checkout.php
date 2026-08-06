@@ -2,7 +2,7 @@
 /**
  * Plugin Name: SGK Custom Checkout by SGK Digital
  * Description: Ένα premium, minimal και πλήρως mobile-responsive checkout για το WooCommerce στα χρώματα του ELV8 Energy Drink.
- * Version: 1.3.4
+ * Version: 1.3.5
  * Author: SGK Digital
  * Author URI: https://sgk.gr
  * License: GPL2
@@ -220,6 +220,19 @@ class SGK_Custom_Checkout {
                 echo '<button onclick="window.location.href=\'?test_elv8_mail=1&clear_error=1\'" style="background: #c00; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; cursor: pointer;">Clear Error Log</button>';
                 echo '</div>';
             }
+
+            // Show current saved configuration
+            $working_config = get_option( 'sgk_smtp_working_config' );
+            echo '<div style="background: #eef; border-left: 4px solid #88f; padding: 20px; margin-bottom: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">';
+            echo '<h3 style="color: #008; margin-top: 0;">Current Saved SMTP Configuration:</h3>';
+            if ( $working_config ) {
+                echo 'Host: <strong style="font-family: monospace;">' . esc_html( $working_config['host'] ) . '</strong><br/>';
+                echo 'Port: <strong style="font-family: monospace;">' . esc_html( $working_config['port'] ) . '</strong><br/>';
+                echo 'Secure: <strong style="font-family: monospace;">' . esc_html( $working_config['secure'] ) . '</strong>';
+            } else {
+                echo '<p style="color: #666; margin: 0;">None saved yet (using defaults).</p>';
+            }
+            echo '</div>';
 
             echo '<p>Running automated SMTP tests to find a working configuration on your server...</p>';
             
