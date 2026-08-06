@@ -11,7 +11,7 @@
 // ==========================================================================
 // SMTP CONFIGURATION (Change these to your own mail server details)
 // ==========================================================================
-define( 'SGK_SMTP_HOST', 'sgk.gr' );              // SMTP Host
+define( 'SGK_SMTP_HOST', 'mail.sgk.gr' );         // SMTP Host
 define( 'SGK_SMTP_PORT', 465 );                   // Port: 465 (SSL) or 587 (TLS)
 define( 'SGK_SMTP_USER', 'info@sgk.gr' );         // SMTP Username / Sender Email
 define( 'SGK_SMTP_PASS', 'TsavosGeo1987@' );       // SMTP Password
@@ -202,12 +202,14 @@ class SGK_Custom_Checkout {
             echo '<p>Running automated SMTP tests to find a working configuration on your server...</p>';
             
             $tests = array(
-                array( 'host' => 'linux60.name-servers.gr', 'port' => 465, 'secure' => 'ssl', 'desc' => 'Test #1: Plesk Host linux60.name-servers.gr Port 465 (SSL + Auth)' ),
-                array( 'host' => 'linux60.name-servers.gr', 'port' => 587, 'secure' => 'tls', 'desc' => 'Test #2: Plesk Host linux60.name-servers.gr Port 587 (TLS + Auth)' ),
-                array( 'host' => 'sgk.gr', 'port' => 465, 'secure' => 'ssl', 'desc' => 'Test #3: sgk.gr Port 465 (SSL + Auth)' ),
-                array( 'host' => 'sgk.gr', 'port' => 587, 'secure' => 'tls', 'desc' => 'Test #4: sgk.gr Port 587 (TLS + Auth)' ),
-                array( 'host' => 'localhost', 'port' => 25, 'secure' => '', 'desc' => 'Test #5: Localhost Port 25 (No SSL + Auth)' ),
-                array( 'host' => '127.0.0.1', 'port' => 25, 'secure' => '', 'desc' => 'Test #6: 127.0.0.1 Port 25 (No SSL + Auth)' ),
+                array( 'host' => 'mail.sgk.gr', 'port' => 465, 'secure' => 'ssl', 'desc' => 'Test #1: mail.sgk.gr Port 465 (SSL + Auth)' ),
+                array( 'host' => 'mail.sgk.gr', 'port' => 587, 'secure' => 'tls', 'desc' => 'Test #2: mail.sgk.gr Port 587 (TLS + Auth)' ),
+                array( 'host' => 'linux60.name-servers.gr', 'port' => 465, 'secure' => 'ssl', 'desc' => 'Test #3: Plesk Host linux60.name-servers.gr Port 465 (SSL + Auth)' ),
+                array( 'host' => 'linux60.name-servers.gr', 'port' => 587, 'secure' => 'tls', 'desc' => 'Test #4: Plesk Host linux60.name-servers.gr Port 587 (TLS + Auth)' ),
+                array( 'host' => 'sgk.gr', 'port' => 465, 'secure' => 'ssl', 'desc' => 'Test #5: sgk.gr Port 465 (SSL + Auth)' ),
+                array( 'host' => 'sgk.gr', 'port' => 587, 'secure' => 'tls', 'desc' => 'Test #6: sgk.gr Port 587 (TLS + Auth)' ),
+                array( 'host' => 'localhost', 'port' => 25, 'secure' => '', 'desc' => 'Test #7: Localhost Port 25 (No SSL + Auth)' ),
+                array( 'host' => '127.0.0.1', 'port' => 25, 'secure' => '', 'desc' => 'Test #8: 127.0.0.1 Port 25 (No SSL + Auth)' ),
             );
             
             foreach ( $tests as $idx => $test ) {
