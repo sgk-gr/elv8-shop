@@ -40,7 +40,7 @@ export default function CartDrawer() {
                 className="rounded-full px-8 bg-[#FF1D8E] hover:bg-black text-white border-none"
                 onClick={() => setIsCartOpen(false)}
               >
-                {t("nav.products")}
+                {language === "el" ? "Κλείσιμο" : "Close"}
               </Button>
             </div>
           ) : (
