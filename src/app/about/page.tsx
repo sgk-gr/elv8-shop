@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     url: "https://elv8now.com/about",
     images: [
       {
-        url: "/about-og.png",
+        url: "/opengraph-image.png",
         width: 1200,
         height: 675,
         alt: "ELV8 Energy About Us",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     title: "Σχετικά με το ELV8 | Η Φιλοσοφία & τα Συστατικά Μας",
     description:
       "Μάθετε περισσότερα για το ELV8 Energy Drink. Ένα premium ενεργειακό ποτό χωρίς ζάχαρη, με φυσική καφεΐνη, ηλεκτρολύτες & πνευματική διαύγεια, που δημιουργήθηκε στην Ελλάδα.",
-    images: ["/about-og.png"],
+    images: ["/opengraph-image.png"],
   },
 };
 
