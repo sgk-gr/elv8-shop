@@ -76,7 +76,7 @@ class SGK_Custom_Checkout {
                 'sgk-checkout-style',
                 plugins_url( 'assets/css/sgk-checkout.css', __FILE__ ),
                 array(),
-                '1.2.0'
+                '1.3.1'
             );
 
             // Google Fonts (Outfit & Inter) to match the main store
@@ -92,7 +92,7 @@ class SGK_Custom_Checkout {
                 'sgk-checkout-script',
                 plugins_url( 'assets/js/sgk-checkout.js', __FILE__ ),
                 array( 'jquery' ),
-                '1.2.0',
+                '1.3.1',
                 true
             );
         }
