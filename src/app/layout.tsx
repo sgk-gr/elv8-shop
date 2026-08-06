@@ -79,12 +79,12 @@ export const metadata: Metadata = {
         siteName: "ELV8 Energy Drink",
         title: "ELV8 Energy Drink Greece | Premium Ενεργειακό Ποτό Χωρίς Ζάχαρη",
         description:
-            "Ανακαλύψτε το κορυφαίο ελληνικό ενεργειακό ποτό ELV8 Energy. 0% ζάχαρη (Zero Sugar), με 200mg φυσική καφεΐνη, ηλεκτρολύτες, βιταμίνες & νοοτροπικά.",
+            "Ανακαλύψτε το κορυφαίο ελληνικό ενεργειακό ποτό ELV8 Energy. 0% ζάχαρη (Zero Sugar), με 200mg φυσική καφεΐνη, ηλεκτρολύτες, βιταμίνες & πνευματική διαύγεια.",
         images: [
             {
                 url: "/opengraph-image.png",
                 width: 1200,
-                height: 630,
+                height: 675,
                 alt: "ELV8 Energy Drink",
             },
         ],
@@ -95,7 +95,7 @@ export const metadata: Metadata = {
         creator: "@elv8energy",
         title: "ELV8 Energy Drink Greece | Premium Ενεργειακό Ποτό Χωρίς Ζάχαρη",
         description:
-            "0% ζάχαρη, με 200mg φυσική καφεΐνη, ηλεκτρολύτες, βιταμίνες & νοοτροπικά για μέγιστη απόδοση.",
+            "0% ζάχαρη, με 200mg φυσική καφεΐνη, ηλεκτρολύτες, βιταμίνες & πνευματική διαύγεια για μέγιστη απόδοση.",
         images: ["/opengraph-image.png"],
     },
     alternates: {
@@ -107,12 +107,10 @@ export const metadata: Metadata = {
     },
     icons: {
         icon: [
-            { url: "/elv8_logo.svg", type: "image/svg+xml" },
-            { url: "/favicon.png", type: "image/png" },
-            { url: "/favicon.ico", type: "image/x-icon" }
+            { url: "/favicon.svg", type: "image/svg+xml" }
         ],
-        shortcut: "/favicon.ico",
-        apple: "/elv8_logo.svg",
+        shortcut: "/favicon.svg",
+        apple: "/favicon.svg",
     },
     category: "shopping",
 };
