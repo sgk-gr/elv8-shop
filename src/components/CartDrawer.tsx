@@ -5,11 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Minus, Plus, X, ShoppingBag } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useRouter, usePathname } from "next/navigation";
+import { useTranslation } from "@/context/LanguageContext";
 
 export default function CartDrawer() {
   const { items, isCartOpen, setIsCartOpen, removeItem, updateQuantity, totalPrice } = useCart();
   const router = useRouter();
   const pathname = usePathname();
+  const { t } = useTranslation();
 
   const goToProduct = (productId: number) => {
     setIsCartOpen(false);
@@ -22,7 +24,7 @@ export default function CartDrawer() {
         <div className="p-6 md:p-8 border-b bg-slate-200/50">
           <SheetHeader>
             <SheetTitle className="font-display text-3xl font-bold tracking-tight">
-              My Cart
+              {t("cart.title")}
             </SheetTitle>
           </SheetHeader>
         </div>
@@ -33,12 +35,12 @@ export default function CartDrawer() {
               <div className="w-16 h-16 bg-secondary/50 rounded-full flex items-center justify-center">
                 <ShoppingBag className="w-8 h-8 text-muted-foreground" />
               </div>
-              <p className="text-muted-foreground font-body text-sm font-medium italic">Your cart is empty</p>
+              <p className="text-muted-foreground font-body text-sm font-medium italic">{t("cart.empty")}</p>
               <Button
                 className="rounded-full px-8 bg-[#FF1D8E] hover:bg-black text-white border-none"
                 onClick={() => setIsCartOpen(false)}
               >
-                Start Shopping
+                {t("nav.products")}
               </Button>
             </div>
           ) : (
@@ -115,7 +117,7 @@ export default function CartDrawer() {
           <div className="p-6 md:p-8 bg-slate-200 border-t space-y-4">
             <div className="flex justify-between items-end">
               <div className="space-y-1">
-                <span className="text-muted-foreground text-xs font-bold uppercase tracking-widest">Subtotal</span>
+                <span className="text-muted-foreground text-xs font-bold uppercase tracking-widest">{t("cart.subtotal")}</span>
                 <p className="text-muted-foreground text-[10px]">Taxes and shipping calculated at checkout</p>
               </div>
               <span className="font-display text-3xl font-bold">€{totalPrice.toFixed(2)}</span>
@@ -125,7 +127,7 @@ export default function CartDrawer() {
               className="w-full h-14 font-body text-sm font-bold uppercase tracking-widest rounded-full shadow-lg hover:scale-[1.02] bg-black text-white hover:bg-[#FF1D8E] transition-all"
               onClick={() => { setIsCartOpen(false); router.push("/checkout"); }}
             >
-              Checkout
+              {t("cart.checkout")}
             </Button>
           </div>
         )}

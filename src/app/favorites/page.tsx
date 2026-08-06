@@ -4,9 +4,11 @@ import { useFavorites } from "@/context/FavoritesContext";
 import ProductCard from "@/components/ProductCard";
 import Link from "next/link";
 import { Heart, ShoppingBag } from "lucide-react";
+import { useTranslation } from "@/context/LanguageContext";
 
 export default function FavoritesPage() {
     const { favorites } = useFavorites();
+    const { t, language } = useTranslation();
 
     return (
         <main className="min-h-screen pt-28 pb-20 md:pt-36 bg-white relative overflow-hidden flex flex-col items-center justify-center">
@@ -34,10 +36,10 @@ export default function FavoritesPage() {
                         </div>
                         <div className="space-y-2">
                             <h2 className="font-display text-2xl sm:text-3xl font-black text-slate-900">
-                                Your Wishlist is Empty
+                                {t("favorites.title")}
                             </h2>
                             <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-md mx-auto">
-                                Discover our natural, zero-sugar energy drinks and tap the heart icon on any flavor to save it here.
+                                {language === "el" ? "Ανακαλύψτε τα ενεργειακά μας ποτά και πατήστε την καρδιά για να τα αποθηκεύσετε εδώ." : "Discover our natural, zero-sugar energy drinks and tap the heart icon on any flavor to save it here."}
                             </p>
                         </div>
                         <Link
@@ -45,7 +47,7 @@ export default function FavoritesPage() {
                             className="inline-flex items-center gap-3 bg-slate-900 hover:bg-[#FF1D8E] text-white px-8 py-4 rounded-full font-bold text-xs sm:text-sm uppercase tracking-[0.2em] transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-[#FF1D8E]/20"
                         >
                             <ShoppingBag className="w-4 h-4" />
-                            Explore Flavors
+                            {t("favorites.btn")}
                         </Link>
                     </div>
                 )}

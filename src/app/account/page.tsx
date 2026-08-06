@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getUserOrders } from "@/lib/woocommerce";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "@/context/LanguageContext";
 import {
     User as UserIcon,
     Package,
@@ -22,6 +23,8 @@ import { toast } from "sonner";
 export default function AccountPage() {
     const { user, logout, isAuthenticated, isLoading } = useAuth();
     const router = useRouter();
+    const { t, language } = useTranslation();
+    const isEl = language === "el";
     const [activeTab, setActiveTab] = useState("dashboard");
     const [orders, setOrders] = useState<any[]>([]);
     const [isOrdersLoading, setIsOrdersLoading] = useState(false);
@@ -48,7 +51,7 @@ export default function AccountPage() {
             setOrders(data.filter((order: any) => order.status !== 'checkout-draft'));
         } catch (error) {
             console.error("Error fetching orders:", error);
-            toast.error("Αποτυχία φόρτωσης παραγγελιών.");
+            toast.error(isEl ? "Αποτυχία φόρτωσης παραγγελιών." : "Failed to load orders.");
         } finally {
             setIsOrdersLoading(false);
         }
@@ -64,7 +67,7 @@ export default function AccountPage() {
 
     const handleLogout = () => {
         logout();
-        toast.success("Αποσυνδεθήκατε επιτυχώς.");
+        toast.success(isEl ? "Αποσυνδεθήκατε επιτυχώς." : "Logged out successfully.");
         router.push("/");
     };
 
@@ -93,11 +96,11 @@ export default function AccountPage() {
                         <div className="p-2 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-1">
                             {[
                                 { id: "dashboard", label: "Dashboard", icon: UserIcon },
-                                { id: "orders", label: "Παραγγελίες", icon: Package },
-                                { id: "addresses", label: "Διευθύνσεις", icon: MapPin },
-                                { id: "payments", label: "Πληρωμές", icon: CreditCard },
-                                { id: "notifications", label: "Ειδοποιήσεις", icon: Bell },
-                                { id: "settings", label: "Ρυθμίσεις", icon: Settings },
+                                { id: "orders", label: isEl ? "Παραγγελίες" : "Orders", icon: Package },
+                                { id: "addresses", label: isEl ? "Διευθύνσεις" : "Addresses", icon: MapPin },
+                                { id: "payments", label: isEl ? "Πληρωμές" : "Payments", icon: CreditCard },
+                                { id: "notifications", label: isEl ? "Ειδοποιήσεις" : "Notifications", icon: Bell },
+                                { id: "settings", label: isEl ? "Ρυθμίσεις" : "Settings", icon: Settings },
                             ].map((item) => (
                                 <button
                                     key={item.id}
@@ -120,7 +123,7 @@ export default function AccountPage() {
                                 className="col-span-full flex items-center justify-center lg:justify-start gap-2 p-3 lg:p-4 rounded-2xl text-destructive hover:bg-destructive/10 transition-all font-body text-[10px] lg:text-sm font-bold group"
                             >
                                 <LogOut className="w-4 h-4 lg:w-5 lg:h-5 group-hover:-translate-x-1 transition-transform" />
-                                <span>Αποσύνδεση</span>
+                                <span>{t("account.logout")}</span>
                             </button>
                         </div>
                     </nav>
@@ -133,22 +136,22 @@ export default function AccountPage() {
                         {activeTab === "dashboard" && (
                             <div className="space-y-8 md:space-y-10">
                                 <div className="space-y-3 md:space-y-4">
-                                    <h1 className="font-display text-2xl md:text-4xl font-bold tracking-tight">Γεια σου, {user.firstName}! 👋</h1>
+                                    <h1 className="font-display text-2xl md:text-4xl font-bold tracking-tight">{isEl ? "Γεια σου" : "Hello"}, {user.firstName}! 👋</h1>
                                     <p className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-2xl font-body">
-                                        Από εδώ μπορείς να διαχειρίζεσαι τις παραγγελίες σου και να βλέπεις τα στοιχεία σου.
+                                        {isEl ? "Από εδώ μπορείς να διαχειρίζεσαι τις παραγγελίες σου και να βλέπεις τα στοιχεία σου." : "Here you can manage your orders and view your details."}
                                     </p>
                                 </div>
 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                                     {[
                                         {
-                                            label: "Ενεργές Παραγγελίες",
+                                            label: isEl ? "Ενεργές Παραγγελίες" : "Active Orders",
                                             value: orders.filter(o => ['processing', 'on-hold', 'pending'].includes(o.status)).length.toString(),
                                             icon: ShoppingBag,
                                             color: "bg-blue-500"
                                         },
                                         {
-                                            label: "Συνολικά Προϊόντα",
+                                            label: isEl ? "Συνολικά Προϊόντα" : "Total Products",
                                             value: orders.reduce((acc, o) => acc + (o.line_items?.length || 0), 0).toString(),
                                             icon: Package,
                                             color: "bg-purple-500"

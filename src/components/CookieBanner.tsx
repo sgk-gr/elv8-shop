@@ -3,11 +3,13 @@
 import { useState, useEffect } from "react";
 import { X, Cookie } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "@/context/LanguageContext";
 
 export default function CookieBanner() {
     const [showBanner, setShowBanner] = useState(false);
     const [cookiesConfigured, setCookiesConfigured] = useState(false);
     const [mounted, setMounted] = useState(false);
+    const { t, language } = useTranslation();
 
     useEffect(() => {
         setMounted(true);
@@ -53,10 +55,9 @@ export default function CookieBanner() {
                                 {/* Content */}
                                 <div className="flex-1 space-y-1">
                                     <p className="text-sm md:text-base text-white/70 leading-relaxed font-body">
-                                        <strong className="text-white font-bold">Χρησιμοποιούμε cookies</strong> για να βελτιώσουμε την εμπειρία σας στην ιστοσελίδα μας.
-                                        Συνεχίζοντας την περιήγηση, συμφωνείτε με τη χρήση cookies.{" "}
+                                        {t("ui.cookie.desc")}{" "}
                                         <a href="/privacy" className="text-[#c4196d] hover:underline font-semibold transition-colors">
-                                            Μάθετε περισσότερα
+                                            {language === "el" ? "Μάθετε περισσότερα" : "Learn more"}
                                         </a>
                                     </p>
                                 </div>
@@ -67,14 +68,14 @@ export default function CookieBanner() {
                                         onClick={acceptCookies}
                                         className="bg-[#c4196d] hover:bg-[#a3155a] text-white px-5 py-3 md:py-4 rounded-xl font-body text-xs md:text-sm font-bold uppercase tracking-wider shadow-lg hover:shadow-[#c4196d]/20 transition-all hover:scale-[1.02]"
                                     >
-                                        Αποδοχή
+                                        {t("ui.cookie.accept")}
                                     </Button>
                                     <Button
                                         onClick={declineCookies}
                                         variant="outline"
                                         className="border-white/20 text-[#c4196d] hover:bg-white/5 px-5 py-3 md:py-4 rounded-xl font-body text-xs md:text-sm font-bold uppercase tracking-wider transition-all"
                                     >
-                                        Απόρριψη
+                                        {t("ui.cookie.decline")}
                                     </Button>
                                 </div>
 

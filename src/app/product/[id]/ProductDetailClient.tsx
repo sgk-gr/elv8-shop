@@ -16,6 +16,7 @@ import {
     TabsList,
     TabsTrigger,
 } from "@/components/ui/tabs";
+import { useTranslation } from "@/context/LanguageContext";
 
 import {
     Select,
@@ -28,6 +29,7 @@ import {
 export default function ProductDetailClient({ id }: { id: string }) {
     const { addItem, setIsCartOpen } = useCart();
     const { user, isAuthenticated } = useAuth();
+    const { t } = useTranslation();
     const queryClient = useQueryClient();
     const searchParams = useSearchParams();
     const backUrlParam = searchParams.get("backUrl");
@@ -225,7 +227,7 @@ export default function ProductDetailClient({ id }: { id: string }) {
                 className="inline-flex items-center gap-2 font-body text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors mb-12 group"
             >
                 <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                Επιστροφη
+                {t("product.back")}
             </Link>
 
             <div className="grid lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-20 items-start">
@@ -435,7 +437,7 @@ export default function ProductDetailClient({ id }: { id: string }) {
                                 className="flex-1 h-14 font-body text-xs font-bold uppercase tracking-widest rounded-2xl shadow-lg shadow-primary/20 bg-[#FF1D8E] text-white hover:bg-[#d80f74] hover:scale-[1.02] active:scale-[0.98] transition-all"
                                 disabled={stockStatus === "outofstock" || (product.type === "variable" && variations && variations.length > 0 && !selectedVariation)}
                             >
-                                {stockStatus === "outofstock" ? "Out of Stock" : "Add to Cart"}
+                                {stockStatus === "outofstock" ? t("product.out_of_stock") : t("product.add_to_cart")}
                             </Button>
                         </div>
                     </div>
@@ -561,13 +563,11 @@ export default function ProductDetailClient({ id }: { id: string }) {
                         <Tabs defaultValue="description" className="w-full">
                             <TabsList className="bg-slate-50 p-1 rounded-2xl border border-slate-100 w-full sm:w-auto h-auto flex flex-wrap">
                                 <TabsTrigger value="description" className="rounded-xl font-body text-xs font-bold uppercase px-6 py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm">
-                                    Description
+                                    {t("product.description")}
                                 </TabsTrigger>
-                                {(![29, 33, 40, 44, 48, 52, 56, 60, 64, 68, 72, 102, 105, 108, 110, 113, 115, 117, 119, 123, 127, 130, 133, 136, 138, 141, 144, 148, 151, 155, 158, 161, 164, 167, 170, 173, 176, 180, 182, 186, 189, 193, 197, 201, 208, 211, 220, 225, 229, 235, 238, 242, 264, 270, 273, 280].includes(product.id) && product.id < 296) && (
-                                    <TabsTrigger value="short" className="rounded-xl font-body text-xs font-bold uppercase px-6 py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm">
-                                        Features
-                                    </TabsTrigger>
-                                )}
+                                <TabsTrigger value="nutritional" className="rounded-xl font-body text-xs font-bold uppercase px-6 py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm">
+                                    {t("product.nutritional")}
+                                </TabsTrigger>
                                 <TabsTrigger value="reviews" className="rounded-xl font-body text-xs font-bold uppercase px-6 py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm">
                                     Reviews ({reviews?.length || 0})
                                 </TabsTrigger>
@@ -580,300 +580,20 @@ export default function ProductDetailClient({ id }: { id: string }) {
                                 />
                             </TabsContent>
 
-                            {(![29, 33, 40, 44, 48, 52, 56, 60, 64, 68, 72, 102, 105, 108, 110, 113, 115, 117, 119, 123, 127, 130, 133, 136, 138, 141, 144, 148, 151, 155, 158, 161, 164, 167, 170, 173, 176, 180, 182, 186, 189, 193, 197, 201, 208, 211, 220, 225, 229, 235, 238, 242, 264, 270, 273, 280].includes(product.id) && product.id < 296) && <TabsContent value="short" className="mt-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
-                                <div className="space-y-8">
-                                    {product.short_description && (
-                                        <div
-                                            className="font-body text-base text-muted-foreground leading-relaxed prose prose-slate max-w-none italic border-l-2 border-primary/20 pl-6"
-                                            dangerouslySetInnerHTML={{ __html: product.short_description }}
-                                        />
-                                    )}
-                                    
-                                    <div className={product.short_description ? "pt-2" : ""}>
-                                        <ul className="grid sm:grid-cols-2 gap-y-5 gap-x-8">
-                                            {(product.name?.toLowerCase().includes("ice berry")
-                                                ? [
-                                                    "Υβριδική φόρμουλα",
-                                                    "Ανάλαφρη, κρεμώδης υφή",
-                                                    "Βιολογικό έλαιο passion fruit",
-                                                    "Πλούσιο σε Βιταμίνη C",
-                                                    "Αντιοξειδωτική δράση",
-                                                    "Καταπραϋντικές ιδιότητες"
-                                                  ]
-                                                : product.name?.toLowerCase().includes("hazelnut cream")
-                                                ? [
-                                                    "Καινοτόμα υβριδική φόρμουλα",
-                                                    "Ανάλαφρη κρεμώδη υφή",
-                                                    "Βιολογικό Έλαιο passion fruit",
-                                                    "Πλούσιο σε Βιταμίνη C",
-                                                    "Αντιοξειδωτικές και καταπραϋντικές ιδιότητες"
-                                                  ]
-                                                : product.name?.toLowerCase().includes("wish")
-                                                ? [
-                                                    "Μεταξένια υφή",
-                                                    "Μεγάλη διάρκεια ως 8 ώρες",
-                                                    "Έξτρα ενυδάτωση",
-                                                    "Έντονη χρωματική απόδοση",
-                                                    "Μάτ φινίρισμα",
-                                                    "Δεν ξηράινει τα χείλη"
-                                                  ]
-                                                : product.name?.toLowerCase().includes("wine")
-                                                ? [
-                                                    "Ματ φινίρισμα",
-                                                    "Μεγάλη διάρκεια έως 8 ώρες",
-                                                    "Έντονη χρωματική απόδοση",
-                                                    "Μεταξένια υφή",
-                                                    "Έξτρα ενυδάτωση",
-                                                    "Δεν ξηραίνει τα χείλη"
-                                                  ]
-                                                : product.name?.toLowerCase().includes("vintage")
-                                                ? [
-                                                    "Ματ φινίρισμα",
-                                                    "Μεγάλη διάρκεια έως 8 ώρες",
-                                                    "Έντονη χρωματική απόδοση",
-                                                    "Μεταξένια υφή",
-                                                    "Έξτρα ενυδάτωση",
-                                                    "Δεν ξηραίνει τα χείλη"
-                                                  ]
-                                                : product.name?.toLowerCase().includes("sweet kiss")
-                                                ? [
-                                                    "Ματ φινίρισμα",
-                                                    "Μεγάλη διάρκεια έως 8 ώρες",
-                                                    "Έντονη χρωματική απόδοση",
-                                                    "Μεταξένια υφή",
-                                                    "Έξτρα ενυδάτωση",
-                                                    "Δεν ξηραίνει τα χείλη"
-                                                  ]
-                                                : product.name?.toLowerCase().includes("red sin")
-                                                ? [
-                                                    "Ματ φινίρισμα",
-                                                    "Μεγάλη διάρκεια έως 8 ώρες",
-                                                    "Έντονη χρωματική απόδοση",
-                                                    "Μεταξένια υφή",
-                                                    "Έξτρα ενυδάτωση",
-                                                    "Δεν ξηραίνει τα χείλη"
-                                                  ]
-                                                : product.name?.toLowerCase().includes("secret")
-                                                ? [
-                                                    "Ματ φινίρισμα",
-                                                    "Μεγάλη διάρκεια έως 8 ώρες",
-                                                    "Έντονη χρωματική απόδοση",
-                                                    "Μεταξένια υφή",
-                                                    "Έξτρα ενυδάτωση",
-                                                    "Δεν ξηραίνει τα χείλη"
-                                                  ]
-                                                : product.name?.toLowerCase().includes("purple rock")
-                                                ? [
-                                                    "Ματ φινίρισμα",
-                                                    "Μεγάλη διάρκεια έως 8 ώρες",
-                                                    "Έντονη χρωματική απόδοση",
-                                                    "Μεταξένια υφή",
-                                                    "Έξτρα ενυδάτωση",
-                                                    "Δεν ξηραίνει τα χείλη"
-                                                  ]
-                                                : product.name?.toLowerCase().includes("pink dream")
-                                                ? [
-                                                    "Ματ φινίρισμα",
-                                                    "Μεγάλη διάρκεια έως 8 ώρες",
-                                                    "Έντονη χρωματική απόδοση",
-                                                    "Μεταξένια υφή",
-                                                    "Έξτρα ενυδάτωση",
-                                                    "Δεν ξηραίνει τα χείλη"
-                                                  ]
-                                                : product.name?.toLowerCase().includes("marshmallow") 
-                                                ? [
-                                                    "Ανάλαφρη, κρεμώδη αφή",
-                                                    "Βιολογικό έλαιο passion fruit",
-                                                    "Βιταμίνη C",
-                                                    "Αντιοξειδωτική δράση"
-                                                  ]
-                                                : ((product.name?.toLowerCase().includes("άπειρο") || product.name?.toLowerCase().includes("απειρο")) && product.name?.includes("925"))
-                                                ? [
-                                                    "Πανέμορφο, βραχιόλι κατασκευασμένο απο Ασήμι 925",
-                                                    "Μήκος αλυσίδας : 15 εκ. συν 3εκ. προέκταση (σύνολο 18εκ.)",
-                                                    "Μπορεί να φορεθεί και απο νεαρά κορίτσια/παιδιά",
-                                                    "Διαστάσεις μοτίφ : 14 x 7 mm",
-                                                    "Nickel Free & Υποαλλεργικό"
-                                                  ]
-                                                : product.id === 115
-                                                ? [
-                                                    "Ανοξείδωτο ατσάλι (stainless steel)",
-                                                    "Ανθεκτικό στο νερό"
-                                                  ]
-                                                : product.id === 117
-                                                ? [
-                                                    "Ανοξείδωτο ατσάλι (stainless steel)",
-                                                    "Ασημί",
-                                                    "Ανθεκτικό στο νερό"
-                                                  ]
-                                                : product.id === 113
-                                                ? []
-                                                : product.name?.toLowerCase().includes("twisted wave")
-                                                ? [
-                                                    "Ανοξείδωτο ατσάλι (stainless steel)",
-                                                    "Χρώμα: Χρυσό",
-                                                    "Ανθεκτικό στο νερό",
-                                                    "One size"
-                                                  ]
-                                                : product.name?.toLowerCase().includes("id βραχιόλι stainless steel")
-                                                ? []
-                                                : product.name?.toLowerCase().includes("σφυρίλατη")
-                                                ? [
-                                                    "Ανοξείδωτο ατσάλι (stainless steel)",
-                                                    "Ασημί",
-                                                    "Ανθεκτικό στο νερό"
-                                                  ]
-                                                : product.id === 182
-                                                ? []
-                                                : product.id === 180
-                                                ? []
-                                                : product.id === 176
-                                                ? [
-                                                    "Ασήμι 925",
-                                                    "Μέγεθος μοτίφ 10x7mm",
-                                                    "Διάμετρος κρίκου 1,2mm * 12mm",
-                                                    "Nickel Free & Υποαλλεργικά"
-                                                  ]
-                                                : product.id === 173
-                                                ? []
-                                                : product.id === 170
-                                                ? []
-                                                : product.id === 167
-                                                ? []
-                                                : product.id === 164
-                                                ? []
-                                                : product.id === 161
-                                                ? [
-                                                    "Ανοξείδωτο ατσάλι (stainless steel)",
-                                                    "Μήκος αλυσίδας 40εκ. έως 45εκ.",
-                                                    "Ανθεκτικό στο νερό"
-                                                  ]
-                                                : product.id === 158
-                                                ? [
-                                                    "Ανοξείδωτο ατσάλι (stainless steel)",
-                                                    "Μέγεθος μοτίφ 2εκ.",
-                                                    "Μήκος αλυσίδας 45εκ. έως 50εκ.",
-                                                    "Ανθεκτικό στο νερό"
-                                                  ]
-                                                : product.id === 155
-                                                ? [
-                                                    "Ανοξείδωτο ατσάλι (stainless steel)",
-                                                    "Εσωτερική διάμετρος 12εκ.",
-                                                    "Χρώμα μετάλλου: Ασημί",
-                                                    "Ανθεκτικό στο νερό"
-                                                  ]
-                                                : product.id === 151
-                                                ? [
-                                                    "Ανοξείδωτο ατσάλι (stainless steel)",
-                                                    "Μήκος αλυσίδας 39εκ. ώς 45εκ.",
-                                                    "Ανθεκτικό στο νερό"
-                                                  ]
-                                                : product.id === 148
-                                                ? [
-                                                    "Ανοξείδωτο ατσάλι (stainless steel)",
-                                                    "Μήκος αλυσίδας 49εκ. ώς 53εκ.",
-                                                    "Ανθεκτικό στο νερό"
-                                                  ]
-                                                : product.id === 144
-                                                ? [
-                                                    "Ανοξείδωτο ατσάλι (stainless steel)",
-                                                    "Μήκος αλυσίδας: 38εκ. έως 43εκ.",
-                                                    "Μέγεθος μοτίφ: 1εκ."
-                                                  ]
-                                                : product.id === 141
-                                                ? [
-                                                    "Ορείχαλκος (brass)",
-                                                    "Δίχρωμο (ασήμι & χρυσό)",
-                                                    "Αυξομειούμενο μέγεθος"
-                                                  ]
-                                                : product.id === 136
-                                                ? [
-                                                    "Ανοξείδωτο ατσάλι (stainless steel)",
-                                                    "Χρώμα μετάλλου: Ασημί και Χρυσό",
-                                                    "Νούμερο: 56",
-                                                    "Δύσκαμπτο υλικό",
-                                                    "Ανθεκτικό στο νερό"
-                                                  ]
-                                                : product.id === 133
-                                                ? [
-                                                    "Ανοξείδωτο ατσάλι (stainless steel)",
-                                                    "Χρώμα μετάλλου: Ασημί και Χρυσό",
-                                                    "Δύσκαμπτο υλικό",
-                                                    "Ανθεκτικό στο νερό"
-                                                  ]
-                                                : product.id === 130
-                                                ? [
-                                                    "Ανοξείδωτο ατσάλι (stainless steel)",
-                                                    "Ανθεκτικό στο νερό"
-                                                  ]
-                                                : product.id === 186
-                                                ? []
-                                                : product.id === 189
-                                                ? []
-                                                : product.id === 193
-                                                ? []
-                                                : product.id === 225
-                                                ? [
-                                                    "Ανοξείδωτο ατσάλι (stainless steel)",
-                                                    "Χρώμα: Χρυσό",
-                                                    "βιδωτά"
-                                                  ]
-                                                : product.id === 229
-                                                ? [
-                                                    "Ορείχαλκος (brass)",
-                                                    "Χρώμα: Χρυσό",
-                                                    "Λευκά ζιργκόν"
-                                                  ]
-                                                : product.id === 220
-                                                ? [
-                                                    "Ανοξείδωτο ατσάλι (stainless steel)",
-                                                    "Συνολικό μήκος 5 εκ."
-                                                  ]
-                                                : product.id === 215
-                                                ? []
-                                                : product.id === 211
-                                                ? []
-                                                : product.id === 208
-                                                ? []
-                                                : product.id === 204
-                                                ? [
-                                                    "Συνολικό μήκος 3 εκ."
-                                                  ]
-                                                : product.id === 201
-                                                ? []
-                                                : product.id === 197
-                                                ? []
-                                                : product.id === 242
-                                                ? [
-                                                    "Ανοξείδωτο ατσάλι (stainless steel)",
-                                                    "Χρώμα: Ασημί",
-                                                    "Ανθεκτικό στο νερό"
-                                                  ]
-                                                : product.id === 235
-                                                ? []
-                                                : [
-                                                    "Ανοξείδωτο ατσάλι (stainless steel)",
-                                                    "Δίχρωμο (ασήμι & χρυσό)",
-                                                    "Ανθεκτικό στο νερό"
-                                                  ]
-
-
-
-
-                                            ).map((feature, idx) => (
-                                                <li key={idx} className="flex items-start gap-4 group">
-                                                    <div className="mt-0.5 w-[22px] h-[22px] rounded-[7px] bg-[#C4196D]/10 flex items-center justify-center group-hover:bg-[#C4196D]/20 group-hover:scale-110 transition-all duration-300 shrink-0">
-                                                        <Check className="w-3.5 h-3.5 text-[#C4196D] stroke-[3]" />
-                                                    </div>
-                                                    <span className="font-body text-[15px] font-medium text-slate-700 group-hover:text-slate-900 transition-colors leading-relaxed">
-                                                        {feature}
-                                                    </span>
-                                                </li>
-                                            ))}
-                                        </ul>
+                            <TabsContent value="nutritional" className="mt-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
+                                <div className="space-y-6">
+                                    <div className="bg-slate-50 p-6 rounded-3xl border border-slate-100">
+                                        <p className="font-bold text-sm mb-4 pb-4 border-b border-slate-200">{t("product.nutrition.serving")}</p>
+                                        <div className="space-y-3">
+                                            <div className="flex justify-between text-sm"><span className="text-slate-500">{t("product.nutrition.calories")}</span><span className="font-bold">10 kcal</span></div>
+                                            <div className="flex justify-between text-sm"><span className="text-slate-500">{t("product.nutrition.sugar")}</span><span className="font-bold">0g</span></div>
+                                            <div className="flex justify-between text-sm"><span className="text-slate-500">{t("product.nutrition.caffeine")}</span><span className="font-bold">200mg</span></div>
+                                            <div className="flex justify-between text-sm"><span className="text-slate-500">{t("product.nutrition.sodium")}</span><span className="font-bold">150mg</span></div>
+                                            <div className="flex justify-between text-sm"><span className="text-slate-500">{t("product.nutrition.bvitamins")}</span><span className="font-bold">100% DV</span></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </TabsContent>}
+                            </TabsContent>
 
                             <TabsContent value="reviews" className="mt-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
                                 <div className="space-y-8">

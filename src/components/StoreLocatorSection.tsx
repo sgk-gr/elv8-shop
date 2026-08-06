@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Search, MapPin, Phone, Navigation } from "lucide-react";
+import { useTranslation } from "@/context/LanguageContext";
 
 export interface StoreLocation {
   id: number;
@@ -44,6 +45,7 @@ export default function StoreLocatorSection() {
   const [stores, setStores] = useState<StoreLocation[]>(FALLBACK_STORES);
   const [isOverviewMode, setIsOverviewMode] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchStores = async () => {
@@ -140,8 +142,8 @@ export default function StoreLocatorSection() {
         {/* Title & Header */}
         <div className="text-center max-w-5xl mx-auto mb-10 space-y-3">
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-normal tracking-tight md:whitespace-nowrap">
-            <span className="font-bold text-[#1E4D7B]">Find ELV8 Stockists </span>
-            <span className="font-bold italic text-[#FF1D8E]">Near Your Location.</span>
+            <span className="font-bold text-[#1E4D7B]">{t("store.locator_title_1")}</span>
+            <span className="font-bold italic text-[#FF1D8E]">{t("store.locator_title_2")}</span>
           </h2>
 
           {/* Search Box */}
@@ -150,7 +152,7 @@ export default function StoreLocatorSection() {
               <div className="flex-1 flex items-center px-3 gap-2">
                 <input
                   type="text"
-                  placeholder="Αναζήτηση με ΤΚ, πόλη ή κατάστημα..."
+                  placeholder={t("store.locator_placeholder")}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full bg-transparent text-slate-800 placeholder:text-slate-400 text-sm focus:outline-none font-medium"
@@ -171,12 +173,12 @@ export default function StoreLocatorSection() {
         <div className="mb-4 flex items-center justify-between gap-2">
           <p className="text-[#1E4D7B] font-bold text-sm tracking-wide">
             {isLoading
-              ? "Φόρτωση..."
+              ? t("store.locator_loading")
               : filteredStores.length > 0
-              ? `${filteredStores.length} Σημεία Πώλησης`
+              ? `${filteredStores.length} ${t("store.locator_points")}`
               : isZipSearch
-              ? `Δεν βρέθηκαν σημεία πώλησης στον ΤΚ ${searchQuery.trim()}. Εμφανίζεται η περιοχή στον χάρτη.`
-              : "Δεν βρέθηκαν αποτελέσματα"}
+              ? `${t("store.locator_not_found_zip")}${searchQuery.trim()}${t("store.locator_not_found_zip2")}`
+              : t("store.locator_no_results")}
           </p>
         </div>
 
@@ -252,7 +254,7 @@ export default function StoreLocatorSection() {
                           }`}
                         >
                           <Navigation className="w-3.5 h-3.5" />
-                          <span>Navigate</span>
+                          <span>{t("store.locator_navigate")}</span>
                         </button>
                       </div>
 

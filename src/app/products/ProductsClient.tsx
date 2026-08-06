@@ -8,6 +8,7 @@ import ProductCard from "@/components/ProductCard";
 import ProductGridWithLoadMore from "@/components/ProductGridWithLoadMore";
 import { useState, useMemo, Suspense } from "react";
 import { SlidersHorizontal, ChevronDown, ChevronUp, ChevronRight, X } from "lucide-react";
+import { useTranslation } from "@/context/LanguageContext";
 
 // Type for attribute filters
 interface AttributeFilter {
@@ -54,7 +55,7 @@ function ProductsContent({
     initialCategories: WooCategory[], 
     initialTags: WooTag[] 
 }) {
-
+    const { t } = useTranslation();
     const searchParams = useSearchParams();
     const router = useRouter();
     const categoryId = searchParams.get("category");
@@ -274,10 +275,10 @@ function ProductsContent({
 
                 <div className="space-y-4">
                     <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-slate-900">
-                        Our <span className="text-[#FF1D8E]">Flavors</span> & Packs
+                        {t("catalog.title")}
                     </h1>
                     <p className="text-slate-600 font-body text-sm sm:text-base max-w-lg leading-relaxed">
-                        Explore our full collection of clean energy drinks. Zero Sugar, 200mg Natural Caffeine, Electrolytes & Real Fruit Flavors.
+                        {t("catalog.desc")}
                     </p>
                 </div>
             </div>
@@ -290,7 +291,7 @@ function ProductsContent({
                         className="flex items-center gap-2 px-4 py-2 rounded-full border border-border hover:border-primary transition-all bg-background"
                     >
                         <SlidersHorizontal className="w-4 h-4" />
-                        <span className="font-body text-xs font-semibold">Filters</span>
+                        <span className="font-body text-xs font-semibold">{t("catalog.filters")}</span>
                         {activeFiltersCount > 0 && (
                             <span className="bg-primary text-primary-foreground text-[10px] font-bold px-2 py-0.5 rounded-full">
                                 {activeFiltersCount}
@@ -302,12 +303,12 @@ function ProductsContent({
                             onClick={resetFilters}
                             className="text-xs text-muted-foreground hover:text-primary transition-colors font-medium"
                         >
-                            Clear filters
+                            {t("catalog.clear_all")}
                         </button>
                     )}
                 </div>
                 <p className="text-sm text-muted-foreground font-medium">
-                    {products.length} {products.length === 1 ? "product" : "products"}
+                    {products.length} {products.length === 1 ? t("catalog.items_count") : t("catalog.items_count_plural")}
                 </p>
             </div>
 
@@ -329,7 +330,7 @@ function ProductsContent({
                     <div className="flex flex-col h-full">
                         {/* Mobile Header */}
                         <div className="flex items-center justify-between mb-8 md:hidden">
-                            <h2 className="font-display text-xl font-bold">Filters</h2>
+                            <h2 className="font-display text-xl font-bold">{t("catalog.filters")}</h2>
                             <button onClick={() => setShowFilters(false)} className="p-2 hover:bg-slate-100 rounded-full">
                                 <X className="w-5 h-5" />
                             </button>
@@ -339,7 +340,7 @@ function ProductsContent({
                             <div className="bg-secondary/30 md:bg-transparent rounded-2xl p-6 md:p-0 space-y-6 md:border-none border border-border/50">
                                 {/* Sort */}
                                 <div className="space-y-3">
-                                    <h3 className="font-display text-sm font-bold tracking-wide">Sort By</h3>
+                                    <h3 className="font-display text-sm font-bold tracking-wide">{t("catalog.sort_by")}</h3>
                                     <select
                                         value={sortBy}
                                         onChange={(e) => {
@@ -348,9 +349,9 @@ function ProductsContent({
                                         }}
                                         className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                                     >
-                                        <option value="newest">Newest First</option>
-                                        <option value="price-asc">Price: Low → High</option>
-                                        <option value="price-desc">Price: High → Low</option>
+                                        <option value="newest">{t("catalog.sort.newest")}</option>
+                                        <option value="price-asc">{t("catalog.sort.price_asc")}</option>
+                                        <option value="price-desc">{t("catalog.sort.price_desc")}</option>
                                         <option value="popular">Most Popular</option>
                                     </select>
                                 </div>
@@ -358,7 +359,7 @@ function ProductsContent({
 
                                 {/* Price Range */}
                                 <div className="space-y-3 border-t border-border/30 pt-4">
-                                    <h3 className="font-display text-sm font-bold tracking-wide">Price Range</h3>
+                                    <h3 className="font-display text-sm font-bold tracking-wide">{t("catalog.filter.price")}</h3>
                                     <div className="space-y-4">
                                         <div className="flex items-center gap-3">
                                             <input
@@ -449,7 +450,7 @@ function ProductsContent({
                                             className="w-5 h-5 rounded border-border text-primary focus:ring-2 focus:ring-primary/20 transition-all"
                                         />
                                         <span className="font-body text-sm font-semibold group-hover:text-primary transition-colors">
-                                            On Sale Only
+                                            {t("catalog.filter.on_sale")}
                                         </span>
                                     </label>
                                     <label className="flex items-center gap-3 cursor-pointer group mt-3">
@@ -463,7 +464,7 @@ function ProductsContent({
                                             className="w-5 h-5 rounded border-border text-primary focus:ring-2 focus:ring-primary/20 transition-all"
                                         />
                                         <span className="font-body text-sm font-semibold group-hover:text-primary transition-colors">
-                                            In Stock Only
+                                            {t("catalog.instock")}
                                         </span>
                                     </label>
                                 </div>
@@ -476,12 +477,12 @@ function ProductsContent({
                 <div className="flex-1">
                     {products.length === 0 && !isLoading ? (
                         <div className="text-center py-32 space-y-4 bg-secondary/20 rounded-[2rem] border border-dashed border-border">
-                            <p className="text-muted-foreground font-display text-2xl font-medium">No products found</p>
+                            <p className="text-muted-foreground font-display text-2xl font-medium">{t("catalog.no_products")}</p>
                             <button
                                 onClick={resetFilters}
                                 className="text-primary font-body text-sm font-semibold border-b border-primary"
                             >
-                                Clear filters
+                                {t("catalog.clear_all")}
                             </button>
                         </div>
                     ) : (

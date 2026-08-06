@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { CheckCircle2, Send, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
+import { useTranslation } from "@/context/LanguageContext";
 
 export default function WholesaleForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -13,11 +14,12 @@ export default function WholesaleForm() {
     companyType: "Gym / Fitness Center",
     message: "",
   });
+  const { t, language } = useTranslation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitted(true);
-    toast.success("Wholesale inquiry submitted successfully! 🎉");
+    toast.success(t("b2b.form.success"));
 
     try {
       await fetch("https://store.elv8now.com/wp-json/elv8/v1/wholesale-submit", {
@@ -38,10 +40,10 @@ export default function WholesaleForm() {
         </div>
         <div className="space-y-2">
           <h3 className="text-2xl sm:text-3xl font-black font-display text-slate-900">
-            Request Submitted!
+            {language === "el" ? "Η Αίτηση Υποβλήθηκε!" : "Request Submitted!"}
           </h3>
           <p className="text-slate-600 text-sm sm:text-base max-w-md mx-auto leading-relaxed">
-            Thank you for your interest. A member of the <strong className="text-slate-900">ELV8 Energy</strong> team will get back to you via phone or email within 24 hours.
+            {t("b2b.form.success")}
           </p>
         </div>
         <button
@@ -49,7 +51,7 @@ export default function WholesaleForm() {
           className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-700 bg-slate-100 hover:bg-slate-200 px-6 py-3 rounded-full transition-all"
         >
           <Send className="w-4 h-4 text-[#FF1D8E]" />
-          Submit Another Request
+          {language === "el" ? "Υποβολη Νεας Αιτησης" : "Submit Another Request"}
         </button>
       </div>
     );
@@ -59,7 +61,7 @@ export default function WholesaleForm() {
     <form onSubmit={handleSubmit} className="bg-white border border-slate-200/80 rounded-3xl p-8 sm:p-10 shadow-sm space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div className="space-y-2 text-left">
-          <label className="text-xs font-bold uppercase tracking-wider text-slate-700">Full Name / Company</label>
+          <label className="text-xs font-bold uppercase tracking-wider text-slate-700">{t("b2b.form.company")}</label>
           <input
             required
             type="text"
@@ -70,7 +72,7 @@ export default function WholesaleForm() {
           />
         </div>
         <div className="space-y-2 text-left">
-          <label className="text-xs font-bold uppercase tracking-wider text-slate-700">Contact Email</label>
+          <label className="text-xs font-bold uppercase tracking-wider text-slate-700">{t("b2b.form.email")}</label>
           <input
             required
             type="email"
@@ -84,7 +86,7 @@ export default function WholesaleForm() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div className="space-y-2 text-left">
-          <label className="text-xs font-bold uppercase tracking-wider text-slate-700">Phone Number</label>
+          <label className="text-xs font-bold uppercase tracking-wider text-slate-700">{t("b2b.form.phone")}</label>
           <input
             required
             type="tel"
@@ -95,23 +97,23 @@ export default function WholesaleForm() {
           />
         </div>
         <div className="space-y-2 text-left">
-          <label className="text-xs font-bold uppercase tracking-wider text-slate-700">Business Type</label>
+          <label className="text-xs font-bold uppercase tracking-wider text-slate-700">{language === "el" ? "Τυπος Επιχειρησης" : "Business Type"}</label>
           <select
             value={formData.companyType}
             onChange={(e) => setFormData({ ...formData, companyType: e.target.value })}
             className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-[#FF1D8E] text-slate-900 text-sm font-medium"
           >
-            <option>Gym / Fitness Center</option>
-            <option>Kiosk / Mini Market</option>
-            <option>Supermarket / Retail Chain</option>
-            <option>Distributor / Wholesaler</option>
-            <option>Other Store</option>
+            <option>{language === "el" ? "Γυμναστήριο / Fitness Center" : "Gym / Fitness Center"}</option>
+            <option>{language === "el" ? "Περίπτερο / Mini Market" : "Kiosk / Mini Market"}</option>
+            <option>{language === "el" ? "Σούπερ Μάρκετ / Αλυσίδα Λιανικής" : "Supermarket / Retail Chain"}</option>
+            <option>{language === "el" ? "Διανομέας / Χονδρέμπορος" : "Distributor / Wholesaler"}</option>
+            <option>{language === "el" ? "Άλλο Κατάστημα" : "Other Store"}</option>
           </select>
         </div>
       </div>
 
       <div className="space-y-2 text-left">
-        <label className="text-xs font-bold uppercase tracking-wider text-slate-700">Message / Estimated Quantity</label>
+        <label className="text-xs font-bold uppercase tracking-wider text-slate-700">{t("b2b.form.message")}</label>
         <textarea
           required
           rows={4}
@@ -123,7 +125,7 @@ export default function WholesaleForm() {
       </div>
 
       <button type="submit" className="w-full bg-slate-900 hover:bg-[#FF1D8E] text-white py-4 rounded-full font-bold text-xs sm:text-sm uppercase tracking-[0.2em] transition-all shadow-lg hover:shadow-xl hover:shadow-[#FF1D8E]/20 cursor-pointer flex items-center justify-center gap-2">
-        <span>SUBMIT WHOLESALE REQUEST</span>
+        <span>{t("b2b.form.submit")}</span>
         <ArrowRight className="w-4 h-4" />
       </button>
     </form>

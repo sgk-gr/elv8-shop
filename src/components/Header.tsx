@@ -8,6 +8,8 @@ import { ShoppingBag, User, Heart, Menu, X, ArrowRight } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useFavorites } from "@/context/FavoritesContext";
 
+import { useTranslation } from "@/context/LanguageContext";
+
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/products", label: "Our Flavors" },
@@ -17,6 +19,7 @@ const navLinks = [
 ];
 
 export default function Header() {
+  const { t, language, setLanguage } = useTranslation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [currentHash, setCurrentHash] = useState("");
@@ -96,7 +99,7 @@ export default function Header() {
                   isHomeActive ? "!text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
                 }`}
               >
-                Home
+                {t("nav.home")}
                 {isHomeActive && (
                   <span className="absolute bottom-0 left-0 right-0 h-1 bg-[#FF1D8E] rounded-full" />
                 )}
@@ -107,7 +110,7 @@ export default function Header() {
                   isProductsActive ? "!text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
                 }`}
               >
-                Our Flavors
+                {t("nav.products")}
                 {isProductsActive && (
                   <span className="absolute bottom-0 left-0 right-0 h-1 bg-[#FF1D8E] rounded-full" />
                 )}
@@ -118,7 +121,7 @@ export default function Header() {
                   isAboutActive ? "!text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
                 }`}
               >
-                About Us
+                {t("nav.about")}
                 {isAboutActive && (
                   <span className="absolute bottom-0 left-0 right-0 h-1 bg-[#FF1D8E] rounded-full" />
                 )}
@@ -129,7 +132,7 @@ export default function Header() {
                   isStoreLocatorActive ? "!text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
                 }`}
               >
-                Store Locator
+                {t("nav.store_locator")}
                 {isStoreLocatorActive && (
                   <span className="absolute bottom-0 left-0 right-0 h-1 bg-[#FF1D8E] rounded-full" />
                 )}
@@ -140,7 +143,7 @@ export default function Header() {
                   isB2BActive ? "!text-[#FF1D8E]" : "text-slate-900 hover:text-[#FF1D8E]"
                 }`}
               >
-                B2B Wholesale
+                {t("nav.b2b")}
                 {isB2BActive && (
                   <span className="absolute bottom-0 left-0 right-0 h-1 bg-[#FF1D8E] rounded-full" />
                 )}
@@ -149,7 +152,26 @@ export default function Header() {
           </div>
 
           {/* Right: Actions (Favorites, Cart & User Icons) */}
-          <div className="flex items-center gap-1 md:gap-3 text-black">
+          <div className="flex items-center gap-1.5 md:gap-3 text-black">
+            {/* Language Switcher */}
+            <div className="hidden sm:flex items-center gap-0.5 border border-slate-200 rounded-full p-0.5 bg-slate-50/50 text-[9px] font-black font-body select-none">
+              <button
+                onClick={() => setLanguage("el")}
+                className={`px-2 py-0.5 rounded-full transition-all ${
+                  language === "el" ? "bg-black text-white" : "text-slate-500 hover:text-black"
+                }`}
+              >
+                EL
+              </button>
+              <button
+                onClick={() => setLanguage("en")}
+                className={`px-2 py-0.5 rounded-full transition-all ${
+                  language === "en" ? "bg-black text-white" : "text-slate-500 hover:text-black"
+                }`}
+              >
+                EN
+              </button>
+            </div>
             {/* Favorites Icon Button */}
             <Link
               href="/favorites"
@@ -220,13 +242,35 @@ export default function Header() {
                     priority
                   />
                 </Link>
-                <button
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  aria-label="Close Mobile Menu"
-                  className="p-2 rounded-full bg-slate-100 text-black hover:bg-slate-200 transition-colors"
-                >
-                  <X className="w-6 h-6" />
-                </button>
+                <div className="flex items-center gap-3">
+                  {/* Mobile Language Switcher */}
+                  <div className="flex items-center gap-0.5 border border-slate-200 rounded-full p-0.5 bg-slate-50/50 text-[9px] font-black font-body select-none">
+                    <button
+                      onClick={() => setLanguage("el")}
+                      className={`px-2 py-0.5 rounded-full transition-all ${
+                        language === "el" ? "bg-black text-white" : "text-slate-500 hover:text-black"
+                      }`}
+                    >
+                      EL
+                    </button>
+                    <button
+                      onClick={() => setLanguage("en")}
+                      className={`px-2 py-0.5 rounded-full transition-all ${
+                        language === "en" ? "bg-black text-white" : "text-slate-500 hover:text-black"
+                      }`}
+                    >
+                      EN
+                    </button>
+                  </div>
+
+                  <button
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    aria-label="Close Mobile Menu"
+                    className="p-2 rounded-full bg-slate-100 text-black hover:bg-slate-200 transition-colors"
+                  >
+                    <X className="w-6 h-6" />
+                  </button>
+                </div>
               </div>
 
               {/* Navigation Links List */}
@@ -244,7 +288,13 @@ export default function Header() {
                           : "text-black hover:bg-slate-100"
                       }`}
                     >
-                      <span>{link.label}</span>
+                      <span>
+                        {link.href === "/" ? t("nav.home") :
+                         link.href === "/products" ? t("nav.products") :
+                         link.href === "/about" ? t("nav.about") :
+                         link.href === "/store-locator" ? t("nav.store_locator") :
+                         link.href === "/b2b-wholesale" ? t("nav.b2b") : link.label}
+                      </span>
                       <ArrowRight className={`w-5 h-5 ${isActive ? "text-white" : "text-slate-400"}`} />
                     </Link>
                   );
@@ -262,7 +312,7 @@ export default function Header() {
                 className="w-full bg-black text-white py-4 rounded-full font-black text-base flex items-center justify-center gap-2 shadow-xl hover:bg-slate-900 transition-colors"
               >
                 <ShoppingBag className="w-5 h-5 text-white" />
-                <span>View Cart ({totalItems})</span>
+                <span>{t("nav.view_cart")} ({totalItems})</span>
               </button>
             </div>
 

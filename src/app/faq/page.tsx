@@ -3,88 +3,92 @@
 import { ChevronLeft, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { useTranslation } from "@/context/LanguageContext";
 
 export default function FAQPage() {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
 
+    const { t, language } = useTranslation();
+    const isEl = language === "el";
+
     const faqs = [
         {
-            category: "Παραγγελίες & Αποστολές",
+            category: isEl ? "Παραγγελίες & Αποστολές" : "Orders & Shipping",
             questions: [
                 {
-                    q: "Πώς μπορώ να παραγγείλω;",
-                    a: "Μπορείτε να παραγγείλετε εύκολα μέσω της ιστοσελίδας μας. Προσθέστε τα ELV8 Energy Drinks που επιθυμείτε στο καλάθι σας, συμπληρώστε τα στοιχεία σας και ολοκληρώστε την πληρωμή. Θα λάβετε email επιβεβαίωσης αμέσως μετά την παραγγελία."
+                    q: isEl ? "Πώς μπορώ να παραγγείλω;" : "How can I order?",
+                    a: isEl ? "Μπορείτε να παραγγείλετε εύκολα μέσω της ιστοσελίδας μας. Προσθέστε τα ELV8 Energy Drinks που επιθυμείτε στο καλάθι σας, συμπληρώστε τα στοιχεία σας και ολοκληρώστε την πληρωμή. Θα λάβετε email επιβεβαίωσης αμέσως μετά την παραγγελία." : "You can easily order through our website. Add the ELV8 Energy Drinks you want to your cart, fill in your details and complete the payment. You will receive a confirmation email immediately after."
                 },
                 {
-                    q: "Πόσο κοστίζουν τα μεταφορικά;",
-                    a: "Τα μεταφορικά έξοδα είναι 4,50€ για παραγγελίες κάτω των 65€. Για παραγγελίες άνω των 65€, τα μεταφορικά είναι ΔΩΡΕΑΝ σε όλη την Ελλάδα! Κόστος αντικαταβολής 2€."
+                    q: isEl ? "Πόσο κοστίζουν τα μεταφορικά;" : "How much is shipping?",
+                    a: isEl ? "Τα μεταφορικά έξοδα είναι 4,50€ για παραγγελίες κάτω των 65€. Για παραγγελίες άνω των 65€, τα μεταφορικά είναι ΔΩΡΕΑΝ σε όλη την Ελλάδα! Κόστος αντικαταβολής 2€." : "Shipping costs are €4.50 for orders under €65. For orders over €65, shipping is FREE all over Greece! Cash on delivery cost is €2."
                 },
                 {
-                    q: "Πόσος χρόνος χρειάζεται για την παράδοση;",
-                    a: "Οι παραγγελίες παραδίδονται εντός 2-4 εργάσιμων ημερών σε όλη την Ελλάδα."
+                    q: isEl ? "Πόσος χρόνος χρειάζεται για την παράδοση;" : "How long does delivery take?",
+                    a: isEl ? "Οι παραγγελίες παραδίδονται εντός 2-4 εργάσιμων ημερών σε όλη την Ελλάδα." : "Orders are delivered within 2-4 working days all over Greece."
                 },
                 {
-                    q: "Μπορώ να παραλάβω από κατάστημα;",
-                    a: "Χρησιμοποιήστε τον Store Locator για να βρείτε το κοντινότερο σημείο πώλησης ELV8 Energy στην περιοχή σας."
+                    q: isEl ? "Μπορώ να παραλάβω από κατάστημα;" : "Can I pick up from a store?",
+                    a: isEl ? "Χρησιμοποιήστε τον Store Locator για να βρείτε το κοντινότερο σημείο πώλησης ELV8 Energy στην περιοχή σας." : "Use the Store Locator to find the nearest ELV8 Energy sales point in your area."
                 },
                 {
-                    q: "Μπορώ να αλλάξω τη διεύθυνση αποστολής μετά την παραγγελία;",
-                    a: "Εάν η παραγγελία σας δεν έχει ακόμα αποσταλεί, επικοινωνήστε άμεσα μαζί μας στο info@elv8now.com για να αλλάξετε τη διεύθυνση αποστολής."
+                    q: isEl ? "Μπορώ να αλλάξω τη διεύθυνση αποστολής μετά την παραγγελία;" : "Can I change my shipping address after ordering?",
+                    a: isEl ? "Εάν η παραγγελία σας δεν έχει ακόμα αποσταλεί, επικοινωνήστε άμεσα μαζί μας στο info@elv8now.com για να αλλάξετε τη διεύθυνση αποστολής." : "If your order has not been shipped yet, contact us immediately at info@elv8now.com to change the shipping address."
                 }
             ]
         },
         {
-            category: "Πληρωμές",
+            category: isEl ? "Πληρωμές" : "Payments",
             questions: [
                 {
-                    q: "Ποιες μεθόδους πληρωμής δέχεστε;",
-                    a: "Δεχόμαστε:\n\n1. Πιστωτική / Χρεωστική Κάρτα (Visa, Mastercard, Maestro)\n2. IRIS Payments – άμεση πληρωμή μέσω e-banking\n3. Αντικαταβολή – πληρωμή κατά την παράδοση (+ 2€)\n4. Τραπεζική Κατάθεση – επικοινωνήστε μαζί μας για στοιχεία λογαριασμού"
+                    q: isEl ? "Ποιες μεθόδους πληρωμής δέχεστε;" : "What payment methods do you accept?",
+                    a: isEl ? "Δεχόμαστε:\n\n1. Πιστωτική / Χρεωστική Κάρτα (Visa, Mastercard, Maestro)\n2. IRIS Payments – άμεση πληρωμή μέσω e-banking\n3. Αντικαταβολή – πληρωμή κατά την παράδοση (+ 2€)\n4. Τραπεζική Κατάθεση – επικοινωνήστε μαζί μας για στοιχεία λογαριασμού" : "We accept:\n\n1. Credit / Debit Card (Visa, Mastercard, Maestro)\n2. IRIS Payments – direct payment via e-banking\n3. Cash on Delivery – payment upon delivery (+ €2)\n4. Bank Transfer – contact us for account details"
                 },
                 {
-                    q: "Είναι ασφαλείς οι πληρωμές;",
-                    a: "Απολύτως. Όλες οι συναλλαγές γίνονται μέσω κρυπτογραφημένου περιβάλλοντος SSL. Τα στοιχεία της κάρτας σας δεν αποθηκεύονται ποτέ στους servers μας."
+                    q: isEl ? "Είναι ασφαλείς οι πληρωμές;" : "Are payments secure?",
+                    a: isEl ? "Απολύτως. Όλες οι συναλλαγές γίνονται μέσω κρυπτογραφημένου περιβάλλοντος SSL. Τα στοιχεία της κάρτας σας δεν αποθηκεύονται ποτέ στους servers μας." : "Absolutely. All transactions are processed through an encrypted SSL environment. Your card details are never stored on our servers."
                 },
                 {
-                    q: "Πότε χρεώνεται η κάρτα μου;",
-                    a: "Η χρέωση γίνεται αμέσως κατά την ολοκλήρωση της παραγγελίας. Σε περίπτωση ακύρωσης, η επιστροφή χρημάτων πραγματοποιείται εντός 3-5 εργάσιμων ημερών."
+                    q: isEl ? "Πότε χρεώνεται η κάρτα μου;" : "When is my card charged?",
+                    a: isEl ? "Η χρέωση γίνεται αμέσως κατά την ολοκλήρωση της παραγγελίας. Σε περίπτωση ακύρωσης, η επιστροφή χρημάτων πραγματοποιείται εντός 3-5 εργάσιμων ημερών." : "The charge is made immediately upon order completion. In case of cancellation, refunds are processed within 3-5 working days."
                 }
             ]
         },
         {
-            category: "Προϊόντα ELV8",
+            category: isEl ? "Προϊόντα ELV8" : "ELV8 Products",
             questions: [
                 {
-                    q: "Τι κάνει το ELV8 Energy διαφορετικό;",
-                    a: "Το ELV8 Energy Drink είναι φτιαγμένο με φυσικά συστατικά, 200mg καφεΐνης φυσικής προέλευσης, ηλεκτρολύτες και μηδενική ζάχαρη. Η ιδανική επιλογή για αθλητές, επαγγελματίες και όλους όσους αναζητούν φυσική ενέργεια χωρίς συμβιβασμούς."
+                    q: isEl ? "Τι κάνει το ELV8 Energy διαφορετικό;" : "What makes ELV8 Energy different?",
+                    a: isEl ? "Το ELV8 Energy Drink είναι φτιαγμένο με φυσικά συστατικά, 200mg καφεΐνης φυσικής προέλευσης, ηλεκτρολύτες και μηδενική ζάχαρη. Η ιδανική επιλογή για αθλητές, επαγγελματίες και όλους όσους αναζητούν φυσική ενέργεια χωρίς συμβιβασμούς." : "ELV8 Energy Drink is made with natural ingredients, 200mg of natural caffeine, electrolytes, and zero sugar. The ideal choice for athletes, professionals, and anyone seeking natural energy without compromise."
                 },
                 {
-                    q: "Περιέχει ζάχαρη;",
-                    a: "Όχι! Το ELV8 Energy είναι Zero Sugar – χωρίς ζάχαρη και χωρίς περιττές θερμίδες. Γλυκαίνεται με φυσικά γλυκαντικά."
+                    q: isEl ? "Περιέχει ζάχαρη;" : "Does it contain sugar?",
+                    a: isEl ? "Όχι! Το ELV8 Energy είναι Zero Sugar – χωρίς ζάχαρη και χωρίς περιττές θερμίδες. Γλυκαίνεται με φυσικά γλυκαντικά." : "No! ELV8 Energy is Zero Sugar – no sugar and no unnecessary calories. It is sweetened with natural sweeteners."
                 },
                 {
-                    q: "Ποιοι πρέπει να αποφεύγουν τα ενεργειακά ποτά;",
-                    a: "Τα ενεργειακά ποτά δεν συνιστώνται σε:\n\n• Άτομα κάτω των 18 ετών\n• Εγκύους και θηλάζουσες\n• Άτομα ευαίσθητα στην καφεΐνη\n• Άτομα με καρδιολογικά προβλήματα\n\nΣε κάθε περίπτωση, συμβουλευτείτε τον γιατρό σας."
+                    q: isEl ? "Ποιοι πρέπει να αποφεύγουν τα ενεργειακά ποτά;" : "Who should avoid energy drinks?",
+                    a: isEl ? "Τα ενεργειακά ποτά δεν συνιστώνται σε:\n\n• Άτομα κάτω των 18 ετών\n• Εγκύους και θηλάζουσες\n• Άτομα ευαίσθητα στην καφεΐνη\n• Άτομα με καρδιολογικά προβλήματα\n\nΣε κάθε περίπτωση, συμβουλευτείτε τον γιατρό σας." : "Energy drinks are not recommended for:\n\n• Individuals under 18 years old\n• Pregnant and nursing women\n• Caffeine-sensitive individuals\n• Individuals with heart conditions\n\nIn any case, consult your doctor."
                 },
                 {
-                    q: "Πόσα κουτιά μπορώ να παραγγείλω;",
-                    a: "Δεν υπάρχει μέγιστος αριθμός κουτιών ανά παραγγελία. Για μεγάλες ποσότητες ή χονδρική, επισκεφθείτε τη σελίδα μας B2B Wholesale ή επικοινωνήστε στο info@elv8now.com."
+                    q: isEl ? "Πόσα κουτιά μπορώ να παραγγείλω;" : "How many cans can I order?",
+                    a: isEl ? "Δεν υπάρχει μέγιστος αριθμός κουτιών ανά παραγγελία. Για μεγάλες ποσότητες ή χονδρική, επισκεφθείτε τη σελίδα μας B2B Wholesale ή επικοινωνήστε στο info@elv8now.com." : "There is no maximum limit per order. For large quantities or wholesale, visit our B2B Wholesale page or contact info@elv8now.com."
                 },
                 {
-                    q: "Διαθέτετε διαφορετικές γεύσεις;",
-                    a: "Ναι! Το ELV8 Energy διατίθεται σε πολλές γεύσεις. Ελέγξτε τη σελίδα των προϊόντων για τη διαθέσιμη γκάμα γεύσεων."
+                    q: isEl ? "Διαθέτετε διαφορετικές γεύσεις;" : "Do you have different flavors?",
+                    a: isEl ? "Ναι! Το ELV8 Energy διατίθεται σε πολλές γεύσεις. Ελέγξτε τη σελίδα των προϊόντων για τη διαθέσιμη γκάμα γεύσεων." : "Yes! ELV8 Energy is available in multiple flavors. Check the products page for the available range."
                 }
             ]
         },
         {
-            category: "Επιστροφές & Αλλαγές",
+            category: isEl ? "Επιστροφές & Αλλαγές" : "Returns & Exchanges",
             questions: [
                 {
-                    q: "Μπορώ να επιστρέψω ένα προϊόν;",
-                    a: "Λόγω υγειονομικών κανονισμών για τρόφιμα και ποτά, δεχόμαστε επιστροφές μόνο σε περιπτώσεις ελαττωματικού, κατεστραμμένου ή λανθασμένου προϊόντος. Διαβάστε αναλυτικά στην Πολιτική Επιστροφών."
+                    q: isEl ? "Μπορώ να επιστρέψω ένα προϊόν;" : "Can I return a product?",
+                    a: isEl ? "Λόγω υγειονομικών κανονισμών για τρόφιμα και ποτά, δεχόμαστε επιστροφές μόνο σε περιπτώσεις ελαττωματικού, κατεστραμμένου ή λανθασμένου προϊόντος. Διαβάστε αναλυτικά στην Πολιτική Επιστροφών." : "Due to health regulations for food and beverages, we only accept returns for defective, damaged, or incorrect products. Read more in our Return Policy."
                 },
                 {
-                    q: "Τι κάνω αν παρέλαβα κατεστραμμένο προϊόν;",
-                    a: "Στείλτε αμέσως φωτογραφίες του προβλήματος στο info@elv8now.com μαζί με τον αριθμό παραγγελίας σας. Η ομάδα μας θα σας αποστείλει άμεσα αντικατάσταση χωρίς καμία επιπλέον χρέωση."
+                    q: isEl ? "Τι κάνω αν παρέλαβα κατεστραμμένο προϊόν;" : "What should I do if I received a damaged product?",
+                    a: isEl ? "Στείλτε αμέσως φωτογραφίες του προβλήματος στο info@elv8now.com μαζί με τον αριθμό παραγγελίας σας. Η ομάδα μας θα σας αποστείλει άμεσα αντικατάσταση χωρίς καμία επιπλέον χρέωση." : "Send photos of the issue immediately to info@elv8now.com along with your order number. Our team will send you a replacement at no extra charge."
                 }
             ]
         }
@@ -99,15 +103,15 @@ export default function FAQPage() {
                 className="inline-flex items-center gap-1 font-body text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors mb-6 sm:mb-8"
             >
                 <ChevronLeft className="w-4 h-4" />
-                Επιστροφή
+                {t("product.back")}
             </Link>
 
             <div className="max-w-4xl mx-auto">
                 <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-light mb-4 sm:mb-6">
-                    Συχνές Ερωτήσεις
+                    {t("faq.title")}
                 </h1>
                 <p className="text-muted-foreground font-body text-sm sm:text-base mb-10 sm:mb-14">
-                    Βρείτε απαντήσεις στις πιο συχνές ερωτήσεις για τα προϊόντα και τις υπηρεσίες του ELV8 Energy.
+                    {isEl ? "Βρείτε απαντήσεις στις πιο συχνές ερωτήσεις για τα προϊόντα και τις υπηρεσίες του ELV8 Energy." : "Find answers to the most frequently asked questions about ELV8 Energy products and services."}
                 </p>
 
                 <div className="space-y-10">
@@ -149,9 +153,9 @@ export default function FAQPage() {
                 </div>
 
                 <div className="mt-12 sm:mt-16 bg-gradient-to-br from-[#FF1D8E]/10 to-[#FF1D8E]/5 rounded-3xl p-6 sm:p-8 text-center border border-[#FF1D8E]/20">
-                    <h2 className="font-display text-xl sm:text-2xl font-bold mb-2">Δεν βρήκατε απάντηση;</h2>
+                    <h2 className="font-display text-xl sm:text-2xl font-bold mb-2">{isEl ? "Δεν βρήκατε απάντηση;" : "Didn't find an answer?"}</h2>
                     <p className="text-muted-foreground font-body text-sm mb-6">
-                        Η ομάδα μας είναι εδώ για να βοηθήσει!
+                        {isEl ? "Η ομάδα μας είναι εδώ για να βοηθήσει!" : "Our team is here to help!"}
                     </p>
                     <a
                         href="mailto:info@elv8now.com"

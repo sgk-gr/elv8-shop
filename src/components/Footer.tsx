@@ -5,8 +5,10 @@ import Image from "next/image";
 import { Instagram, Mail, Phone, MapPin, CreditCard, Shield, Truck, Send } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useTranslation } from "@/context/LanguageContext";
 
 export default function Footer() {
+    const { t, language, setLanguage } = useTranslation();
     const currentYear = new Date().getFullYear();
     const [email, setEmail] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -50,7 +52,7 @@ export default function Footer() {
                             />
                         </Link>
                         <p className="text-sm text-white/60 leading-relaxed">
-                            Real fruit energy. Zero sugar. 200mg Natural Caffeine & Electrolytes. Made for those who push limits.
+                            {t("footer.desc")}
                         </p>
                         <div className="flex gap-3 justify-center">
                             <a
@@ -66,7 +68,7 @@ export default function Footer() {
 
                     {/* Quick Links */}
                     <div className="space-y-6">
-                        <h4 className="font-display font-bold text-lg">Quick Links</h4>
+                        <h4 className="font-display font-bold text-lg">{t("footer.quick_links")}</h4>
                         <ul className="space-y-3">
                             <li>
                                 <Link href="/products" className="text-sm text-white/60 transition-colors hover:text-[#FF1D8E]">
@@ -98,7 +100,7 @@ export default function Footer() {
 
                     {/* Customer Service */}
                     <div className="space-y-6">
-                        <h4 className="font-display font-bold text-lg">Customer Service</h4>
+                        <h4 className="font-display font-bold text-lg">{t("footer.categories")}</h4>
                         <ul className="space-y-3">
                             <li>
                                 <Link href="/terms" className="text-sm text-white/60 transition-colors hover:text-[#FF1D8E]">
@@ -130,7 +132,7 @@ export default function Footer() {
 
                     {/* Contact Info */}
                     <div className="space-y-6">
-                        <h4 className="font-display font-bold text-lg">Contact Us</h4>
+                        <h4 className="font-display font-bold text-lg">{t("footer.contact")}</h4>
                         <ul className="space-y-4">
                             <li className="flex items-start gap-3">
                                 <MapPin className="w-5 h-5 flex-shrink-0 mt-0.5 text-[#FF1D8E]" />
@@ -154,7 +156,12 @@ export default function Footer() {
                 <div className="container mx-auto px-4 md:px-8 py-8">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-6">
                         <div className="text-sm text-white/40 text-center md:text-left space-y-1">
-                            <p>© {currentYear} ELV8 Energy. All rights reserved.</p>
+                            <p>© {currentYear} ELV8 Energy. {t("footer.rights")}</p>
+                            <div className="flex justify-center md:justify-start gap-2 mt-2 pt-2 border-t border-white/10">
+                                <button onClick={() => setLanguage('el')} className={language === 'el' ? 'text-white' : 'hover:text-white'}>EL</button>
+                                <span>|</span>
+                                <button onClick={() => setLanguage('en')} className={language === 'en' ? 'text-white' : 'hover:text-white'}>EN</button>
+                            </div>
                         </div>
                         
                         <div className="flex justify-center items-center gap-4 bg-white/5 px-4 py-2 rounded-xl opacity-80 hover:opacity-100 transition-opacity">

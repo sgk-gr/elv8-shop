@@ -7,6 +7,7 @@ import ProductCarousel from "@/components/ProductCarousel";
 import EnergyButton from "@/components/EnergyButton";
 import { useCart } from "@/context/CartContext";
 import { WooProduct, WooCategory, WooTag } from "@/types/product";
+import { useTranslation } from "@/context/LanguageContext";
 
 export default function HomeClient({
   initialFeaturedProducts = [],
@@ -16,6 +17,7 @@ export default function HomeClient({
   initialCategories?: WooCategory[];
   initialTags?: WooTag[];
 }) {
+  const { t } = useTranslation();
   const { setIsCartOpen } = useCart();
   const [scrollProgress, setScrollProgress] = useState(0);
   const [scrollY, setScrollY] = useState(0);
@@ -84,7 +86,7 @@ export default function HomeClient({
               className="object-contain drop-shadow-xl"
             />
           </div>
-          <span className="text-white text-[11px] md:text-sm font-semibold tracking-[0.18em] uppercase drop-shadow-lg">Natural Caffeine</span>
+          <span className="text-white text-[11px] md:text-sm font-semibold tracking-[0.18em] uppercase drop-shadow-lg">{t("hero.caffeine")}</span>
         </div>
 
         {/* 2. Strawberry (Middle Left) */}
@@ -103,7 +105,7 @@ export default function HomeClient({
               className="object-contain drop-shadow-xl"
             />
           </div>
-          <span className="text-white text-[11px] md:text-sm font-semibold tracking-[0.18em] uppercase drop-shadow-lg">Zero Sugar</span>
+          <span className="text-white text-[11px] md:text-sm font-semibold tracking-[0.18em] uppercase drop-shadow-lg">{t("hero.sugar")}</span>
         </div>
 
         {/* 3. Strawberry (Top Right) */}
@@ -122,7 +124,7 @@ export default function HomeClient({
               className="object-contain drop-shadow-xl"
             />
           </div>
-          <span className="text-white text-[11px] md:text-sm font-semibold tracking-[0.18em] uppercase drop-shadow-lg">Nootropics & Focus</span>
+          <span className="text-white text-[11px] md:text-sm font-semibold tracking-[0.18em] uppercase drop-shadow-lg">{t("hero.focus")}</span>
         </div>
 
         {/* 4. Lemon Slice (Middle Right) */}
@@ -141,7 +143,7 @@ export default function HomeClient({
               className="object-contain drop-shadow-xl"
             />
           </div>
-          <span className="text-white text-[11px] md:text-sm font-semibold tracking-[0.18em] uppercase drop-shadow-lg">Electrolytes</span>
+          <span className="text-white text-[11px] md:text-sm font-semibold tracking-[0.18em] uppercase drop-shadow-lg">{t("hero.electrolytes")}</span>
         </div>
 
         {/* Giant Outlined Stroke Background Typography ("ELV8") */}
@@ -315,14 +317,14 @@ export default function HomeClient({
       <section className="w-full bg-white py-20 md:py-28">
         <div className="container mx-auto px-6 md:px-12">
           <div className="text-center mb-14">
-            <p className="text-[11px] font-black tracking-[0.3em] text-[#FF1D8E] uppercase mb-3">What People Say</p>
-            <h2 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight">Real Energy.<br/>Real Results.</h2>
+            <p className="text-[11px] font-black tracking-[0.3em] text-[#FF1D8E] uppercase mb-3">{t("home.testimonials.title")}</p>
+            <h2 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight whitespace-pre-line">{t("home.testimonials.subtitle")}</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { name: "Alex K.", handle: "@alexk_fit", text: "Best energy drink I've ever had. Zero sugar, insane focus. Been drinking it every day before the gym.", stars: 5, flavor: "Strawberry Lemon" },
-              { name: "Maria P.", handle: "@mariap", text: "Finally an energy drink that doesn't make me crash. The taste is incredible and it's actually good for you!", stars: 5, flavor: "Green Apple" },
-              { name: "Nikos T.", handle: "@nikostrains", text: "Switched from Red Bull to ELV8 and never looked back. The electrolytes actually keep me hydrated during long sessions.", stars: 5, flavor: "Strawberry Lemon" },
+              { name: "Alex K.", handle: "@alexk_fit", text: t("home.review.alex.text"), stars: 5, flavor: "Strawberry Lemon" },
+              { name: "Maria P.", handle: "@mariap", text: t("home.review.maria.text"), stars: 5, flavor: "Green Apple" },
+              { name: "Nikos T.", handle: "@nikostrains", text: t("home.review.nikos.text"), stars: 5, flavor: "Strawberry Lemon" },
             ].map((review) => (
               <div key={review.name} className="bg-slate-50 p-7 flex flex-col gap-4 border border-slate-100">
                 <div className="flex gap-0.5">
@@ -350,14 +352,14 @@ export default function HomeClient({
           <span className="text-[20vw] font-black text-white tracking-widest uppercase">ELV8</span>
         </div>
         <div className="relative container mx-auto px-6 text-center">
-          <h2 className="text-4xl md:text-7xl font-black text-white tracking-tight leading-none mb-8">
-            Don't Just<br/>Drink Energy.<br/><span className="italic">Feel It.</span>
+          <h2 className="text-4xl md:text-7xl font-black text-white tracking-tight leading-none mb-8 whitespace-pre-line">
+            {t("home.lifestyle.title")}
           </h2>
           <a
             href="/products"
             className="bg-white text-[#FF1D8E] px-12 py-4 font-black text-xs tracking-[0.25em] uppercase hover:bg-slate-900 hover:text-white transition-colors duration-300 inline-block"
           >
-            Shop Now
+            {t("home.lifestyle.btn")}
           </a>
         </div>
       </section>
@@ -365,17 +367,17 @@ export default function HomeClient({
       {/* ================= NEWSLETTER SECTION ================= */}
       <section className="w-full bg-slate-900 py-20">
         <div className="container mx-auto px-6 text-center max-w-2xl">
-          <p className="text-[#FF1D8E] text-[11px] font-black tracking-[0.3em] uppercase mb-3">Stay in the Loop</p>
-          <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-3">Join the ELV8 Movement</h2>
-          <p className="text-slate-400 text-sm mb-8">Be the first to know about new flavors, drops, and exclusive offers.</p>
+          <p className="text-[#FF1D8E] text-[11px] font-black tracking-[0.3em] uppercase mb-3">{t("home.newsletter.title")}</p>
+          <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-3">{t("home.newsletter.subtitle")}</h2>
+          <p className="text-slate-400 text-sm mb-8">{t("home.newsletter.desc")}</p>
           <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
             <input
               type="email"
-              placeholder="your@email.com"
+              placeholder={t("home.newsletter.placeholder")}
               className="flex-1 bg-slate-800 text-white placeholder:text-slate-500 px-5 py-4 text-sm border border-slate-700 focus:border-[#FF1D8E] outline-none transition-colors"
             />
             <button className="bg-[#FF1D8E] text-white px-8 py-4 font-black text-xs tracking-[0.2em] uppercase hover:bg-white hover:text-[#FF1D8E] transition-colors duration-300 shrink-0">
-              Subscribe
+              {t("home.newsletter.btn")}
             </button>
           </div>
         </div>
