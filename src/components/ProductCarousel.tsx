@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useFavorites } from "@/context/FavoritesContext";
 
+import { useTranslation } from "@/context/LanguageContext";
+
 interface ProductCarouselProps {
     title: string;
     subtitle?: string;
@@ -19,6 +21,8 @@ interface ProductCarouselProps {
 function ProductAqaCard({ product }: { product: WooProduct }) {
     const { addItem, setIsCartOpen } = useCart();
     const { isFavorite, toggleFavorite } = useFavorites();
+    const { language } = useTranslation();
+    const isEl = language === "el";
     const router = useRouter();
     const favorite = isFavorite(product.id);
 
@@ -97,14 +101,14 @@ function ProductAqaCard({ product }: { product: WooProduct }) {
                         className="flex-1 inline-flex items-center justify-center gap-1.5 bg-[#1E4D7B] hover:bg-[#163a5e] text-white text-[12px] font-semibold rounded-xl py-2.5 px-2 transition-colors duration-200"
                     >
                         <MapPin className="w-3.5 h-3.5 shrink-0" />
-                        Stockists
+                        {isEl ? "Καταστήματα" : "Stockists"}
                     </button>
                     <button
                         onClick={handleAddToCart}
                         className="flex-1 inline-flex items-center justify-center gap-1.5 bg-[#FF1D8E] hover:bg-[#e0187f] text-white text-[12px] font-semibold rounded-xl py-2.5 px-2 transition-colors duration-200"
                     >
                         <ShoppingCart className="w-3.5 h-3.5 shrink-0" />
-                        Add to Cart
+                        {isEl ? "Στο Καλάθι" : "Add to Cart"}
                     </button>
                 </div>
             </div>
