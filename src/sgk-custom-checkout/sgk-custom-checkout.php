@@ -2,7 +2,7 @@
 /**
  * Plugin Name: SGK Custom Checkout by SGK Digital
  * Description: Ένα premium, minimal και πλήρως mobile-responsive checkout για το WooCommerce στα χρώματα του ELV8 Energy Drink.
- * Version: 1.3.3
+ * Version: 1.3.4
  * Author: SGK Digital
  * Author URI: https://sgk.gr
  * License: GPL2
@@ -47,6 +47,10 @@ class SGK_Custom_Checkout {
 
         // Test mail trigger URL parameter
         add_action( 'init', array( $this, 'trigger_test_email' ) );
+
+        // Force From email and From name to match SMTP settings
+        add_filter( 'wp_mail_from', array( $this, 'force_mail_from' ), 999 );
+        add_filter( 'wp_mail_from_name', array( $this, 'force_mail_from_name' ), 999 );
     }
 
     /**
@@ -193,12 +197,30 @@ class SGK_Custom_Checkout {
             if ( ! current_user_can( 'manage_options' ) ) {
                 wp_die( 'Access denied. You must be logged in as an administrator to run this test.' );
             }
+
+            // Clear error log helper
+            if ( isset( $_GET['clear_error'] ) ) {
+                delete_transient( 'sgk_mail_error_log' );
+                wp_redirect( '?test_elv8_mail=1' );
+                exit;
+            }
             
             global $wp_version;
             $use_new_phpmailer = version_compare( $wp_version, '5.5', '>=' );
             
             echo '<html><head><title>ELV8 SMTP Mail Test Debugger</title><style>body { font-family: sans-serif; padding: 30px; background: #fafafa; color: #333; line-height: 1.6; } pre { background: #000; color: #0f0; padding: 20px; border-radius: 8px; overflow-x: auto; font-size: 13px; font-family: monospace; } hr { border: none; border-top: 1px solid #ccc; margin: 40px 0; }</style></head><body>';
             echo '<h1>ELV8 SMTP Mail Test Debugger</h1>';
+
+            // Show last logged error if any
+            $last_error = get_transient( 'sgk_mail_error_log' );
+            if ( $last_error ) {
+                echo '<div style="background: #fee; border-left: 4px solid #f88; padding: 20px; margin-bottom: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">';
+                echo '<h3 style="color: #c00; margin-top: 0;">Last Recorded WordPress Mail Error (from Checkout or Order emails):</h3>';
+                echo '<pre style="background: #300; color: #ff8; border: 1px solid #c88; padding: 12px;">' . esc_html( $last_error ) . '</pre>';
+                echo '<button onclick="window.location.href=\'?test_elv8_mail=1&clear_error=1\'" style="background: #c00; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; cursor: pointer;">Clear Error Log</button>';
+                echo '</div>';
+            }
+
             echo '<p>Running automated SMTP tests to find a working configuration on your server...</p>';
             
             $tests = array(
@@ -291,6 +313,26 @@ class SGK_Custom_Checkout {
             echo '</body></html>';
             exit;
         }
+    }
+
+    /**
+     * Force the sender email address to match SMTP authenticated username
+     */
+    public function force_mail_from( $from_email ) {
+        if ( defined( 'SGK_SMTP_USER' ) && SGK_SMTP_USER !== '' ) {
+            return SGK_SMTP_USER;
+        }
+        return $from_email;
+    }
+
+    /**
+     * Force the sender name to match SGK_FROM_NAME
+     */
+    public function force_mail_from_name( $from_name ) {
+        if ( defined( 'SGK_FROM_NAME' ) && SGK_FROM_NAME !== '' ) {
+            return SGK_FROM_NAME;
+        }
+        return $from_name;
     }
 }
 
