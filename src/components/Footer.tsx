@@ -121,6 +121,12 @@ export default function Footer() {
                                 </Link>
                             </li>
                             <li>
+                                <Link href="/returns/withdraw" className="text-sm text-amber-300 font-bold transition-colors hover:underline flex items-center gap-1.5">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                                    {isEl ? "Δήλωση Υπαναχώρησης (14 Ημέρες)" : "Right of Withdrawal Form"}
+                                </Link>
+                            </li>
+                            <li>
                                 <Link href="/payment-methods" className="text-sm text-white/60 transition-colors hover:text-[#FF1D8E]">
                                     {isEl ? "Τρόποι Πληρωμής" : "Payment Methods"}
                                 </Link>

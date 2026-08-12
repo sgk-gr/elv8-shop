@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ChevronLeft, FileText, CheckCircle2, AlertCircle, ArrowRight, Loader2 } from "lucide-react";
+import { ChevronLeft, FileText, CheckCircle2, AlertCircle, ArrowRight, Loader2, ShieldCheck } from "lucide-react";
 import { getOrder, createOrderNote } from "@/lib/woocommerce";
 import { toast } from "sonner";
 
@@ -19,6 +19,26 @@ export default function WithdrawalPage() {
         declarationChecked: false,
     });
     const [errorMsg, setErrorMsg] = useState("");
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const params = new URLSearchParams(window.location.search);
+            const orderIdParam = params.get("orderId") || params.get("order") || "";
+            const emailParam = params.get("email") || "";
+            const nameParam = params.get("name") || "";
+            const phoneParam = params.get("phone") || "";
+
+            if (orderIdParam || emailParam || nameParam) {
+                setFormData((prev) => ({
+                    ...prev,
+                    orderId: orderIdParam || prev.orderId,
+                    email: emailParam || prev.email,
+                    fullName: nameParam || prev.fullName,
+                    phone: phoneParam || prev.phone,
+                }));
+            }
+        }
+    }, []);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
