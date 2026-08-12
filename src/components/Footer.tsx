@@ -94,7 +94,7 @@ export default function Footer() {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/b2b-wholesale" className="text-sm text-[#FF1D8E] font-bold transition-colors hover:underline">
+                                <Link href="/b2b-wholesale" className="text-sm text-white/60 transition-colors hover:text-[#FF1D8E]">
                                     {isEl ? "Χονδρική B2B" : "B2B Wholesale"}
                                 </Link>
                             </li>
@@ -121,8 +121,7 @@ export default function Footer() {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/returns/withdraw" className="text-sm text-amber-300 font-bold transition-colors hover:underline flex items-center gap-1.5">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                                <Link href="/returns/withdraw" className="text-sm text-white/60 transition-colors hover:text-[#FF1D8E]">
                                     {isEl ? "Δήλωση Υπαναχώρησης (14 Ημέρες)" : "Right of Withdrawal Form"}
                                 </Link>
                             </li>
@@ -137,8 +136,7 @@ export default function Footer() {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/gemi" className="text-sm text-white/60 transition-colors hover:text-[#FF1D8E] font-medium flex items-center gap-1.5">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                                <Link href="/gemi" className="text-sm text-white/60 transition-colors hover:text-[#FF1D8E]">
                                     {isEl ? "Στοιχεία Γ.Ε.ΜΗ." : "GEMI Disclosures"}
                                 </Link>
                             </li>
