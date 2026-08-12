@@ -9,6 +9,7 @@ ELV8 is a premium next-generation energy drink formulated with natural caffeine,
 - [Store Locator](https://elv8now.com/store-locator) - Find local stores and stockists near you.
 - [B2B Wholesale Portal](https://elv8now.com/b2b-wholesale) - Form for business partners and distributors.
 - [Payment Methods](https://elv8now.com/payment-methods) - Information about accepted payment options (Credit/Debit Card).
+- [GEMI Public Disclosures](https://elv8now.com/gemi) - Official GEMI registry disclosures (AR. GEMI 195202901000, AFM 803354749), publications and PDF files.
 
 ## API & Integrations
 - [WooCommerce API](https://store.elv8now.com/wp-json/wc/v3) - For product retrieval and order processing.

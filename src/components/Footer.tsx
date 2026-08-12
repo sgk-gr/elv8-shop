@@ -130,6 +130,12 @@ export default function Footer() {
                                     {isEl ? "Συχνές Ερωτήσεις (FAQ)" : "FAQ"}
                                 </Link>
                             </li>
+                            <li>
+                                <Link href="/gemi" className="text-sm text-white/60 transition-colors hover:text-[#FF1D8E] font-medium flex items-center gap-1.5">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                                    {isEl ? "Στοιχεία Γ.Ε.ΜΗ." : "GEMI Disclosures"}
+                                </Link>
+                            </li>
                         </ul>
                     </div>
 
