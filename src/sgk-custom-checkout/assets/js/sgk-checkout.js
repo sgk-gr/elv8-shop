@@ -17,7 +17,7 @@ jQuery(document).ready(function($) {
     updateMobileTotal();
 
     // Listen to WooCommerce native event when checkout refreshes (e.g. shipping or coupon changes)
-    $(document).body.on('updated_checkout', function() {
+    $(document).on('updated_checkout', function() {
         updateMobileTotal();
     });
 
@@ -28,7 +28,7 @@ jQuery(document).ready(function($) {
     });
 
     // Smooth scroll to error fields if WooCommerce checkout fails validation
-    $(document).body.on('checkout_error', function() {
+    $(document).on('checkout_error', function() {
         var errorNotices = $('.woocommerce-NoticeGroup-checkout, .woocommerce-error');
         if (errorNotices.length) {
             $('html, body').animate({
@@ -45,7 +45,7 @@ jQuery(document).ready(function($) {
     }
 
     beautifyFields();
-    $(document).body.on('country_to_state_changed', function() {
+    $(document).on('country_to_state_changed', function() {
         beautifyFields();
     });
 });
