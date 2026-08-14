@@ -26,12 +26,22 @@ export default function Footer() {
         setIsSubmitting(true);
 
         try {
+            // 1. Post to local API route
             const res = await fetch("/api/newsletter", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, source: "Footer Newsletter" }),
             });
             const data = await res.json();
+
+            // 2. Direct POST to WordPress REST API for 100% instant sync
+            try {
+                fetch("https://store.elv8now.com/wp-json/elv8/v1/newsletter-subscribe", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, source: "Footer Newsletter" }),
+                }).catch(() => {});
+            } catch (_) {}
 
             if (data.success) {
                 toast.success(data.message || (isEl ? "Ευχαριστούμε! Εγγραφήκατε επιτυχώς στο ενημερωτικό μας δελτίο! 🎉" : "Thank you! You have successfully subscribed to our newsletter! 🎉"));

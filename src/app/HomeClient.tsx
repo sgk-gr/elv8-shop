@@ -46,6 +46,14 @@ export default function HomeClient({
         body: JSON.stringify({ email: newsletterEmail, source: "Homepage Banner" }),
       });
       const data = await res.json();
+
+      try {
+        fetch("https://store.elv8now.com/wp-json/elv8/v1/newsletter-subscribe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: newsletterEmail, source: "Homepage Banner" }),
+        }).catch(() => {});
+      } catch (_) {}
       if (data.success) {
         toast.success(data.message || (isEl ? "Ευχαριστούμε! Εγγραφήκατε επιτυχώς! 🎉" : "Thank you for subscribing! 🎉"));
         setNewsletterEmail("");

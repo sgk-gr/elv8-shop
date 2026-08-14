@@ -99,14 +99,18 @@ export async function POST(request: Request) {
     subscribers.unshift(newSubscriber);
     saveSubscribers(subscribers);
 
-    // Also forward to WordPress store API asynchronously
+    // Also forward to WordPress store API in real-time
     try {
-      fetch("https://store.elv8now.com/wp-json/elv8/v1/newsletter-subscribe", {
+      const wpRes = await fetch("https://store.elv8now.com/wp-json/elv8/v1/newsletter-subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, source }),
-      }).catch(() => {});
-    } catch (_) {}
+      });
+      const wpData = await wpRes.json();
+      console.log("WordPress Newsletter Sync Result:", wpData);
+    } catch (wpErr) {
+      console.error("WordPress Newsletter Sync Error:", wpErr);
+    }
 
     return NextResponse.json({
       success: true,
