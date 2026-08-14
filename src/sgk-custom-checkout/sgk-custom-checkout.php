@@ -557,6 +557,38 @@ add_action( 'admin_menu', function() {
 } );
 
 function elv8_render_newsletter_admin_page() {
+    if ( isset( $_POST['manual_add_email'] ) && isset( $_POST['new_subscriber_email'] ) ) {
+        $new_email = sanitize_email( trim( $_POST['new_subscriber_email'] ) );
+        if ( is_email( $new_email ) ) {
+            $subscribers = get_option( 'elv8_newsletter_subscribers', array() );
+            if ( ! is_array( $subscribers ) ) {
+                $subscribers = array();
+            }
+
+            $already = false;
+            foreach ( $subscribers as $s ) {
+                if ( isset( $s['email'] ) && strtolower( $s['email'] ) === strtolower( $new_email ) ) {
+                    $already = true;
+                    break;
+                }
+            }
+
+            if ( ! $already ) {
+                $new_sub = array(
+                    'id'           => 'sub_' . time() . '_' . wp_generate_password( 4, false ),
+                    'email'        => $new_email,
+                    'subscribedAt' => current_time( 'mysql' ),
+                    'source'       => 'Admin Manual',
+                );
+                array_unshift( $subscribers, $new_sub );
+                update_option( 'elv8_newsletter_subscribers', $subscribers );
+                echo '<div class="notice notice-success is-dismissible"><p>Το email <strong>' . esc_html( $new_email ) . '</strong> προστέθηκε επιτυχώς!</p></div>';
+            } else {
+                echo '<div class="notice notice-warning is-dismissible"><p>Το email <strong>' . esc_html( $new_email ) . '</strong> είναι ήδη εγγεγραμμένο.</p></div>';
+            }
+        }
+    }
+
     if ( isset( $_POST['export_csv'] ) ) {
         $subscribers = get_option( 'elv8_newsletter_subscribers', array() );
         if ( ! is_array( $subscribers ) ) {
@@ -605,12 +637,13 @@ function elv8_render_newsletter_admin_page() {
             Δείτε όλους τους εγγεγραμμένους πελάτες στο Newsletter του ELV8 Energy και κατεβάστε το αρχείο CSV για αποστολή ενημερώσεων.
         </p>
 
-        <div style="display: flex; gap: 15px; margin: 20px 0;">
-            <div style="background: #fff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 20px; flex: 1; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #64748b; tracking-wider: 1px;">Σύνολο Συνδρομητών</span>
+        <div style="display: flex; gap: 15px; margin: 20px 0; flex-wrap: wrap;">
+            <div style="background: #fff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 20px; flex: 1; min-width: 200px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #64748b;">Σύνολο Συνδρομητών</span>
                 <div style="font-size: 32px; font-weight: 900; color: #ff1d8e; margin-top: 5px;"><?php echo count( $subscribers ); ?></div>
             </div>
-            <div style="background: #fff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 20px; flex: 2; box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: space-between;">
+
+            <div style="background: #fff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 20px; flex: 2; min-width: 300px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: space-between;">
                 <div>
                     <strong style="display: block; font-size: 14px; color: #0f172a;">Εξαγωγή Λίστας Emails σε Excel/CSV</strong>
                     <span style="font-size: 12px; color: #64748b;">Κατεβάστε όλα τα emails για χρήση σε Mailchimp, Brevo ή μαζική αλληλογραφία.</span>
@@ -622,6 +655,15 @@ function elv8_render_newsletter_admin_page() {
                     </button>
                 </form>
             </div>
+        </div>
+
+        <div style="background: #fff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 18px 20px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+            <strong style="display: block; font-size: 14px; color: #0f172a; margin-bottom: 8px;">➕ Χειροκίνητη Προσθήκη Email Συνδρομητή:</strong>
+            <form method="post" style="display: flex; gap: 10px; margin: 0;">
+                <input type="hidden" name="manual_add_email" value="1" />
+                <input type="email" name="new_subscriber_email" placeholder="π.χ. customer@example.com" required style="flex: 1; max-width: 350px; padding: 6px 12px; border: 1px solid #cbd5e1; border-radius: 6px;" />
+                <button type="submit" class="button" style="font-weight: 600;">Προσθήκη στη Λίστα</button>
+            </form>
         </div>
 
         <table class="wp-list-table widefat fixed striped table-view-list" style="margin-top: 20px; border-radius: 8px; overflow: hidden;">
