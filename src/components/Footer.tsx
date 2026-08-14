@@ -25,12 +25,25 @@ export default function Footer() {
 
         setIsSubmitting(true);
 
-        // Simulate API call
-        setTimeout(() => {
-            toast.success(isEl ? "Ευχαριστούμε! Εγγραφήκατε επιτυχώς στο ενημερωτικό μας δελτίο! 🎉" : "Thank you! You have successfully subscribed to our newsletter! 🎉");
-            setEmail("");
+        try {
+            const res = await fetch("/api/newsletter", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, source: "Footer Newsletter" }),
+            });
+            const data = await res.json();
+
+            if (data.success) {
+                toast.success(data.message || (isEl ? "Ευχαριστούμε! Εγγραφήκατε επιτυχώς στο ενημερωτικό μας δελτίο! 🎉" : "Thank you! You have successfully subscribed to our newsletter! 🎉"));
+                setEmail("");
+            } else {
+                toast.error(data.message || (isEl ? "Σφάλμα εγγραφής" : "Subscription error"));
+            }
+        } catch (err) {
+            toast.error(isEl ? "Σφάλμα επικοινωνίας" : "Network error");
+        } finally {
             setIsSubmitting(false);
-        }, 1000);
+        }
     };
 
     return (

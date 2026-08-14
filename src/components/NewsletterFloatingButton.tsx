@@ -75,9 +75,18 @@ export default function NewsletterFloatingButton() {
                                     </div>
 
                                     <form
-                                        onSubmit={(e) => {
+                                        onSubmit={async (e) => {
                                             e.preventDefault();
-                                            if (email) setIsSubscribed(true);
+                                            if (email) {
+                                                try {
+                                                    await fetch("/api/newsletter", {
+                                                        method: "POST",
+                                                        headers: { "Content-Type": "application/json" },
+                                                        body: JSON.stringify({ email, source: "Floating Popup (15% Off)" }),
+                                                    });
+                                                } catch (_) {}
+                                                setIsSubscribed(true);
+                                            }
                                         }}
                                         className="flex flex-col gap-3 mt-4"
                                     >

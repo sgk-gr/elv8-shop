@@ -474,6 +474,198 @@ class SGK_Custom_Checkout {
     }
 }
 
+// ==========================================================================
+// NEWSLETTER SUBSCRIBERS INTEGRATION & WORDPRESS ADMIN PAGE
+// ==========================================================================
+
+add_action( 'rest_api_init', function() {
+    // REST API Endpoint to submit newsletter subscription
+    register_rest_route( 'elv8/v1', '/newsletter-subscribe', array(
+        'methods'  => 'POST',
+        'callback' => function( $request ) {
+            $params = $request->get_json_params();
+            $email = isset( $params['email'] ) ? sanitize_email( trim( $params['email'] ) ) : '';
+            $source = isset( $params['source'] ) ? sanitize_text_field( $params['source'] ) : 'Website';
+
+            if ( ! is_email( $email ) ) {
+                return new WP_Error( 'invalid_email', 'Παρακαλώ εισάγετε ένα έγκυρο email.', array( 'status' => 400 ) );
+            }
+
+            $subscribers = get_option( 'elv8_newsletter_subscribers', array() );
+            if ( ! is_array( $subscribers ) ) {
+                $subscribers = array();
+            }
+
+            // Check if already subscribed
+            foreach ( $subscribers as $sub ) {
+                if ( isset( $sub['email'] ) && strtolower( $sub['email'] ) === strtolower( $email ) ) {
+                    return array(
+                        'success'           => true,
+                        'alreadySubscribed' => true,
+                        'message'           => 'Είστε ήδη εγγεγραμμένος στο newsletter!',
+                    );
+                }
+            }
+
+            $new_sub = array(
+                'id'           => 'sub_' . time() . '_' . wp_generate_password( 4, false ),
+                'email'        => $email,
+                'subscribedAt' => current_time( 'mysql' ),
+                'source'       => $source,
+            );
+
+            array_unshift( $subscribers, $new_sub );
+            update_option( 'elv8_newsletter_subscribers', $subscribers );
+
+            return array(
+                'success'    => true,
+                'message'    => 'Ευχαριστούμε! Εγγραφήκατε επιτυχώς στο newsletter! 🎉',
+                'subscriber' => $new_sub,
+            );
+        },
+        'permission_callback' => '__return_true',
+    ) );
+
+    // REST API Endpoint to fetch newsletter subscribers
+    register_rest_route( 'elv8/v1', '/newsletter-subscribers', array(
+        'methods'  => 'GET',
+        'callback' => function() {
+            $subscribers = get_option( 'elv8_newsletter_subscribers', array() );
+            if ( ! is_array( $subscribers ) ) {
+                $subscribers = array();
+            }
+            return array(
+                'success'     => true,
+                'total'       => count( $subscribers ),
+                'subscribers' => $subscribers,
+            );
+        },
+        'permission_callback' => '__return_true',
+    ) );
+} );
+
+// Add WordPress Admin Menu under WooCommerce -> Newsletter ELV8
+add_action( 'admin_menu', function() {
+    add_submenu_page(
+        'woocommerce',
+        'Συνδρομητές Newsletter ELV8',
+        '📧 Newsletter ELV8',
+        'manage_woocommerce',
+        'elv8-newsletter',
+        'elv8_render_newsletter_admin_page'
+    );
+} );
+
+function elv8_render_newsletter_admin_page() {
+    if ( isset( $_POST['export_csv'] ) ) {
+        $subscribers = get_option( 'elv8_newsletter_subscribers', array() );
+        if ( ! is_array( $subscribers ) ) {
+            $subscribers = array();
+        }
+
+        header( 'Content-Type: text/csv; charset=utf-8' );
+        header( 'Content-Disposition: attachment; filename=elv8_newsletter_subscribers_' . date( 'Y-m-d' ) . '.csv' );
+        $output = fopen( 'php://output', 'w' );
+        fputs( $output, "\xEF\xBB\xBF" ); // UTF-8 BOM
+        fputcsv( $output, array( 'Email', 'Date Subscribed', 'Source' ) );
+
+        foreach ( $subscribers as $sub ) {
+            fputcsv( $output, array(
+                isset( $sub['email'] ) ? $sub['email'] : '',
+                isset( $sub['subscribedAt'] ) ? $sub['subscribedAt'] : '',
+                isset( $sub['source'] ) ? $sub['source'] : 'Website',
+            ) );
+        }
+        fclose( $output );
+        exit;
+    }
+
+    if ( isset( $_POST['delete_email'] ) && isset( $_POST['email_to_delete'] ) ) {
+        $email_to_delete = sanitize_email( $_POST['email_to_delete'] );
+        $subscribers = get_option( 'elv8_newsletter_subscribers', array() );
+        if ( is_array( $subscribers ) ) {
+            $subscribers = array_values( array_filter( $subscribers, function( $s ) use ( $email_to_delete ) {
+                return isset( $s['email'] ) && strtolower( $s['email'] ) !== strtolower( $email_to_delete );
+            } ) );
+            update_option( 'elv8_newsletter_subscribers', $subscribers );
+            echo '<div class="notice notice-success is-dismissible"><p>Το email <strong>' . esc_html( $email_to_delete ) . '</strong> διαγράφηκε επιτυχώς.</p></div>';
+        }
+    }
+
+    $subscribers = get_option( 'elv8_newsletter_subscribers', array() );
+    if ( ! is_array( $subscribers ) ) {
+        $subscribers = array();
+    }
+    ?>
+    <div class="wrap" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;">
+        <h1 style="display: flex; align-items: center; gap: 10px; font-size: 24px; font-weight: 800; color: #1e293b;">
+            📧 Διαχείριση Συνδρομητών Newsletter ELV8
+        </h1>
+        <p style="color: #64748b; font-size: 14px;">
+            Δείτε όλους τους εγγεγραμμένους πελάτες στο Newsletter του ELV8 Energy και κατεβάστε το αρχείο CSV για αποστολή ενημερώσεων.
+        </p>
+
+        <div style="display: flex; gap: 15px; margin: 20px 0;">
+            <div style="background: #fff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 20px; flex: 1; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #64748b; tracking-wider: 1px;">Σύνολο Συνδρομητών</span>
+                <div style="font-size: 32px; font-weight: 900; color: #ff1d8e; margin-top: 5px;"><?php echo count( $subscribers ); ?></div>
+            </div>
+            <div style="background: #fff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 20px; flex: 2; box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                    <strong style="display: block; font-size: 14px; color: #0f172a;">Εξαγωγή Λίστας Emails σε Excel/CSV</strong>
+                    <span style="font-size: 12px; color: #64748b;">Κατεβάστε όλα τα emails για χρήση σε Mailchimp, Brevo ή μαζική αλληλογραφία.</span>
+                </div>
+                <form method="post" style="margin: 0;">
+                    <input type="hidden" name="export_csv" value="1" />
+                    <button type="submit" class="button button-primary" style="background: #ff1d8e; border-color: #ff1d8e; font-weight: 700; padding: 6px 16px; height: auto; border-radius: 8px;">
+                        📥 Εξαγωγή σε CSV
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <table class="wp-list-table widefat fixed striped table-view-list" style="margin-top: 20px; border-radius: 8px; overflow: hidden;">
+            <thead>
+                <tr>
+                    <th style="width: 50px;">#</th>
+                    <th>Email Συνδρομητή</th>
+                    <th>Ημερομηνία Εγγραφής</th>
+                    <th>Πηγή Εγγραφής</th>
+                    <th style="width: 100px; text-align: right;">Ενέργεια</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ( empty( $subscribers ) ) : ?>
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 30px; color: #94a3b8;">
+                            Δεν υπάρχουν ακόμα εγγεγραμμένοι συνδρομητές.
+                        </td>
+                    </tr>
+                <?php else : ?>
+                    <?php foreach ( $subscribers as $index => $sub ) : ?>
+                        <tr>
+                            <td style="font-weight: bold; color: #94a3b8;"><?php echo $index + 1; ?></td>
+                            <td style="font-weight: 600; color: #0f172a;"><?php echo esc_html( isset( $sub['email'] ) ? $sub['email'] : '' ); ?></td>
+                            <td style="color: #64748b;"><?php echo esc_html( isset( $sub['subscribedAt'] ) ? $sub['subscribedAt'] : '' ); ?></td>
+                            <td><span style="background: #f1f5f9; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;"><?php echo esc_html( isset( $sub['source'] ) ? $sub['source'] : 'Website' ); ?></span></td>
+                            <td style="text-align: right;">
+                                <form method="post" style="display: inline;" onsubmit="return confirm('Διαγραφή του email;');">
+                                    <input type="hidden" name="delete_email" value="1" />
+                                    <input type="hidden" name="email_to_delete" value="<?php echo esc_attr( isset( $sub['email'] ) ? $sub['email'] : '' ); ?>" />
+                                    <button type="submit" class="button button-small" style="color: #ef4444; border-color: #fca5a5;">
+                                        Διαγραφή
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php
+}
+
 // Initialize the plugin safely
 add_action( 'plugins_loaded', function() {
     if ( class_exists( 'WooCommerce' ) ) {

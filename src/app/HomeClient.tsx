@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { toast } from "sonner";
 import ProductCarousel from "@/components/ProductCarousel";
 import EnergyButton from "@/components/EnergyButton";
 import { useCart } from "@/context/CartContext";
@@ -26,6 +27,37 @@ export default function HomeClient({
 
   const [isMobile, setIsMobile] = useState(false);
   const isEl = language === "el";
+
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [isSubmittingNewsletter, setIsSubmittingNewsletter] = useState(false);
+
+  const handleHomeNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsletterEmail || !newsletterEmail.includes("@")) {
+      toast.error(isEl ? "Παρακαλώ εισάγετε ένα έγκυρο email" : "Please enter a valid email address");
+      return;
+    }
+
+    setIsSubmittingNewsletter(true);
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: newsletterEmail, source: "Homepage Banner" }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        toast.success(data.message || (isEl ? "Ευχαριστούμε! Εγγραφήκατε επιτυχώς! 🎉" : "Thank you for subscribing! 🎉"));
+        setNewsletterEmail("");
+      } else {
+        toast.error(data.message || "Σφάλμα εγγραφής");
+      }
+    } catch (err) {
+      toast.error(isEl ? "Σφάλμα επικοινωνίας" : "Network error");
+    } finally {
+      setIsSubmittingNewsletter(false);
+    }
+  };
 
   // Restore scroll position on refresh and handle smart auto-scroll between Hero & Section 2
   useEffect(() => {
@@ -390,16 +422,23 @@ export default function HomeClient({
           <p className="text-[#FF1D8E] text-[11px] font-black tracking-[0.3em] uppercase mb-3">{t("home.newsletter.title")}</p>
           <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-3">{t("home.newsletter.subtitle")}</h2>
           <p className="text-slate-400 text-sm mb-8">{t("home.newsletter.desc")}</p>
-          <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+          <form onSubmit={handleHomeNewsletterSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
             <input
               type="email"
+              value={newsletterEmail}
+              onChange={(e) => setNewsletterEmail(e.target.value)}
               placeholder={t("home.newsletter.placeholder")}
               className="flex-1 bg-slate-800 text-white placeholder:text-slate-500 px-5 py-4 text-sm border border-slate-700 focus:border-[#FF1D8E] outline-none transition-colors"
+              required
             />
-            <button className="bg-[#FF1D8E] text-white px-8 py-4 font-black text-xs tracking-[0.2em] uppercase hover:bg-white hover:text-[#FF1D8E] transition-colors duration-300 shrink-0">
-              {t("home.newsletter.btn")}
+            <button
+              type="submit"
+              disabled={isSubmittingNewsletter}
+              className="bg-[#FF1D8E] text-white px-8 py-4 font-black text-xs tracking-[0.2em] uppercase hover:bg-white hover:text-[#FF1D8E] transition-colors duration-300 shrink-0 disabled:opacity-50"
+            >
+              {isSubmittingNewsletter ? "..." : t("home.newsletter.btn")}
             </button>
-          </div>
+          </form>
         </div>
       </section>
 
