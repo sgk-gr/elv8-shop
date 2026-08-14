@@ -92,16 +92,16 @@ export default function ComingSoonGuard({ children }: { children: React.ReactNod
       </main>
 
       {/* Footer Info */}
-      <footer className="relative z-10 container mx-auto px-6 py-8 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+      <footer className="relative z-10 container mx-auto px-6 py-8 border-t border-slate-100 flex items-center justify-center text-xs text-slate-500">
         <div>
-          © {new Date().getFullYear()} <strong className="text-slate-800">ELV8 Ι.Κ.Ε.</strong> | ΑΦΜ: 803354749 | Γ.Ε.ΜΗ: 195202901000
-        </div>
-        <div className="flex items-center gap-6">
-          <Link href="/gemi" className="hover:text-slate-900 transition-colors">
-            Δημοσιότητα Γ.Ε.ΜΗ.
-          </Link>
-          <a href="mailto:info@elv8now.com" className="hover:text-slate-900 transition-colors">
-            info@elv8now.com
+          Created by{" "}
+          <a
+            href="https://sgk.gr"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-bold text-slate-800 hover:text-[#FF1D8E] transition-colors"
+          >
+            sgk.gr
           </a>
         </div>
       </footer>
