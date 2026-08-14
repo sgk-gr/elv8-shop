@@ -479,13 +479,23 @@ class SGK_Custom_Checkout {
 // ==========================================================================
 
 // Automatically subscribe customer email to Newsletter list when an order is placed in WooCommerce
-add_action( 'woocommerce_checkout_order_processed', function( $order_id ) {
-    $order = wc_get_order( $order_id );
-    if ( ! $order ) {
-        return;
+function elv8_auto_subscribe_order_email( $order_id_or_order ) {
+    $order = false;
+    if ( is_a( $order_id_or_order, 'WC_Order' ) ) {
+        $order = $order_id_or_order;
+    } elseif ( is_numeric( $order_id_or_order ) && $order_id_or_order > 0 ) {
+        $order = wc_get_order( $order_id_or_order );
     }
 
-    $email = sanitize_email( trim( $order->get_billing_email() ) );
+    $email = '';
+    if ( $order ) {
+        $email = $order->get_billing_email();
+    }
+    if ( empty( $email ) && isset( $_POST['billing_email'] ) ) {
+        $email = sanitize_email( $_POST['billing_email'] );
+    }
+
+    $email = sanitize_email( trim( $email ) );
     if ( ! is_email( $email ) ) {
         return;
     }
@@ -502,16 +512,22 @@ add_action( 'woocommerce_checkout_order_processed', function( $order_id ) {
         }
     }
 
+    $order_num = $order ? $order->get_id() : 'New';
     $new_sub = array(
         'id'           => 'sub_' . time() . '_' . wp_generate_password( 4, false ),
         'email'        => $email,
         'subscribedAt' => current_time( 'mysql' ),
-        'source'       => 'Order #' . $order_id,
+        'source'       => 'Order #' . $order_num,
     );
 
     array_unshift( $subscribers, $new_sub );
     update_option( 'elv8_newsletter_subscribers', $subscribers );
-}, 10, 1 );
+}
+
+add_action( 'woocommerce_new_order', 'elv8_auto_subscribe_order_email', 10, 1 );
+add_action( 'woocommerce_checkout_order_processed', 'elv8_auto_subscribe_order_email', 10, 1 );
+add_action( 'woocommerce_thankyou', 'elv8_auto_subscribe_order_email', 10, 1 );
+add_action( 'woocommerce_payment_complete', 'elv8_auto_subscribe_order_email', 10, 1 );
 
 add_action( 'rest_api_init', function() {
     // REST API Endpoint to submit newsletter subscription
