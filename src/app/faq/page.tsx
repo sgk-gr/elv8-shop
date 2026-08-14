@@ -42,7 +42,7 @@ export default function FAQPage() {
             questions: [
                 {
                     q: isEl ? "Ποιες μεθόδους πληρωμής δέχεστε;" : "What payment methods do you accept?",
-                    a: isEl ? "Δεχόμαστε:\n\n1. Πιστωτική / Χρεωστική Κάρτα (Visa, Mastercard, Maestro)\n2. IRIS Payments – άμεση πληρωμή μέσω e-banking\n3. Αντικαταβολή – πληρωμή κατά την παράδοση (+ 2€)\n4. Τραπεζική Κατάθεση – επικοινωνήστε μαζί μας για στοιχεία λογαριασμού" : "We accept:\n\n1. Credit / Debit Card (Visa, Mastercard, Maestro)\n2. IRIS Payments – direct payment via e-banking\n3. Cash on Delivery – payment upon delivery (+ €2)\n4. Bank Transfer – contact us for account details"
+                    a: isEl ? "Οι πληρωμές στο κατάστημά μας πραγματοποιούνται αποκλειστικά ηλεκτρονικά μέσω Πιστωτικής / Χρεωστικής Κάρτας (Visa, Mastercard, Maestro) με πλήρη ασφάλεια μέσω Nexi XPay." : "Payments in our store are processed exclusively online via Credit / Debit Card (Visa, Mastercard, Maestro) with full security through Nexi XPay."
                 },
                 {
                     q: isEl ? "Είναι ασφαλείς οι πληρωμές;" : "Are payments secure?",
