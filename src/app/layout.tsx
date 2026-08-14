@@ -115,6 +115,8 @@ export const metadata: Metadata = {
     category: "shopping",
 };
 
+import ComingSoonGuard from "@/components/ComingSoonGuard";
+
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -127,16 +129,18 @@ export default function RootLayout({
             </head>
             <body className="font-body antialiased min-h-screen bg-white" suppressHydrationWarning>
                 <Providers>
-                    <JsonLd type="website" />
-                    <ScrollRestoration />
-                    <Header />
-                    <CartDrawer />
-                    <div className="flex flex-col min-h-screen justify-between">
-                        <main className="flex-1">{children}</main>
-                        <Footer />
-                    </div>
-                    <CookieBanner />
-                    <BackToTopButton />
+                    <ComingSoonGuard>
+                        <JsonLd type="website" />
+                        <ScrollRestoration />
+                        <Header />
+                        <CartDrawer />
+                        <div className="flex flex-col min-h-screen justify-between">
+                            <main className="flex-1">{children}</main>
+                            <Footer />
+                        </div>
+                        <CookieBanner />
+                        <BackToTopButton />
+                    </ComingSoonGuard>
                 </Providers>
             </body>
         </html>
