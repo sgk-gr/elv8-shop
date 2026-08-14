@@ -478,6 +478,41 @@ class SGK_Custom_Checkout {
 // NEWSLETTER SUBSCRIBERS INTEGRATION & WORDPRESS ADMIN PAGE
 // ==========================================================================
 
+// Automatically subscribe customer email to Newsletter list when an order is placed in WooCommerce
+add_action( 'woocommerce_checkout_order_processed', function( $order_id ) {
+    $order = wc_get_order( $order_id );
+    if ( ! $order ) {
+        return;
+    }
+
+    $email = sanitize_email( trim( $order->get_billing_email() ) );
+    if ( ! is_email( $email ) ) {
+        return;
+    }
+
+    $subscribers = get_option( 'elv8_newsletter_subscribers', array() );
+    if ( ! is_array( $subscribers ) ) {
+        $subscribers = array();
+    }
+
+    // Check if already in list
+    foreach ( $subscribers as $sub ) {
+        if ( isset( $sub['email'] ) && strtolower( $sub['email'] ) === strtolower( $email ) ) {
+            return;
+        }
+    }
+
+    $new_sub = array(
+        'id'           => 'sub_' . time() . '_' . wp_generate_password( 4, false ),
+        'email'        => $email,
+        'subscribedAt' => current_time( 'mysql' ),
+        'source'       => 'Order #' . $order_id,
+    );
+
+    array_unshift( $subscribers, $new_sub );
+    update_option( 'elv8_newsletter_subscribers', $subscribers );
+}, 10, 1 );
+
 add_action( 'rest_api_init', function() {
     // REST API Endpoint to submit newsletter subscription
     register_rest_route( 'elv8/v1', '/newsletter-subscribe', array(
