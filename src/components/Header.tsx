@@ -83,7 +83,7 @@ export default function Header() {
             {/* Brand Logo */}
             <Link href="/" className="flex items-center group select-none">
               <Image
-                src="/elv8_logo.svg"
+                src="/logo2.jpg"
                 alt="ELV8 Logo"
                 width={90}
                 height={40}
@@ -235,7 +235,7 @@ export default function Header() {
                   className="flex items-center select-none"
                 >
                   <Image
-                    src="/elv8_logo.svg"
+                    src="/logo2.jpg"
                     alt="ELV8 Logo"
                     width={72}
                     height={32}

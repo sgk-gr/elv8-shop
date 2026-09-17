@@ -205,7 +205,7 @@ export default function StoreLocatorSection() {
               >
                 <div className="bg-white group-hover:bg-[#FF1D8E] text-white px-4 py-2.5 rounded-2xl shadow-2xl border-2 border-white flex items-center gap-2 transition-all duration-300">
                   <Image
-                    src="/elv8_logo.svg"
+                    src="/logo2.jpg"
                     alt="ELV8"
                     width={52}
                     height={24}
@@ -239,7 +239,7 @@ export default function StoreLocatorSection() {
                       {/* Top Header Row */}
                       <div className="flex items-center justify-between mb-2">
                         <Image
-                          src="/elv8_logo.svg"
+                          src="/logo2.jpg"
                           alt="ELV8"
                           width={44}
                           height={20}

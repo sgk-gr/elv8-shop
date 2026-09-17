@@ -107,10 +107,10 @@ export const metadata: Metadata = {
     },
     icons: {
         icon: [
-            { url: "/favicon.svg", type: "image/svg+xml" }
+            { url: "/logo2.jpg", type: "image/jpeg" }
         ],
-        shortcut: "/favicon.svg",
-        apple: "/favicon.svg",
+        shortcut: "/logo2.jpg",
+        apple: "/logo2.jpg",
     },
     category: "shopping",
 };

@@ -69,7 +69,7 @@ export default function Footer() {
                     <div className="space-y-6 flex flex-col items-center md:items-start">
                         <Link href="/" className="inline-block transition-transform hover:scale-105">
                             <Image
-                                src="/elv8_logo.svg"
+                                src="/logo2.jpg"
                                 alt="ELV8 Logo"
                                 width={120}
                                 height={55}

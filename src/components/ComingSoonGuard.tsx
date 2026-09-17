@@ -44,7 +44,7 @@ export default function ComingSoonGuard({ children }: { children: React.ReactNod
       <header className="relative z-10 container mx-auto px-6 py-8 flex items-center justify-center">
         <Link href="/" className="relative flex items-center">
           <Image
-            src="/elv8_logo.svg"
+            src="/logo2.jpg"
             alt="ELV8 Energy Logo"
             width={140}
             height={46}
