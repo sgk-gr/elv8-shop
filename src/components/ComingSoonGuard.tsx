@@ -9,7 +9,7 @@ export default function ComingSoonGuard({ children }: { children: React.ReactNod
   const [isChecking, setIsChecking] = useState(true);
 
   // Maintenance mode active flag
-  const isMaintenanceActive = process.env.NEXT_PUBLIC_COMING_SOON === "true" || true;
+  const isMaintenanceActive = false;
 
   useEffect(() => {
     if (typeof window !== "undefined") {
