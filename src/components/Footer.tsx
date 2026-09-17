@@ -71,9 +71,9 @@ export default function Footer() {
                             <Image
                                 src="/logo2.jpg"
                                 alt="ELV8 Logo"
-                                width={120}
-                                height={55}
-                                className="object-contain"
+                                width={60}
+                                height={60}
+                                className="w-14 h-14 object-cover rounded-full mix-blend-screen drop-shadow-md"
                             />
                         </Link>
                         <p className="text-sm text-white/60 leading-relaxed max-w-sm">

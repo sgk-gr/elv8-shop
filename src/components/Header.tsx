@@ -85,9 +85,9 @@ export default function Header() {
               <Image
                 src="/logo2.jpg"
                 alt="ELV8 Logo"
-                width={90}
-                height={40}
-                className="w-[72px] md:w-[90px] h-auto object-contain"
+                width={60}
+                height={60}
+                className="w-12 md:w-14 h-12 md:h-14 object-cover rounded-full mix-blend-screen drop-shadow-md"
                 priority
               />
             </Link>
@@ -237,9 +237,9 @@ export default function Header() {
                   <Image
                     src="/logo2.jpg"
                     alt="ELV8 Logo"
-                    width={72}
-                    height={32}
-                    className="w-[64px] h-auto object-contain"
+                    width={50}
+                    height={50}
+                    className="w-12 h-12 object-cover rounded-full mix-blend-screen drop-shadow-md"
                     priority
                   />
                 </Link>

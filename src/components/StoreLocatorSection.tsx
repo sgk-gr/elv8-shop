@@ -207,9 +207,9 @@ export default function StoreLocatorSection() {
                   <Image
                     src="/logo2.jpg"
                     alt="ELV8"
-                    width={52}
-                    height={24}
-                    className="object-contain shrink-0"
+                    width={32}
+                    height={32}
+                    className="w-8 h-8 object-cover rounded-full mix-blend-screen shrink-0"
                   />
                   <span className="font-bold text-sm text-slate-800 group-hover:text-white">{selectedStore.name}</span>
                   <Navigation className="w-3.5 h-3.5 ml-1 shrink-0 text-slate-600 group-hover:text-white" />
@@ -241,9 +241,9 @@ export default function StoreLocatorSection() {
                         <Image
                           src="/logo2.jpg"
                           alt="ELV8"
-                          width={44}
-                          height={20}
-                          className="object-contain"
+                          width={28}
+                          height={28}
+                          className="w-7 h-7 object-cover rounded-full mix-blend-screen"
                         />
                         <button
                           onClick={(e) => openNavigation(store, e)}

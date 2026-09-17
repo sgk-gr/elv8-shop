@@ -46,9 +46,9 @@ export default function ComingSoonGuard({ children }: { children: React.ReactNod
           <Image
             src="/logo2.jpg"
             alt="ELV8 Energy Logo"
-            width={140}
-            height={46}
-            className="h-14 w-auto object-contain"
+            width={60}
+            height={60}
+            className="w-14 h-14 object-cover rounded-full mix-blend-screen drop-shadow-md"
             priority
           />
         </Link>
