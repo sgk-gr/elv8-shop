@@ -205,11 +205,11 @@ export default function StoreLocatorSection() {
               >
                 <div className="bg-white group-hover:bg-[#FF1D8E] text-white px-4 py-2.5 rounded-2xl shadow-2xl border-2 border-white flex items-center gap-2 transition-all duration-300">
                   <Image
-                    src="/logo2.jpg"
+                    src="/logo2.png"
                     alt="ELV8"
                     width={32}
                     height={32}
-                    className="w-8 h-8 object-cover rounded-full mix-blend-screen shrink-0"
+                    className="w-8 h-8 object-contain shrink-0"
                   />
                   <span className="font-bold text-sm text-slate-800 group-hover:text-white">{selectedStore.name}</span>
                   <Navigation className="w-3.5 h-3.5 ml-1 shrink-0 text-slate-600 group-hover:text-white" />
@@ -239,11 +239,11 @@ export default function StoreLocatorSection() {
                       {/* Top Header Row */}
                       <div className="flex items-center justify-between mb-2">
                         <Image
-                          src="/logo2.jpg"
+                          src="/logo2.png"
                           alt="ELV8"
                           width={28}
                           height={28}
-                          className="w-7 h-7 object-cover rounded-full mix-blend-screen"
+                          className="w-7 h-7 object-contain"
                         />
                         <button
                           onClick={(e) => openNavigation(store, e)}

@@ -69,11 +69,11 @@ export default function Footer() {
                     <div className="space-y-6 flex flex-col items-center md:items-start">
                         <Link href="/" className="inline-block transition-transform hover:scale-105">
                             <Image
-                                src="/logo2.jpg"
+                                src="/logo2.png"
                                 alt="ELV8 Logo"
                                 width={60}
                                 height={60}
-                                className="w-14 h-14 object-cover rounded-full mix-blend-screen drop-shadow-md"
+                                className="w-14 h-14 object-contain drop-shadow-md"
                             />
                         </Link>
                         <p className="text-sm text-white/60 leading-relaxed max-w-sm">

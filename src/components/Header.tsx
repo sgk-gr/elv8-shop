@@ -83,11 +83,11 @@ export default function Header() {
             {/* Brand Logo */}
             <Link href="/" className="flex items-center group select-none">
               <Image
-                src="/logo2.jpg"
+                src="/logo2.png"
                 alt="ELV8 Logo"
                 width={60}
                 height={60}
-                className="w-12 md:w-14 h-12 md:h-14 object-cover rounded-full mix-blend-screen drop-shadow-md"
+                className="w-12 md:w-14 h-12 md:h-14 object-contain drop-shadow-md"
                 priority
               />
             </Link>
@@ -235,11 +235,11 @@ export default function Header() {
                   className="flex items-center select-none"
                 >
                   <Image
-                    src="/logo2.jpg"
+                    src="/logo2.png"
                     alt="ELV8 Logo"
                     width={50}
                     height={50}
-                    className="w-12 h-12 object-cover rounded-full mix-blend-screen drop-shadow-md"
+                    className="w-12 h-12 object-contain drop-shadow-md"
                     priority
                   />
                 </Link>
