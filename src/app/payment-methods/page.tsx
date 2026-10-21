@@ -40,13 +40,13 @@ export default function PaymentMethodsPage() {
                             <span className="text-xs uppercase tracking-widest font-bold text-slate-500">
                                 {isEl ? "Αποδεκτά Σχήματα Καρτών Πληρωμών" : "Accepted Card Schemes"}
                             </span>
-                            <div className="bg-white px-6 py-3 rounded-xl shadow-sm border border-slate-100">
+                            <div className="bg-white px-6 sm:px-8 py-4 sm:py-5 rounded-2xl shadow-sm border border-slate-200 w-full max-w-xl flex items-center justify-center">
                                 <Image
                                     src="/Horizontal_Banner_Logos-no-AMEX_new_transparent.png"
                                     alt="Nexi XPay Card Schemes - Visa, Mastercard, Maestro, Diners, Discover"
-                                    width={380}
-                                    height={55}
-                                    className="h-10 md:h-12 w-auto object-contain"
+                                    width={575}
+                                    height={74}
+                                    className="w-full h-auto max-h-[75px] sm:max-h-[95px] object-contain"
                                     priority
                                 />
                             </div>

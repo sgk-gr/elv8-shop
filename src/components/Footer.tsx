@@ -229,10 +229,34 @@ export default function Footer() {
                 </div>
             </div>
 
+            {/* Dedicated High-Visibility Nexi XPay Payment Schemes Trust Section */}
+            <div className="border-t border-white/10 bg-white/[0.03] py-8">
+                <div className="container mx-auto px-4 text-center flex flex-col items-center gap-3">
+                    <span className="text-xs sm:text-sm font-bold text-white/90 uppercase tracking-widest">
+                        {isEl ? "Αποδεκτοί Τρόποι Πληρωμής & Ασφάλεια Συναλλαγών" : "Accepted Payment Methods & Security"}
+                    </span>
+                    <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-xl inline-flex items-center justify-center max-w-[620px] w-full">
+                        <Image
+                            src="/Horizontal_Banner_Logos-no-AMEX_new_transparent.png"
+                            alt="Nexi XPay Card Schemes - Visa, Mastercard, Maestro, Diners, Discover, Google Pay, Apple Pay"
+                            width={575}
+                            height={74}
+                            className="w-full h-auto object-contain max-h-[80px] sm:max-h-[105px]"
+                            priority
+                        />
+                    </div>
+                    <p className="text-xs text-white/60 max-w-lg leading-relaxed">
+                        {isEl 
+                            ? "Ασφαλείς ηλεκτρονικές πληρωμές μέσω της πλατφόρμας Nexi XPay (Alpha Bank) με ισχυρή κρυπτογράφηση SSL 256-bit και πιστοποίηση 3D-Secure."
+                            : "Secure electronic payments powered by Nexi XPay platform (Alpha Bank) with 256-bit SSL encryption and 3D-Secure authentication."}
+                    </p>
+                </div>
+            </div>
+
             {/* Bottom Bar */}
             <div className="border-t border-white/10">
-                <div className="container mx-auto px-4 md:px-8 py-8">
-                    <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div className="container mx-auto px-4 md:px-8 py-6">
+                    <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                         <div className="text-sm text-white/40 text-center md:text-left space-y-1">
                             <p>© {currentYear} ELV8 Energy. {t("footer.rights")}</p>
                             <div className="flex justify-center md:justify-start gap-2 mt-2 pt-2 border-t border-white/10">
@@ -240,22 +264,6 @@ export default function Footer() {
                                 <span>|</span>
                                 <button onClick={() => setLanguage('en')} className={language === 'en' ? 'text-white' : 'hover:text-white'}>EN</button>
                             </div>
-                        </div>
-                        
-                        {/* Official Nexi XPay Card Schemes Banner (No Amex) */}
-                        <div className="flex flex-col items-center md:items-center gap-1.5">
-                            <div className="bg-white/10 hover:bg-white/15 transition-colors px-3 py-1.5 rounded-xl backdrop-blur-sm">
-                                <Image
-                                    src="/Horizontal_Banner_Logos-no-AMEX_new_transparent.png"
-                                    alt="Ασφαλείς Πληρωμές μέσω Nexi XPay - Visa, Mastercard, Maestro, Diners, Discover"
-                                    width={320}
-                                    height={50}
-                                    className="h-7 sm:h-8 w-auto object-contain"
-                                />
-                            </div>
-                            <span className="text-[10px] sm:text-[11px] text-white/50 tracking-wider">
-                                {isEl ? "Ασφαλείς συναλλαγές μέσω Nexi XPay (Alpha Bank)" : "Secure checkout powered by Nexi XPay"}
-                            </span>
                         </div>
 
                         <div className="text-center md:text-right">
