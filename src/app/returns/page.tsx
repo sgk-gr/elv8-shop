@@ -200,14 +200,30 @@ export default function ReturnPolicyPage() {
 
                     <section>
                         <h2 className="font-display text-xl sm:text-2xl font-bold mb-3 sm:mb-4">
-                            {isEl ? "6. Επικοινωνία" : "6. Contact Us"}
+                            {isEl ? "6. Στοιχεία Επιστροφών & Επικοινωνία" : "6. Returns Address & Contact Details"}
                         </h2>
-                        <div className="bg-gradient-to-br from-[#FF1D8E]/10 to-[#FF1D8E]/5 p-4 sm:p-6 rounded-xl border border-[#FF1D8E]/20 text-left">
-                            <p className="text-sm sm:text-base font-medium mb-1">📧 Email: info@elv8now.com</p>
-                            <p className="text-sm sm:text-base font-medium mb-1">
-                                {isEl ? "⏰ Ωράριο: Δευτέρα - Παρασκευή, 9:00 - 17:00" : "⏰ Hours: Monday - Friday, 9:00 - 17:00"}
+                        <div className="bg-slate-50 border border-slate-200/80 p-5 sm:p-7 rounded-2xl text-left space-y-4">
+                            <p className="text-sm sm:text-base text-slate-700">
+                                {isEl
+                                    ? "Για οποιοδήποτε αίτημα επιστροφής, ακύρωσης ή αντικατάστασης, καθώς και για την άσκηση του νόμιμου δικαιώματος υπαναχώρησης 14 ημερών, παρακαλούμε απευθυνθείτε:"
+                                    : "For return, cancellation, or replacement requests, as well as exercising your 14-day statutory right of withdrawal, please contact:"}
                             </p>
-                            <p className="text-sm sm:text-base font-medium">🌐 Website: elv8now.com</p>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm text-slate-800">
+                                <p><strong>Επωνυμία:</strong> ELV8 Ι.Κ.Ε. (ELV8 P.C.)</p>
+                                <p><strong>ΑΦΜ:</strong> 803354749 (ΔΟΥ Δ' Αθηνών)</p>
+                                <p><strong>Αρ. Γ.Ε.ΜΗ.:</strong> 195202901000</p>
+                                <p><strong>Διεύθυνση Επιστροφών:</strong> Καστριώτη Γεωργίου 2-4, Τ.Κ. 11476, Αθήνα</p>
+                                <p><strong>Τηλέφωνο Εξυπηρέτησης:</strong> +30 6980273388</p>
+                                <p><strong>Email Εξυπηρέτησης:</strong> info@elv8now.com</p>
+                            </div>
+                            <div className="pt-2">
+                                <Link
+                                    href="/returns/withdraw"
+                                    className="inline-flex items-center text-xs sm:text-sm font-bold text-[#FF1D8E] hover:underline"
+                                >
+                                    {isEl ? "→ Μετάβαση στην Ηλεκτρονική Φόρμα Υπαναχώρησης (14 Ημερών)" : "→ Go to Right of Withdrawal Electronic Form (14 Days)"}
+                                </Link>
+                            </div>
                         </div>
                     </section>
                 </div>

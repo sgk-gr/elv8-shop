@@ -28,9 +28,35 @@ export default function TermsOfServicePage() {
                 </p>
 
                 <div className="prose prose-sm sm:prose-base max-w-none space-y-6 sm:space-y-8">
+                    {/* Merchant Statutory Identification */}
+                    <section className="bg-slate-50 border border-slate-200/80 p-5 sm:p-7 rounded-2xl">
+                        <h2 className="font-display text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-slate-900">
+                            {isEl ? "1. Ταυτότητα Επιχείρησης & Στοιχεία Εταιρείας" : "1. Merchant Identity & Company Details"}
+                        </h2>
+                        <p className="text-sm sm:text-base leading-relaxed text-slate-700 mb-4">
+                            {isEl
+                                ? "Ο παρών ιστότοπος και το ηλεκτρονικό κατάστημα elv8now.com ανήκει και λειτουργεί νόμιμα υπό την ακόλουθη εταιρεία:"
+                                : "This website and the online store elv8now.com is owned and operated by the following legal entity:"}
+                        </p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm text-slate-800">
+                            <p><strong>{isEl ? "Επωνυμία:" : "Company Name:"}</strong> ELV8 Ι.Κ.Ε.</p>
+                            <p><strong>{isEl ? "Επωνυμία (Λατινικά):" : "Corporate Name (EN):"}</strong> ELV8 P.C.</p>
+                            <p><strong>{isEl ? "Διακριτικός Τίτλος:" : "Trade Name:"}</strong> ELV8</p>
+                            <p><strong>{isEl ? "Νομική Μορφή:" : "Legal Form:"}</strong> Ιδιωτική Κεφαλαιουχική Εταιρεία (ΙΚΕ)</p>
+                            <p><strong>{isEl ? "Α.Φ.Μ.:" : "Tax ID (AFM):"}</strong> 803354749</p>
+                            <p><strong>{isEl ? "Δ.Ο.Υ.:" : "Tax Office:"}</strong> Δ' Αθηνών</p>
+                            <p><strong>{isEl ? "Αριθμός Γ.Ε.ΜΗ.:" : "GEMI Register No:"}</strong> 195202901000</p>
+                            <p><strong>EUID:</strong> ELGEMI.195202901000</p>
+                            <p><strong>{isEl ? "Έδρα / Διεύθυνση:" : "Headquarters:"}</strong> Καστριώτη Γεωργίου 2-4, Τ.Κ. 11476, Αθήνα</p>
+                            <p><strong>{isEl ? "Ημ/νία Σύστασης:" : "Incorporation Date:"}</strong> 21/07/2026</p>
+                            <p><strong>{isEl ? "Τηλέφωνο:" : "Phone:"}</strong> +30 6980273388</p>
+                            <p><strong>Email:</strong> info@elv8now.com</p>
+                        </div>
+                    </section>
+
                     <section>
                         <h2 className="font-display text-xl sm:text-2xl font-bold mb-3 sm:mb-4">
-                            {isEl ? "1. Αποδοχή Όρων" : "1. Acceptance of Terms"}
+                            {isEl ? "2. Αποδοχή Όρων" : "2. Acceptance of Terms"}
                         </h2>
                         <p className="text-sm sm:text-base leading-relaxed text-muted-foreground">
                             {isEl ? (
@@ -43,7 +69,7 @@ export default function TermsOfServicePage() {
 
                     <section>
                         <h2 className="font-display text-xl sm:text-2xl font-bold mb-3 sm:mb-4">
-                            {isEl ? "2. Χρήση της Υπηρεσίας" : "2. Use of Service"}
+                            {isEl ? "3. Χρήση της Υπηρεσίας" : "3. Use of Service"}
                         </h2>
                         <p className="text-sm sm:text-base leading-relaxed text-muted-foreground mb-3">
                             {isEl ? (
@@ -99,15 +125,24 @@ export default function TermsOfServicePage() {
 
                     <section>
                         <h2 className="font-display text-xl sm:text-2xl font-bold mb-3 sm:mb-4">
-                            {isEl ? "5. Παραγγελίες και Πληρωμές" : "5. Orders and Payments"}
+                            {isEl ? "6. Παραγγελίες, Τιμολόγηση & Ασφάλεια Πληρωμών (Nexi XPay)" : "6. Orders, Pricing & Payment Security (Nexi XPay)"}
                         </h2>
-                        <p className="text-sm sm:text-base leading-relaxed text-muted-foreground mb-3">
-                            {isEl ? (
-                                "Όλες οι παραγγελίες υπόκεινται σε διαθεσιμότητα και επιβεβαίωση της τιμής. Διατηρούμε το δικαίωμα να αρνηθούμε ή να ακυρώσουμε οποιαδήποτε παραγγελία για οποιονδήποτε λόγο. Οι τιμές αναφέρονται σε ευρώ (€) και περιλαμβάνουν ΦΠΑ."
-                            ) : (
-                                "All orders are subject to availability and price confirmation. We reserve the right to refuse or cancel any order for any reason. Prices are stated in euros (€) and include VAT."
-                            )}
-                        </p>
+                        <div className="space-y-3 text-sm sm:text-base leading-relaxed text-muted-foreground">
+                            <p>
+                                {isEl ? (
+                                    "Όλες οι παραγγελίες υπόκεινται σε διαθεσιμότητα και επιβεβαίωση της τιμής. Οι αναγραφόμενες τιμές είναι σε ευρώ (€) και συμπεριλαμβάνουν τον νόμιμο συντελεστή ΦΠΑ."
+                                ) : (
+                                    "All orders are subject to availability and price confirmation. Quoted prices are in Euros (€) and include applicable VAT."
+                                )}
+                            </p>
+                            <p>
+                                {isEl ? (
+                                    "Οι πληρωμές με πιστωτική, χρεωστική ή προπληρωμένη κάρτα διεκπεραιώνονται μέσω της διεθνώς αναγνωρισμένης και ασφαλούς πλατφόρμας e-Commerce Nexi XPay της Alpha Bank. Γίνονται δεκτές κάρτες Visa, Mastercard, Maestro, Diners Club και Discover. Η ELV8 Ι.Κ.Ε. δεν διατηρεί και δεν αποθηκεύει στοιχεία καρτών, καθώς η συναλλαγή εκτελείται με ισχυρή κρυπτογράφηση SSL 256-bit και πρωτόκολλο 3D-Secure απευθείας στα ασφαλή συστήματα της τράπεζας."
+                                ) : (
+                                    "Credit, debit, and prepaid card payments are processed securely through the certified Nexi XPay e-Commerce payment gateway of Alpha Bank. We accept Visa, Mastercard, Maestro, Diners Club, and Discover. ELV8 P.C. does not store or process card numbers, as transactions occur under 256-bit SSL encryption and 3D-Secure authentication directly on the bank's secure platform."
+                                )}
+                            </p>
+                        </div>
                     </section>
 
                     <section>

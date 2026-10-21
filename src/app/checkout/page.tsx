@@ -238,6 +238,27 @@ export default function CheckoutPage() {
                             {t("cart.checkout")}
                             <ArrowRight className="w-4 h-4 ml-2" />
                         </Button>
+
+                        {/* Nexi XPay Card Schemes Security Banner */}
+                        <div className="mt-6 pt-5 border-t border-border flex flex-col items-center gap-2.5 text-center">
+                            <span className="text-[10px] uppercase tracking-widest font-semibold text-muted-foreground">
+                                {isEl ? "Ασφαλείς Πληρωμές μέσω Nexi XPay" : "Secure Payment via Nexi XPay"}
+                            </span>
+                            <div className="bg-white/80 p-2 rounded-xl shadow-xs border border-border/60">
+                                <Image
+                                    src="/Horizontal_Banner_Logos-no-AMEX_new_transparent.png"
+                                    alt="Visa, Mastercard, Maestro, Diners, Discover - Nexi XPay"
+                                    width={260}
+                                    height={40}
+                                    className="h-7 w-auto object-contain"
+                                />
+                            </div>
+                            <p className="text-[10px] text-muted-foreground leading-tight">
+                                {isEl
+                                    ? "Κρυπτογράφηση TLS 1.3 / SSL 256-bit & Πιστοποίηση 3D-Secure"
+                                    : "TLS 1.3 / 256-bit SSL Encryption & 3D-Secure Authentication"}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

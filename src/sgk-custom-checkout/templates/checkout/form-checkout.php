@@ -104,6 +104,17 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
                             <div id="order_review" class="woocommerce-checkout-review-order">
                                 <?php do_action( 'woocommerce_checkout_order_review' ); ?>
                             </div>
+
+                            <!-- Nexi XPay Security & Card Schemes Banner -->
+                            <div class="sgk-checkout-security-badge" style="margin-top: 20px; padding: 15px; background: #fafafa; border: 1px solid #eee; border-radius: 12px; text-align: center;">
+                                <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #666; font-weight: 700; margin-bottom: 8px;">
+                                    Ασφαλείς Πληρωμές μέσω Nexi XPay
+                                </div>
+                                <img src="https://elv8now.com/Horizontal_Banner_Logos-no-AMEX_new_transparent.png" alt="Visa, Mastercard, Maestro, Diners, Discover - Nexi XPay" style="max-height: 38px; width: auto; margin: 0 auto; display: block;" />
+                                <div style="font-size: 11px; color: #888; margin-top: 8px;">
+                                    Πιστοποίηση 3D-Secure & Κρυπτογράφηση SSL 256-bit
+                                </div>
+                            </div>
                         </div>
                     </div>
                     

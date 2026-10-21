@@ -166,15 +166,23 @@ export default function Footer() {
                         </ul>
                     </div>
 
-                    {/* Contact Info */}
+                    {/* Contact Info & Business Details */}
                     <div className="space-y-6">
                         <h4 className="font-display font-bold text-lg">{t("footer.contact")}</h4>
-                        <ul className="space-y-4">
+                        <ul className="space-y-3">
                             <li className="flex items-start gap-3 justify-center md:justify-start">
                                 <MapPin className="w-5 h-5 flex-shrink-0 mt-0.5 text-[#FF1D8E]" />
-                                <span className="text-sm text-white/60">
-                                    {isEl ? "Ελλάδα" : "Greece"}
-                                </span>
+                                <div className="text-sm text-white/60 text-left">
+                                    <p className="font-semibold text-white/90">ELV8 Ι.Κ.Ε.</p>
+                                    <p>Καστριώτη Γεωργίου 2-4</p>
+                                    <p>Τ.Κ. 11476, Αθήνα, Ελλάδα</p>
+                                </div>
+                            </li>
+                            <li className="flex items-center gap-3 justify-center md:justify-start">
+                                <Phone className="w-5 h-5 flex-shrink-0 text-[#FF1D8E]" />
+                                <a href="tel:+306980273388" className="text-sm text-white/60 transition-colors hover:text-[#FF1D8E]">
+                                    +30 6980 273 388
+                                </a>
                             </li>
                             <li className="flex items-center gap-3 justify-center md:justify-start">
                                 <Mail className="w-5 h-5 flex-shrink-0 text-[#FF1D8E]" />
@@ -183,6 +191,40 @@ export default function Footer() {
                                 </a>
                             </li>
                         </ul>
+                    </div>
+                </div>
+
+                {/* Statutory Business Identity Bar (Compliant with Greek Law & Nexi Requirements) */}
+                <div className="mt-12 pt-8 border-t border-white/10">
+                    <div className="bg-white/5 rounded-2xl p-6 text-xs text-white/70 leading-relaxed grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-center md:text-left">
+                        <div>
+                            <span className="block font-bold text-white uppercase tracking-wider text-[11px] mb-1">
+                                {isEl ? "Επωνυμία & Μορφή" : "Company & Legal Form"}
+                            </span>
+                            <p>ELV8 Ι.Κ.Ε. (ELV8 P.C.)</p>
+                            <p className="text-white/50">{isEl ? "Διακριτικός Τίτλος: ELV8" : "Trade Name: ELV8"}</p>
+                        </div>
+                        <div>
+                            <span className="block font-bold text-white uppercase tracking-wider text-[11px] mb-1">
+                                {isEl ? "Φορολογικά Στοιχεία" : "Tax Information"}
+                            </span>
+                            <p>ΑΦΜ: <strong className="text-white">803354749</strong></p>
+                            <p className="text-white/50">ΔΟΥ: Δ' Αθηνών</p>
+                        </div>
+                        <div>
+                            <span className="block font-bold text-white uppercase tracking-wider text-[11px] mb-1">
+                                {isEl ? "Μητρώο Γ.Ε.ΜΗ." : "G.E.M.I. Register"}
+                            </span>
+                            <p>Αρ. Γ.Ε.ΜΗ.: <strong className="text-white">195202901000</strong></p>
+                            <p className="text-white/50">EUID: ELGEMI.195202901000</p>
+                        </div>
+                        <div>
+                            <span className="block font-bold text-white uppercase tracking-wider text-[11px] mb-1">
+                                {isEl ? "Έδρα & Επικοινωνία" : "Headquarters"}
+                            </span>
+                            <p>Καστριώτη Γεωργίου 2-4, 11476 Αθήνα</p>
+                            <p className="text-white/50">Τηλ: +30 6980273388</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -200,12 +242,20 @@ export default function Footer() {
                             </div>
                         </div>
                         
-                        <div className="flex justify-center items-center gap-4 bg-white/5 px-4 py-2 rounded-xl opacity-80 hover:opacity-100 transition-opacity">
-                            <svg className="h-4 w-auto text-white fill-current" viewBox="0 0 100 32" aria-label="Visa">
-                              <path d="M37.1 2.3L24.3 30.5h-6.7L10.5 8.7c-.5-1.9-1.3-2.6-2.9-3.4C5.2 4 1.7 2.8 0 2.4l.2-.9h10.9c1.4 0 2.7 1 3 2.6l2.7 14.1L23.7 2.3h13.4zm28.8 19c.1-7.4-10.3-7.8-10.2-11.1 0-1 1-2.1 3.2-2.3 1.1-.1 4.1-.2 7.5 1.4l1.3-6.2C66.1 2.5 63.3 2 60 2c-6.6 0-11.3 3.5-11.3 8.6 0 3.7 3.3 5.8 5.8 7 2.6 1.3 3.5 2.1 3.5 3.3 0 1.8-2.1 2.6-4.1 2.6-3.4 0-5.4-.5-8.3-1.8l-1.4 6.7c2.1.9 6 1.7 10 1.7 7.1 0 11.7-3.5 11.7-8.8zm18.3 9.2h5.8L85 2.3h-5.4c-1.2 0-2.2.7-2.7 1.8L66.7 30.5h6.7l1.3-3.7h8.2l1.3 3.7zm-7.1-8.7l3.4-9.3 1.9 9.3h-5.3zM45.7 2.3l-5.3 28.2h-6.4L39.3 2.3h6.4z"/>
-                            </svg>
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-5" />
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fd/Maestro_logo.svg" alt="Maestro" className="h-5" />
+                        {/* Official Nexi XPay Card Schemes Banner (No Amex) */}
+                        <div className="flex flex-col items-center md:items-center gap-1.5">
+                            <div className="bg-white/10 hover:bg-white/15 transition-colors px-3 py-1.5 rounded-xl backdrop-blur-sm">
+                                <Image
+                                    src="/Horizontal_Banner_Logos-no-AMEX_new_transparent.png"
+                                    alt="Ασφαλείς Πληρωμές μέσω Nexi XPay - Visa, Mastercard, Maestro, Diners, Discover"
+                                    width={320}
+                                    height={50}
+                                    className="h-7 sm:h-8 w-auto object-contain"
+                                />
+                            </div>
+                            <span className="text-[10px] sm:text-[11px] text-white/50 tracking-wider">
+                                {isEl ? "Ασφαλείς συναλλαγές μέσω Nexi XPay (Alpha Bank)" : "Secure checkout powered by Nexi XPay"}
+                            </span>
                         </div>
 
                         <div className="text-center md:text-right">

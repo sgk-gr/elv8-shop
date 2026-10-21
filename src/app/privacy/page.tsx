@@ -49,9 +49,31 @@ export default function PrivacyPolicyPage() {
                 </div>
 
                 <div className="prose prose-sm sm:prose-base max-w-none space-y-6 sm:space-y-8">
+                    {/* Data Controller Statutory Details */}
+                    <section className="bg-slate-50 border border-slate-200/80 p-5 sm:p-7 rounded-2xl">
+                        <h2 className="font-display text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-slate-900">
+                            {isEl ? "1. Υπεύθυνος Επεξεργασίας Δεδομένων (Data Controller)" : "1. Data Controller Identification"}
+                        </h2>
+                        <p className="text-sm sm:text-base leading-relaxed text-slate-700 mb-3">
+                            {isEl
+                                ? "Σύμφωνα με τον Γενικό Κανονισμό Προστασίας Δεδομένων (GDPR - ΕΕ 2016/679) και την ελληνική νομοθεσία (Ν. 4624/2019), Υπεύθυνος Επεξεργασίας των προσωπικών σας δεδομένων είναι η εταιρεία:"
+                                : "In accordance with the General Data Protection Regulation (GDPR - EU 2016/679) and Greek legislation (L. 4624/2019), the Data Controller is:"}
+                        </p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm text-slate-800">
+                            <p><strong>{isEl ? "Επωνυμία:" : "Company Name:"}</strong> ELV8 Ι.Κ.Ε. (ELV8 P.C.)</p>
+                            <p><strong>{isEl ? "Διακριτικός Τίτλος:" : "Trade Name:"}</strong> ELV8</p>
+                            <p><strong>{isEl ? "ΑΦΜ:" : "Tax ID (AFM):"}</strong> 803354749 (ΔΟΥ Δ' Αθηνών)</p>
+                            <p><strong>{isEl ? "Αρ. Γ.Ε.ΜΗ.:" : "GEMI No:"}</strong> 195202901000</p>
+                            <p><strong>{isEl ? "Έδρα:" : "Headquarters:"}</strong> Καστριώτη Γεωργίου 2-4, Τ.Κ. 11476, Αθήνα</p>
+                            <p><strong>{isEl ? "Τηλέφωνο:" : "Phone:"}</strong> +30 6980273388</p>
+                            <p><strong>Email DPO / Privacy:</strong> info@elv8now.com</p>
+                            <p><strong>Website:</strong> https://elv8now.com</p>
+                        </div>
+                    </section>
+
                     <section>
                         <h2 className="font-display text-xl sm:text-2xl font-bold mb-3 sm:mb-4">
-                            {isEl ? "1. Εισαγωγή" : "1. Introduction"}
+                            {isEl ? "2. Εισαγωγή" : "2. Introduction"}
                         </h2>
                         <p className="text-sm sm:text-base leading-relaxed text-muted-foreground">
                             {isEl ? (
