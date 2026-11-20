@@ -105,13 +105,6 @@ export const metadata: Metadata = {
             "en-US": "https://elv8now.com/?lang=en",
         },
     },
-    icons: {
-        icon: [
-            { url: "/logo2.png", type: "image/png" }
-        ],
-        shortcut: "/logo2.png",
-        apple: "/logo2.png",
-    },
     category: "shopping",
 };
 
